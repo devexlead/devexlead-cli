@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dx": {
+      "commandName": "Project",
+      "commandLineArgs": "dx --version"
+    }
+  }
+}
