@@ -1,0 +1,35 @@
+name: Publish and Release Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-artifacts
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Publish to NuGet
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      run: |
+        dotnet nuget push ./build-artifacts/*.nupkg \
+          --source https://api.nuget.org/v3/index.json \
+          --api-key $NUGET_API_KEY
+
+    - name: Create GitHub Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        tag_name=$(git describe --tags --abbrev=0)
+        release_notes=$(git log -1 --pretty=%B)
+        gh release create "$tag_name" ./build-artifacts/*.nupkg --notes "$release_notes"
