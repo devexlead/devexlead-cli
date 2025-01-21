@@ -18,8 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
-	  <ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj" />
+	  <ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" PrivateAssets="all"/>
+	  <ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj" PrivateAssets="all"/>
 	</ItemGroup>
 
 	<ItemGroup>
