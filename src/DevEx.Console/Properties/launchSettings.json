@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "dx": {
+    "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "dx --version"
+      "commandLineArgs": "--version"
     }
   }
 }

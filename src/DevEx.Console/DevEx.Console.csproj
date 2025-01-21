@@ -18,6 +18,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
+	  <ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="version.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
