@@ -21,7 +21,7 @@ namespace DevEx.Core
                     {
                         if (Activator.CreateInstance(type) is IPlugin plugin)
                         {
-                            #if !DEBUG
+                            #if DEBUG
                             Console.WriteLine($"Loading plugin: {plugin.Name} - {plugin.Description}");
                             #endif
                             var command = plugin.GetCommand();
