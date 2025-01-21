@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dx", "src\dx\dx.csproj", "{CADD67F4-5F6C-41E2-93ED-83CEF9DF9A48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "devex", "src\dx\devex.csproj", "{CADD67F4-5F6C-41E2-93ED-83CEF9DF9A48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
