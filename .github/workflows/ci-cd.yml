@@ -31,7 +31,7 @@ jobs:
       run: dotnet test --configuration Release --no-build --verbosity normal
 
     - name: Pack Nuget Package
-      run: dotnet pack --configuration Release --output ./nupkgs
+      run: dotnet pack --configuration Release --output $GITHUB_WORKSPACE/dx-cli/nupkgs
 
     - name: Add GitHub Packages as a NuGet source
       run: dotnet nuget add source https://nuget.pkg.github.com/devexlead/index.json --name github --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }}
