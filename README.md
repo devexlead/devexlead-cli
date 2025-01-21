@@ -11,4 +11,7 @@ Developer Experience CLI
 5. Run `dotnet tool update devex --global --no-cache`
 6. Check global tools `dotnet tool list -g`
 
-Ensure your `nuget.config` file has the correct source and credentials. Open or create `nuget.config` in your user profile directory (e.g., `%AppData%\NuGet\nuget.config` on Windows).
+**Troubleshooting**
+- Ensure your `nuget.config` file has the correct source and credentials. Open or create `nuget.config` in your user profile directory (e.g., `%AppData%\NuGet\nuget.config` on Windows).
+- Test Authentication `& "C:\Windows\System32\curl.exe" -u "$username:$pat" https://nuget.pkg.github.com/devexlead/index.json`
+
