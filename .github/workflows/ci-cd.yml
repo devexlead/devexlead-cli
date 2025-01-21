@@ -35,9 +35,8 @@ jobs:
 
     - name: Add GitHub Packages as a NuGet source
       run: |
-        dotnet nuget add source \
+        dotnet nuget add source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
           --name github \
-          --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
           --username ${{ github.repository_owner }} \
           --password ${{ secrets.GITHUB_TOKEN }}
 
