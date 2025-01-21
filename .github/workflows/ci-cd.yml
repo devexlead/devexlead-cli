@@ -37,4 +37,4 @@ jobs:
       run: dotnet nuget add source https://nuget.pkg.github.com/devexlead/index.json --name github --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }}
 
     - name: Publish to GitHub Packages
-      run: dotnet nuget push ./nupkgs/*.nupkg --source "github" --api-key ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push ./dx-cli/nupkgs/*.nupkg --source "github" --api-key ${{ secrets.GITHUB_TOKEN }}
