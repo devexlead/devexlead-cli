@@ -1,5 +1,5 @@
-# devex-cli
-Developer Experience CLI
+# Developer Experience CLI
+
 
 
 ## Install CI/CD Version
