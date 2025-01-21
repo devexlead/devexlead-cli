@@ -1,4 +1,4 @@
-# dx-cli
+# devex-cli
 Developer Experience CLI
 
 
