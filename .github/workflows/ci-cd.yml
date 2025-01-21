@@ -34,11 +34,13 @@ jobs:
       run: dotnet pack --configuration Release --output ./nupkgs
 
     - name: Add GitHub Packages as a NuGet source
+      shell: pwsh
       run: |
-        dotnet nuget add source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
-          --name github \
-          --username ${{ github.repository_owner }} \
-          --password ${{ secrets.GITHUB_TOKEN }}
+        dotnet nuget add source `
+            https://nuget.pkg.github.com/devexlead/index.json `
+            --name github `
+            --username ${{ github.repository_owner }} `
+            --password ${{ secrets.GITHUB_TOKEN }} `
 
     - name: Publish to GitHub Packages
       env:
