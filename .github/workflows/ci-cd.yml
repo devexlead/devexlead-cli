@@ -33,6 +33,14 @@ jobs:
     - name: Pack application as global tool
       run: dotnet pack --configuration Release --output ./nupkgs
 
+    - name: Add GitHub Packages as a NuGet source
+      run: |
+        dotnet nuget add source \
+          --name github \
+          --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
+          --username ${{ github.repository_owner }} \
+          --password ${{ secrets.GITHUB_TOKEN }}
+
     - name: Publish to GitHub Packages
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
