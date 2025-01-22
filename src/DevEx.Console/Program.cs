@@ -1,4 +1,15 @@
 ﻿using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
+using DevEx.Core;
 
 var rootCommand = new RootCommand();
-return await rootCommand.InvokeAsync(args);
+
+PluginService.LoadPlugins(rootCommand);
+
+var builder = new CommandLineBuilder(rootCommand)
+    .UseDefaults()
+    .UseSuggestDirective();
+
+var parser = builder.Build();
+return await parser.InvokeAsync(args);

@@ -4,8 +4,10 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
 		<PackageId>dxc</PackageId>
-		<PackAsTool>true</PackAsTool> <!-- This makes it a .NET tool -->
-		<ToolCommandName>dxc</ToolCommandName> <!-- The command users will run -->
+		<!-- This makes it a .NET tool -->
+		<PackAsTool>true</PackAsTool>
+		<!-- The command users will run -->
+		<ToolCommandName>dxc</ToolCommandName>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,6 +17,11 @@
 		</PackageReference>
 		<PackageReference Include="Spectre.Console" Version="0.49.1" />
 		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj"/>
+		<ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>
