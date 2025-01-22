@@ -1,5 +1,8 @@
 # Developer Experience CLI
 
+[![CI](https://github.com/devexlead/devex-cli/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/devexlead/devex-cli/actions/workflows/ci-cd.yml)
+[![CI](https://github.com/devexlead/devex-cli/actions/workflows/release.yml/badge.svg)](https://github.com/devexlead/devex-cli/actions/workflows/release.yml)
+
 
 
 ## Install CI/CD Version
