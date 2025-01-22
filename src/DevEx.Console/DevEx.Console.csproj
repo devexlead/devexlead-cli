@@ -4,8 +4,10 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net9.0</TargetFramework>
 		<PackageId>dxc</PackageId>
-		<PackAsTool>true</PackAsTool> <!-- This makes it a .NET tool -->
-		<ToolCommandName>dxc</ToolCommandName> <!-- The command users will run -->
+		<!-- This makes it a .NET tool -->
+		<PackAsTool>true</PackAsTool>
+		<!-- The command users will run -->
+		<ToolCommandName>dxc</ToolCommandName>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -18,8 +20,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" PrivateAssets="all"/>
-		<ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj" PrivateAssets="all"/>
+		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj"/>
+		<ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>
