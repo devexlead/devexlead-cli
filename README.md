@@ -8,8 +8,9 @@
 2. Generate Personal Access Token (PAT) with the required scope: `read:packages` and `repo` 
 3. Run `dotnet nuget remove source DevExLeadPackages` and `dotnet nuget add source https://nuget.pkg.github.com/devexlead/index.json --name DevExLeadPackages --username <your-github-username> --password <your-github-token>`
 4. Check sources `dotnet nuget list source`
-5. Run `dotnet tool update --global dxc --no-cache --prerelease --verbosity detailed`
-6. Check global tools `dotnet tool list -g`
+5. Check the version you want to install from https://github.com/devexlead/devex-cli/pkgs/nuget/dxc
+6. Run `dotnet tool update --global dxc --no-cache --version <version> --verbosity detailed`
+7. Check global tools `dotnet tool list -g`
 
 **Troubleshooting**
 - Ensure your `nuget.config` file has the correct source and credentials. Open or create `nuget.config` in your user profile directory (e.g., `%AppData%\NuGet\nuget.config` on Windows).
