@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "--version"
+      "commandLineArgs": "vault read --key a"
     }
   }
 }

@@ -1,9 +1,10 @@
 ﻿using System.CommandLine;
 using DevEx.Core;
+using DevEx.Core.Storage;
 
 namespace DevEx.Plugins.Vault
 {
-    public class SamplePlugin : IPlugin
+    public class VaultPlugin : IPlugin
     {
         public string Name => "vault";
         public string Description => "Manage items in the vault";
@@ -40,7 +41,10 @@ namespace DevEx.Plugins.Vault
                     Console.WriteLine("--key is required for read.");
                     return;
                 }
-                Console.WriteLine($"Fetched item with Key={key}");
+
+                var userStorage = UserStorageManager.GetUserStorage();
+                var value = userStorage.Vault.FirstOrDefault(v => v.Key.Equals(key)).Value.Decrypt();
+                Console.WriteLine($"Fetched item with Key={key} and Value={value}");
             },
             readCommand.Options[0] as Option<string>);
             return readCommand;
@@ -60,6 +64,11 @@ namespace DevEx.Plugins.Vault
                     Console.WriteLine("Both --key and --value are required for modify.");
                     return;
                 }
+
+                var userStorage = UserStorageManager.GetUserStorage();
+                userStorage.Vault[key] = value.Encrypt();
+                UserStorageManager.SaveUserStorage(userStorage);
+
                 Console.WriteLine($"Modified item: Key={key}, New Value={value}");
             },
             modifyCommand.Options[0] as Option<string>,
@@ -80,6 +89,11 @@ namespace DevEx.Plugins.Vault
                     Console.WriteLine("--key is required for delete.");
                     return;
                 }
+
+                var userStorage = UserStorageManager.GetUserStorage();
+                userStorage.Vault.Remove(key);
+                UserStorageManager.SaveUserStorage(userStorage);
+
                 Console.WriteLine($"Deleted item with Key={key}");
             },
             deleteCommand.Options[0] as Option<string>);
@@ -100,6 +114,11 @@ namespace DevEx.Plugins.Vault
                     Console.WriteLine("Both --key and --value are required for create.");
                     return;
                 }
+
+                var userStorage = UserStorageManager.GetUserStorage();
+                userStorage.Vault.Add(key, value.Encrypt());
+                UserStorageManager.SaveUserStorage(userStorage);
+
                 Console.WriteLine($"Created item: Key={key}, Value={value}");
             },
             createCommand.Options[0] as Option<string>,
