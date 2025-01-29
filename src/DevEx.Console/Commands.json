@@ -1,0 +1,62 @@
+{
+    "Commands": [
+        {
+            "Name": "vault",
+            "Description": "Vault operations",
+            "SubCommands": [
+                {
+                    "Name": "create",
+                    "Description": "Create a new entry",
+                    "Handler": "DevEx.Core.Handlers.Vault.VaultCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key for the entry"
+                        },
+                        {
+                            "Name": "value",
+                            "Description": "The value to store"
+                        }
+                    ]
+                },
+                {
+                    "Name": "read",
+                    "Description": "Read an entry",
+                    "Handler": "DevEx.Core.Handlers.Vault.VaultReadCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key to retrieve"
+                        }
+                    ]
+                },
+                {
+                    "Name": "update",
+                    "Description": "Update an existing entry",
+                    "Handler": "DevEx.Core.Handlers.Vault.VaultUpdateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key to update"
+                        },
+                        {
+                            "Name": "value",
+                            "Description": "The new value"
+                        }
+                    ]
+                },
+                {
+                    "Name": "delete",
+                    "Description": "Delete an entry",
+                    "Handler": "DevEx.Core.Handlers.Vault.VaultDeleteCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key to delete"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

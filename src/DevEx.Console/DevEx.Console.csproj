@@ -8,6 +8,7 @@
 		<PackAsTool>true</PackAsTool>
 		<!-- The command users will run -->
 		<ToolCommandName>dxc</ToolCommandName>
+		<UserSecretsId>5a2cdd97-0170-4aaa-9816-a59401e8de2b</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,11 +21,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj"/>
-		<ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj"/>
+		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Commands.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="version.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
