@@ -1,8 +1,8 @@
 ﻿using DevEx.Core;
 
-namespace DevEx.Modules.Vault.Windows
+namespace DevEx.Modules.Vault.Windows.Handlers
 {
-    public class VaultReadCommandHandler : ICommandHandler
+    public class WindowsVaultReadCommandHandler : ICommandHandler
     {
         public void Execute(Dictionary<string, string> options)
         {

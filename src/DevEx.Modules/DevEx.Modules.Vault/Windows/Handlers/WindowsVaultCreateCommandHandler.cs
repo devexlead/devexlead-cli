@@ -1,12 +1,12 @@
 ﻿using DevEx.Core;
 
-namespace DevEx.Modules.Vault.Windows
+namespace DevEx.Modules.Vault.Windows.Handlers
 {
-    public class VaultUpdateCommandHandler : ICommandHandler
+    public class WindowsVaultCreateCommandHandler : ICommandHandler
     {
         public void Execute(Dictionary<string, string> options)
         {
-            Console.WriteLine("Executing Vault Update Command:");
+            Console.WriteLine("Executing Vault Create Command:");
             PrintOptions(options);
         }
 

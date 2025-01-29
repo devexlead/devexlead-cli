@@ -1,12 +1,13 @@
 ﻿using DevEx.Core;
 
-namespace DevEx.Modules.Vault.Windows
+namespace DevEx.Modules.Vault.Windows.Handlers
 {
-    public class VaultCreateCommandHandler : ICommandHandler
+
+    public class WindowsVaultDeleteCommandHandler : ICommandHandler
     {
         public void Execute(Dictionary<string, string> options)
         {
-            Console.WriteLine("Executing Vault Create Command:");
+            Console.WriteLine("Executing Vault Delete Command:");
             PrintOptions(options);
         }
 
