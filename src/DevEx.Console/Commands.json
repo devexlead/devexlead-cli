@@ -7,7 +7,7 @@
                 {
                     "Name": "create",
                     "Description": "Create a new entry",
-                    "Handler": "DevEx.Core.Handlers.Vault.VaultCreateCommandHandler",
+                    "Handler": "DevEx.Modules.Vault.Windows.VaultCreateCommandHandler",
                     "Parameters": [
                         {
                             "Name": "key",
@@ -22,7 +22,7 @@
                 {
                     "Name": "read",
                     "Description": "Read an entry",
-                    "Handler": "DevEx.Core.Handlers.Vault.VaultReadCommandHandler",
+                    "Handler": "DevEx.Modules.Vault.Windows.VaultReadCommandHandler",
                     "Parameters": [
                         {
                             "Name": "key",
@@ -33,7 +33,7 @@
                 {
                     "Name": "update",
                     "Description": "Update an existing entry",
-                    "Handler": "DevEx.Core.Handlers.Vault.VaultUpdateCommandHandler",
+                    "Handler": "DevEx.Modules.Vault.Windows.VaultUpdateCommandHandler",
                     "Parameters": [
                         {
                             "Name": "key",
@@ -48,7 +48,7 @@
                 {
                     "Name": "delete",
                     "Description": "Delete an entry",
-                    "Handler": "DevEx.Core.Handlers.Vault.VaultDeleteCommandHandler",
+                    "Handler": "DevEx.Modules.Vault.Windows.VaultDeleteCommandHandler",
                     "Parameters": [
                         {
                             "Name": "key",

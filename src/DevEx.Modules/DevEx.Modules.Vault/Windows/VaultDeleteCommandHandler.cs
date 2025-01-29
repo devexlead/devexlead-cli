@@ -1,4 +1,6 @@
-﻿namespace DevEx.Core.Handlers.Vault
+﻿using DevEx.Core;
+
+namespace DevEx.Modules.Vault.Windows
 {
 
     public class VaultDeleteCommandHandler : ICommandHandler

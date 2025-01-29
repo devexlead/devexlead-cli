@@ -1,10 +1,12 @@
-﻿namespace DevEx.Core.Handlers.Vault
+﻿using DevEx.Core;
+
+namespace DevEx.Modules.Vault.Windows
 {
-    public class VaultCreateCommandHandler : ICommandHandler
+    public class VaultUpdateCommandHandler : ICommandHandler
     {
         public void Execute(Dictionary<string, string> options)
         {
-            Console.WriteLine("Executing Vault Create Command:");
+            Console.WriteLine("Executing Vault Update Command:");
             PrintOptions(options);
         }
 

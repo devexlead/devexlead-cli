@@ -1,11 +1,15 @@
-﻿using System.CommandLine;
-using System.CommandLine.Invocation;
+﻿using System;
+using System.Collections.Generic;
+using System.CommandLine;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using DevEx.Core.Model.Command;
 
-namespace DevEx.Core
+namespace DevEx.Console
 {
-    public class Commandservice
+    public class Helper
     {
         public static void LoadCommands(RootCommand rootCommand)
         {
@@ -44,7 +48,7 @@ namespace DevEx.Core
                         }
 
                         // Assign handler dynamically, passing all options as a dictionary
-                        subCommand.SetHandler((InvocationContext context) =>
+                        subCommand.SetHandler((context) =>
                         {
                             var handlerInstance = GetHandlerInstance(subCmd.Handler);
                             var optionsDict = new Dictionary<string, string>();
@@ -70,20 +74,52 @@ namespace DevEx.Core
             }
         }
 
-        static ICommandHandler InstantiateHandler(string handlerClassName)
+        static Core.ICommandHandler GetHandlerInstance(string handlerName)
         {
-            Type handlerType = Type.GetType(handlerClassName);
-            if (handlerType == null || !typeof(ICommandHandler).IsAssignableFrom(handlerType))
+            Type handlerType = FindTypeInReferencedAssemblies(handlerName);
+            if (handlerType == null || !typeof(Core.ICommandHandler).IsAssignableFrom(handlerType))
             {
-                throw new InvalidOperationException($"Handler class '{handlerClassName}' not found or does not implement ICommandHandler.");
+                throw new InvalidOperationException($"Handler class '{handlerName}' not found or does not implement ICommandHandler.");
             }
 
-            return (ICommandHandler)Activator.CreateInstance(handlerType);
+            return (Core.ICommandHandler)Activator.CreateInstance(handlerType);
         }
 
-        static ICommandHandler GetHandlerInstance(string handlerName)
+        static Type FindTypeInReferencedAssemblies(string className)
         {
-            return InstantiateHandler(handlerName);
+            string assemblyDirectory = AppContext.BaseDirectory;
+            foreach (var dllFile in Directory.GetFiles(assemblyDirectory, "DevEx.Modules.*.dll"))
+            {
+                Assembly externalAssembly = Assembly.LoadFrom(dllFile);
+                var type = externalAssembly.GetType(className, false, true);
+                if (type != null)
+                    return type;
+            }
+
+            return null;
         }
+
+        public static string GetCurrentVersion()
+        {
+            return Assembly
+                .GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion;
+        }
+
+        //public static void UpdateAutoComplete()
+        //{
+        //    string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        //    string psReadLineFile = Path.Combine(userFolder, "AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt");
+
+        //    //Remove all HF CLI Commands
+        //    string[] lines = File.ReadAllLines(psReadLineFile);
+        //    string[] filteredLines = lines.Where(line => !line.Contains("engmgr")).ToArray();
+        //    File.WriteAllLines(psReadLineFile, filteredLines);
+
+        //    //Insert new HF CLI Commands
+        //    var autoCompleteContent = File.ReadAllText($"{toolPath}\\Files\\AutoComplete.txt");
+        //    File.AppendAllText(psReadLineFile, autoCompleteContent);
+        //}
     }
 }

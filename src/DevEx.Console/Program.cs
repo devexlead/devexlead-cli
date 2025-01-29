@@ -1,12 +1,12 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using DevEx.Core;
+using DevEx.Console;
 using DevEx.Core.Storage;
 
 var rootCommand = new RootCommand();
 
-Commandservice.LoadCommands(rootCommand);
+Helper.LoadCommands(rootCommand);
 
 UserStorageManager.Initialize();
 
