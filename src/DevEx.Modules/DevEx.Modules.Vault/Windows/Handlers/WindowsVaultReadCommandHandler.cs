@@ -1,4 +1,5 @@
 ﻿using DevEx.Core;
+using DevEx.Core.Storage;
 
 namespace DevEx.Modules.Vault.Windows.Handlers
 {
@@ -6,16 +7,17 @@ namespace DevEx.Modules.Vault.Windows.Handlers
     {
         public void Execute(Dictionary<string, string> options)
         {
-            Console.WriteLine("Executing Vault Read Command:");
-            PrintOptions(options);
-        }
-
-        private void PrintOptions(Dictionary<string, string> options)
-        {
-            foreach (var option in options)
+            var key = options["key"];
+            if (string.IsNullOrWhiteSpace(key))
             {
-                Console.WriteLine($"{option.Key}: {option.Value}");
+                Console.WriteLine("--key is required for read.");
+                return;
             }
+
+            var userStorage = UserStorageManager.GetUserStorage();
+            var value = userStorage.Vault.FirstOrDefault(v => v.Key.Equals(key)).Value;
+            value = WindowsVaultHelper.Decrypt(value);
+            Console.WriteLine($"Fetched item with Key={options["key"]} and Value={value}");
         }
     }
 }

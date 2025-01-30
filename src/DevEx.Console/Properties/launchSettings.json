@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "vault delete --key \"a\""
+      "commandLineArgs": "vault delete --key ab"
     }
   }
 }
