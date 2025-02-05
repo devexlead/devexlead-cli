@@ -1,9 +1,10 @@
 ﻿using System.Text.Json;
 using DevEx.Modules.IntelliSense.Model;
+using Spectre.Console;
 
 namespace DevEx.Modules.IntelliSense.Helpers
 {
-    internal class IntelliSenseHelper
+    public class IntelliSenseHelper
     {
         /// <summary>
         /// Reads the JSON configuration from a file and returns a list of command lines,
@@ -55,6 +56,19 @@ namespace DevEx.Modules.IntelliSense.Helpers
             }
 
             return commandLines;
+        }
+
+        public static void ResetPsReadLineFile()
+        {
+            //Clean PSReadLine File
+            string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string psReadLineFile = Path.Combine(userFolder, "AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt");
+            File.WriteAllText(psReadLineFile, string.Empty);
+
+            //Insert DevEx CLI Commands into PSReadLine File
+            var commands = IntelliSenseHelper.GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
+            File.AppendAllLines(psReadLineFile, commands);
+            AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
         }
     }
 }

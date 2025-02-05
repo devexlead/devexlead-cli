@@ -3,6 +3,7 @@ using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using DevEx.Console;
 using DevEx.Core.Storage;
+using DevEx.Modules.IntelliSense.Helpers;
 
 var rootCommand = new RootCommand();
 
@@ -17,11 +18,11 @@ var builder = new CommandLineBuilder(rootCommand)
 
 var userStorage = UserStorageManager.GetUserStorage();
 
-//Check if auto-complete must be updated
+//Check if IntelliSense must be updated
 var currentVersion = Helper.GetCurrentVersion();
 if (!currentVersion.Equals(userStorage.Version))
 {
-    //Helper.UpdateAutoComplete();
+    IntelliSenseHelper.ResetPsReadLineFile();
     userStorage.Version = currentVersion;
     UserStorageManager.SaveUserStorage(userStorage);
 }
