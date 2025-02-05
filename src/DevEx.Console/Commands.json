@@ -69,6 +69,18 @@
                     "Parameters": []
                 }
             ]
+        },
+        {
+            "Name": "intellisense",
+            "Description": "Configures CLI IntelliSense on PowerShell",
+            "SubCommands": [
+                {
+                    "Name": "clean",
+                    "Description": "Reset IntelliSense Commands",
+                    "Handler": "DevEx.Modules.IntelliSense.CleanHandler",
+                    "Parameters": []
+                }
+            ]
         }
     ]
 }
