@@ -25,7 +25,6 @@ namespace DevEx.Modules.Run.Docker
 
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, "docker-compose down", dockerComposePath);
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, "docker-compose up -d", dockerComposePath);
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, "docker-compose logs nginx", dockerComposePath);
         }
     }
 }
