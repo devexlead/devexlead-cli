@@ -1,4 +1,5 @@
 ﻿using DevEx.Core;
+using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
 namespace DevEx.Modules.Vault.Windows.Handlers
@@ -17,7 +18,7 @@ namespace DevEx.Modules.Vault.Windows.Handlers
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
-            value = WindowsVaultHelper.Encrypt(value);
+            value = EncryptionHelper.Encrypt(value);
             userStorage.Vault.Add(key, value);
             UserStorageManager.SaveUserStorage(userStorage);
 

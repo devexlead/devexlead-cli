@@ -1,4 +1,5 @@
 ﻿using DevEx.Core;
+using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
 namespace DevEx.Modules.Vault.Windows.Handlers
@@ -16,7 +17,7 @@ namespace DevEx.Modules.Vault.Windows.Handlers
 
             var userStorage = UserStorageManager.GetUserStorage();
             var value = userStorage.Vault.FirstOrDefault(v => v.Key.Equals(key)).Value;
-            value = WindowsVaultHelper.Decrypt(value);
+            value = EncryptionHelper.Decrypt(value);
             Console.WriteLine($"Fetched item with Key={options["key"]} and Value={value}");
         }
     }

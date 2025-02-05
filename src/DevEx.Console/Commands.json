@@ -57,6 +57,18 @@
                     ]
                 }
             ]
+        },
+        {
+            "Name": "run",
+            "Description": "Run operations",
+            "SubCommands": [
+                {
+                    "Name": "docker-compose",
+                    "Description": "Run Docker Compose Configuration",
+                    "Handler": "DevEx.Modules.Run.Docker.DockerComposeRunCommandHandler",
+                    "Parameters": []
+                }
+            ]
         }
     ]
 }

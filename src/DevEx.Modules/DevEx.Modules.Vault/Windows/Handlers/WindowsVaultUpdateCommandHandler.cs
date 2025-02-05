@@ -1,4 +1,5 @@
 ﻿using DevEx.Core;
+using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
 namespace DevEx.Modules.Vault.Windows.Handlers
@@ -17,7 +18,7 @@ namespace DevEx.Modules.Vault.Windows.Handlers
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
-            userStorage.Vault[key] = WindowsVaultHelper.Encrypt(value);
+            userStorage.Vault[key] = EncryptionHelper.Encrypt(value);
             UserStorageManager.SaveUserStorage(userStorage);
 
             Console.WriteLine($"Modified item: Key={key}, New Value={value}");

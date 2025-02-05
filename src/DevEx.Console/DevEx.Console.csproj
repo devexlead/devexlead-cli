@@ -22,6 +22,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Run\DevEx.Modules.Run.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Vault.csproj" />
 	</ItemGroup>
 

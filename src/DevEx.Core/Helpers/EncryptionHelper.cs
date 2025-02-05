@@ -2,9 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DevEx.Modules.Vault.Windows
+namespace DevEx.Core.Helpers
 {
-    public class WindowsVaultHelper
+    public class EncryptionHelper
     {
         private static readonly byte[] _key = GenerateKey();
         private static readonly byte[] _iv = GenerateIV();
