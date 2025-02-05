@@ -81,6 +81,27 @@
                     "Parameters": []
                 }
             ]
+        },
+        {
+            "Name": "tool",
+            "Description": "Developer Tools",
+            "SubCommands": [
+                {
+                    "Name": "waffle",
+                    "Description": "Generate Text Data for Testing",
+                    "Handler": "DevEx.Modules.Tools.Handlers.WaffleGeneratorHandler",
+                    "Parameters": [
+                        {
+                            "Name": "paragraphs",
+                            "Description": "Number of Paragraph"
+                        },
+                        {
+                            "Name": "includeHeading",
+                            "Description": "Generate Heading"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
