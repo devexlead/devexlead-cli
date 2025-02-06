@@ -6,81 +6,81 @@ namespace DevEx.Core.Helpers
 {
     public static class TerminalHelper
     {
-        public static string Run(ConsoleMode consoleMode, string command, string? directory = null, bool waitForExit = true, bool redirectStandardOutput = true, string regexPattern = null, bool isPrintable = true)
-        {
-            if (isPrintable)
-            {
-                AnsiConsole.WriteLine();
-                AnsiConsole.MarkupLine($"[yellow]Command:   {command}[/]");
-                AnsiConsole.MarkupLine($"[yellow]Directory: {directory}[/]");
-            }
+        //public static string Run(ConsoleMode consoleMode, string command, string? directory = null, bool waitForExit = true, bool redirectStandardOutput = true, string regexPattern = null, bool isPrintable = true)
+        //{
+        //    if (isPrintable)
+        //    {
+        //        AnsiConsole.WriteLine();
+        //        AnsiConsole.MarkupLine($"[yellow]Command:   {command}[/]");
+        //        AnsiConsole.MarkupLine($"[yellow]Directory: {directory}[/]");
+        //    }
 
-            var filename = string.Empty;
-            var arguments = string.Empty;
+        //    var filename = string.Empty;
+        //    var arguments = string.Empty;
 
-            switch (consoleMode)
-            {
-                case ConsoleMode.Cmd:
-                    filename = "cmd.exe";
-                    arguments = $"/C {command}";
-                    break;
-                case ConsoleMode.Powershell:
-                    filename = "powershell.exe";
-                    arguments = $" -noprofile -nologo -c {command}";
-                    break;
-                case ConsoleMode.Wsl:
-                    filename = "wsl";
-                    arguments = command;
-                    break;
-            }
+        //    switch (consoleMode)
+        //    {
+        //        case ConsoleMode.Cmd:
+        //            filename = "cmd.exe";
+        //            arguments = $"/C {command}";
+        //            break;
+        //        case ConsoleMode.Powershell:
+        //            filename = "powershell.exe";
+        //            arguments = $" -noprofile -nologo -c {command}";
+        //            break;
+        //        case ConsoleMode.Wsl:
+        //            filename = "wsl";
+        //            arguments = command;
+        //            break;
+        //    }
 
-            try
-            {
-                var p = new Process();
-                if (!string.IsNullOrEmpty(directory))
-                {
-                    p.StartInfo.WorkingDirectory = directory;
-                }
-                p.StartInfo.UseShellExecute = false;
-                //p.StartInfo.RedirectStandardInput = true;
-                p.StartInfo.RedirectStandardOutput = redirectStandardOutput;
-                p.StartInfo.FileName = filename;
-                p.StartInfo.Arguments = arguments;
-                p.Start();
-                //p.StandardInput.WriteLine("Y");
-                if (waitForExit)
-                {
-                    var output = p.StandardOutput.ReadToEnd();
-                    p.WaitForExit();
+        //    try
+        //    {
+        //        var p = new Process();
+        //        if (!string.IsNullOrEmpty(directory))
+        //        {
+        //            p.StartInfo.WorkingDirectory = directory;
+        //        }
+        //        p.StartInfo.UseShellExecute = false;
+        //        //p.StartInfo.RedirectStandardInput = true;
+        //        p.StartInfo.RedirectStandardOutput = redirectStandardOutput;
+        //        p.StartInfo.FileName = filename;
+        //        p.StartInfo.Arguments = arguments;
+        //        p.Start();
+        //        //p.StandardInput.WriteLine("Y");
+        //        if (waitForExit)
+        //        {
+        //            var output = p.StandardOutput.ReadToEnd();
+        //            p.WaitForExit();
 
-                    if (!string.IsNullOrEmpty(regexPattern))
-                    {
-                        Regex regex = new Regex(regexPattern);
-                        Match match = regex.Match(output);
-                        if (match.Success)
-                        {
-                            output = match.Value;
-                        }
-                    }
+        //            if (!string.IsNullOrEmpty(regexPattern))
+        //            {
+        //                Regex regex = new Regex(regexPattern);
+        //                Match match = regex.Match(output);
+        //                if (match.Success)
+        //                {
+        //                    output = match.Value;
+        //                }
+        //            }
 
-                    if (isPrintable)
-                    {
-                        AnsiConsole.MarkupLine($"[yellow]Output: {output.Replace("[", "[[").Replace("]", "]]")}[/]");
-                    }
+        //            if (isPrintable)
+        //            {
+        //                AnsiConsole.MarkupLine($"[yellow]Output: {output.Replace("[", "[[").Replace("]", "]]")}[/]");
+        //            }
 
-                    return output;
-                }
+        //            return output;
+        //        }
 
-                return string.Empty;
-            }
-            catch (Exception ex)
-            {
-                AnsiConsole.MarkupLine($"[red]{ex.Message}[/]");
-                return string.Empty;
-            }
-        }
+        //        return string.Empty;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        AnsiConsole.MarkupLine($"[red]{ex.Message}[/]");
+        //        return string.Empty;
+        //    }
+        //}
 
-        public static void RunInteractive(ConsoleMode consoleMode, string command, string directory = null)
+        public static void Run(ConsoleMode consoleMode, string command, string directory = null)
         {
             try
             {
