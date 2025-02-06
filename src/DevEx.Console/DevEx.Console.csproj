@@ -25,7 +25,7 @@
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.IntelliSense\DevEx.Modules.IntelliSense.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Run\DevEx.Modules.Run.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Tools\DevEx.Modules.Tools.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Vault.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Configuration.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

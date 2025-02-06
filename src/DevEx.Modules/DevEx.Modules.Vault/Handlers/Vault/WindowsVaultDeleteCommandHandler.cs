@@ -1,7 +1,7 @@
 ﻿using DevEx.Core;
 using DevEx.Core.Storage;
 
-namespace DevEx.Modules.Vault.Windows.Handlers
+namespace DevEx.Modules.Configuration.Handlers.Vault
 {
 
     public class WindowsVaultDeleteCommandHandler : ICommandHandler
@@ -22,6 +22,6 @@ namespace DevEx.Modules.Vault.Windows.Handlers
             Console.WriteLine($"Deleted item with Key={options["key"]}");
         }
 
-        
+
     }
 }

@@ -2,7 +2,7 @@
 using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
-namespace DevEx.Modules.Vault.Windows.Handlers
+namespace DevEx.Modules.Configuration.Handlers.Vault
 {
     public class WindowsVaultCreateCommandHandler : ICommandHandler
     {

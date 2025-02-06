@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3A074D34-F91
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{92F3FA74-1E19-46D4-8393-AC9C60BDC32D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Vault", "src\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Vault.csproj", "{5D74B34E-FBEC-451C-A936-1DE7A5E4B59C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Configuration", "src\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Configuration.csproj", "{5D74B34E-FBEC-451C-A936-1DE7A5E4B59C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Run", "src\DevEx.Modules\DevEx.Modules.Run\DevEx.Modules.Run.csproj", "{519D999F-C7C0-4E16-BE20-7B570C990385}"
 EndProject
