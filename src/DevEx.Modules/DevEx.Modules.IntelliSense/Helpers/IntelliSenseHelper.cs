@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using DevEx.Core.Storage;
 using DevEx.Modules.IntelliSense.Model;
 using Spectre.Console;
 
@@ -65,8 +66,11 @@ namespace DevEx.Modules.IntelliSense.Helpers
             string psReadLineFile = Path.Combine(userFolder, "AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt");
             File.WriteAllText(psReadLineFile, string.Empty);
 
-            //Insert DevEx CLI Commands into PSReadLine File
+            //Insert DevEx and Bookmarked CLI Commands into PSReadLine File
+            var userStorage = UserStorageManager.GetUserStorage();
             var commands = IntelliSenseHelper.GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
+            commands.AddRange(userStorage.Bookmarks);
+            
             File.AppendAllLines(psReadLineFile, commands);
             AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
         }

@@ -59,6 +59,17 @@
             ]
         },
         {
+            "Name": "bookmark",
+            "Description": "Bookmark CLI Commands",
+            "Handler": "DevEx.Modules.Configuration.Handlers.Bookmark.BookmarkCreateCommandHandler",
+            "Parameters": [
+                {
+                    "Name": "command",
+                    "Description": "Command to Bookmark"
+                }
+            ]
+        },
+        {
             "Name": "run",
             "Description": "Run operations",
             "SubCommands": [

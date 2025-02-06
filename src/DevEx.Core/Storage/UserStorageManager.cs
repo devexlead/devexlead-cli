@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using DevEx.Core.Storage.Model;
 using Microsoft.Extensions.Configuration;
 
 namespace DevEx.Core.Storage
@@ -25,10 +26,22 @@ namespace DevEx.Core.Storage
                                     .Build();
 
             var userStorage = GetUserStorage();
+
             if (userStorage.Vault == null)
             {
                 userStorage.Vault = new Dictionary<string, string>();
             }
+
+            if (userStorage.Applications == null)
+            {
+                userStorage.Applications = new List<Application>();
+            }
+
+            if (userStorage.Bookmarks == null)
+            {
+                userStorage.Bookmarks = new List<string>();
+            }
+
             SaveUserStorage(userStorage);
         }
 
