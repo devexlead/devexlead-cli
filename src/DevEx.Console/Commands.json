@@ -59,17 +59,6 @@
             ]
         },
         {
-            "Name": "bookmark",
-            "Description": "Bookmark CLI Commands",
-            "Handler": "DevEx.Modules.Configuration.Handlers.Bookmark.BookmarkCreateCommandHandler",
-            "Parameters": [
-                {
-                    "Name": "command",
-                    "Description": "Command to Bookmark"
-                }
-            ]
-        },
-        {
             "Name": "application",
             "Description": "Application Configuration Commands",
             "Handler": "DevEx.Modules.Configuration.Handlers.Application.ApplicationCreateCommandHandler",
@@ -109,6 +98,17 @@
                     "Description": "Reset IntelliSense Commands",
                     "Handler": "DevEx.Modules.IntelliSense.CleanHandler",
                     "Parameters": []
+                },
+                {
+                    "Name": "bookmark",
+                    "Description": "Bookmark CLI Commands",
+                    "Handler": "DevEx.Modules.IntelliSense.Bookmark.BookmarkCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "command",
+                            "Description": "Command to Bookmark"
+                        }
+                    ]
                 }
             ]
         },

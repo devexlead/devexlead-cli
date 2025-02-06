@@ -1,7 +1,7 @@
 ﻿using DevEx.Core;
 using DevEx.Core.Storage;
 
-namespace DevEx.Modules.Configuration.Handlers.Bookmark
+namespace DevEx.Modules.IntelliSense.Bookmark
 {
     internal class BookmarkCreateCommandHandler : ICommandHandler
     {
