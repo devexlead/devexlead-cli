@@ -59,21 +59,27 @@
             ]
         },
         {
-            "Name": "application",
-            "Description": "Application Configuration Commands",
-            "Handler": "DevEx.Modules.Configuration.Handlers.Application.ApplicationCreateCommandHandler",
-            "Parameters": [
+            "Name": "configuration",
+            "Description": "Configuration Commands",
+            "SubCommands": [
                 {
-                    "Name": "name",
-                    "Description": "Command to Bookmark"
-                },
-                {
-                    "Name": "path",
-                    "Description": "Command to Bookmark"
-                },
-                {
-                    "Name": "command",
-                    "Description": "Command to Bookmark"
+                    "Name": "application",
+                    "Description": "Application Configuration",
+                    "Handler": "DevEx.Modules.Configuration.Handlers.Application.ApplicationCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Command to Bookmark"
+                        },
+                        {
+                            "Name": "path",
+                            "Description": "Command to Bookmark"
+                        },
+                        {
+                            "Name": "command",
+                            "Description": "Command to Bookmark"
+                        }
+                    ]
                 }
             ]
         },
