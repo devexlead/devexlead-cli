@@ -92,6 +92,17 @@
                     "Description": "Run Docker Compose Configuration",
                     "Handler": "DevEx.Modules.Run.Docker.DockerComposeRunCommandHandler",
                     "Parameters": []
+                },
+                {
+                    "Name": "application",
+                    "Description": "Run Application",
+                    "Handler": "DevEx.Modules.Run.Application.ApplicationRunHandler",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Application Name"
+                        }
+                    ]
                 }
             ]
         },
