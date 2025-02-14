@@ -30,7 +30,7 @@ namespace DevEx.Modules.Tools.Handlers
                 return;
             }
 
-            var text  = WaffleEngine.Text(paragraphs: paragraphCount, includeHeading: includeHeaderBool);
+            var text = WaffleEngine.Text(paragraphs: paragraphCount, includeHeading: includeHeaderBool);
             Console.WriteLine(text);
         }
     }

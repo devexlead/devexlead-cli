@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "tool waffle --paragraphs 2 --includeHeading true"
+      "commandLineArgs": "jira create"
     }
   }
 }

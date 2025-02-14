@@ -70,7 +70,7 @@ namespace DevEx.Modules.IntelliSense.Helpers
             var userStorage = UserStorageManager.GetUserStorage();
             var commands = IntelliSenseHelper.GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
             commands.AddRange(userStorage.Bookmarks);
-            
+
             File.AppendAllLines(psReadLineFile, commands);
             AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
         }

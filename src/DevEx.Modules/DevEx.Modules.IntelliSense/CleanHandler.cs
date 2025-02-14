@@ -1,6 +1,5 @@
 ﻿using DevEx.Core;
 using DevEx.Modules.IntelliSense.Helpers;
-using Spectre.Console;
 
 namespace DevEx.Modules.IntelliSense
 {

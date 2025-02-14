@@ -149,6 +149,18 @@
                     ]
                 }
             ]
+        },
+        {
+            "Name": "jira",
+            "Description": "JIRA Commands",
+            "SubCommands": [
+                {
+                    "Name": "create",
+                    "Description": "Generate JIRA ticket",
+                    "Handler": "DevEx.Modules.Jira.Handlers.JiraCreateHandler",
+                    "Parameters": []
+                }
+            ]
         }
     ]
 }

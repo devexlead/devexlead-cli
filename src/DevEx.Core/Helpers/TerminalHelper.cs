@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
 using Spectre.Console;
 
 namespace DevEx.Core.Helpers

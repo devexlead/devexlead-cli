@@ -18,11 +18,12 @@ namespace DevEx.Modules.Configuration.Handlers.Application
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
-            var application = new Core.Storage.Model.Application() { 
-                                                                     Name = name,
-                                                                     Path = path,
-                                                                     Command = command
-                                                                   };
+            var application = new Core.Storage.Model.Application()
+            {
+                Name = name,
+                Path = path,
+                Command = command
+            };
 
             userStorage.Applications.Add(application);
 

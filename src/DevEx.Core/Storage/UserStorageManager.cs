@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
+using DevEx.Core.Helpers;
 using DevEx.Core.Storage.Model;
 using Microsoft.Extensions.Configuration;
+using Spectre.Console;
 
 namespace DevEx.Core.Storage
 {
@@ -51,6 +53,18 @@ namespace DevEx.Core.Storage
             var userConfigurationFileContent = StorageHelper.ReadFile(userConfigurationFile);
             var userStorage = JsonSerializer.Deserialize<UserStorage>(userConfigurationFileContent);
             return userStorage;
+        }
+
+        public static string GetDecryptedValue(string key)
+        {
+            var userStorage = GetUserStorage();
+            var encryptedValue = userStorage.Vault.FirstOrDefault(v => v.Key.Equals(key)).Value;
+            if (encryptedValue == null)
+            {
+                AnsiConsole.MarkupLine($"[red]Error: {key} not found in user storage.[/]");
+                return null;
+            }
+            return EncryptionHelper.Decrypt(encryptedValue);
         }
 
         public static void SaveUserStorage(UserStorage userStorage)
