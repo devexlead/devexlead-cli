@@ -12,43 +12,70 @@ namespace DevEx.Modules.Jira.Handlers
     {
         public void Execute(Dictionary<string, string> options)
         {
-            var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("AtlassianBaseUrl");
-            if (atlassianBaseUrl == null) return;
-
-            var atlassianUser = UserStorageManager.GetDecryptedValue("AtlassianUser");
-            if (atlassianUser == null) return;
-
-            var atlassianKey = UserStorageManager.GetDecryptedValue("AtlassianKey");
-            if (atlassianKey == null) return;
-
-            var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey);
-
-            var request = new JiraIssueCreateRequest
+            try
             {
-                Fields = new JiraFieldsCreateRequest
+                bool isVerbose = false;
+                if (options.TryGetValue("isVerbose", out var isVerboseString))
                 {
-                    Project = new JiraProject { Key = AnsiConsole.Ask<string>("Enter project ID:") },
-                    Summary = AnsiConsole.Ask<string>("Enter summary:"),
-                    Description = AnsiConsole.Ask<string>("Enter description:"),
-                    IssueType = new JiraIssueType { Name = SelectIssueType() },
-                    Priority = new JiraPriority { Name = SelectPriority() },
+                    if (!bool.TryParse(isVerboseString, out isVerbose))
+                    {
+                        throw new ArgumentException("Invalid value for isVerbose. It must be a boolean.");
+                    }
                 }
-            };
 
-            if (request.Fields.IssueType.Name != IssueTypeConstants.EPIC)
-            {
-                request.Fields.Parent = SelectParent(jiraConnector, request.Fields.Project.Key);
+                var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("AtlassianBaseUrl");
+                if (atlassianBaseUrl == null) return;
+
+                var atlassianUser = UserStorageManager.GetDecryptedValue("AtlassianUser");
+                if (atlassianUser == null) return;
+
+                var atlassianKey = UserStorageManager.GetDecryptedValue("AtlassianKey");
+                if (atlassianKey == null) return;
+
+                var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
+
+                var request = new JiraIssueCreateRequest
+                {
+                    Fields = new JiraFieldsCreateRequest
+                    {
+                        Project = new JiraProject { Key = AnsiConsole.Ask<string>("Enter project ID:") },
+                        Summary = AnsiConsole.Ask<string>("Enter summary:"),
+                        Description = AnsiConsole.Ask<string>("Enter description:"),
+                        IssueType = new JiraIssueType { Name = SelectIssueType() },
+                        Priority = new JiraPriority { Name = SelectPriority() },
+                    }
+                };
+
+                if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.STORY) ||
+                    request.Fields.IssueType.Name.Equals(IssueTypeConstants.BUG) ||
+                    request.Fields.IssueType.Name.Equals(IssueTypeConstants.TASK))
+                {
+                    request.Fields.Parent = SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.EPIC]);
+                }
+
+                if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.SUB_TASK))
+                {
+                    request.Fields.Parent = SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
+                }
+
+                if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
+                {
+                    request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (optional, format: yyyy-MM-dd):", null);
+                    request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (optional, format: yyyy-MM-dd):", null);
+                }
+
                 request.Fields.Assignee = SelectAssignee(jiraConnector);
                 request.Fields.SprintId = SelectSprint(jiraConnector);
-            }
 
-            if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
+                var result = jiraConnector.CreateIssueAsync(request).Result;
+
+                AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/{result.Key}[/]");
+
+            }
+            catch (Exception ex)
             {
-                request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (optional, format: yyyy-MM-dd):", null);
-                request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (optional, format: yyyy-MM-dd):", null);
+                AnsiConsole.MarkupLine($"[red]Error: {ex}[/]");
             }
-
-            var result = jiraConnector.CreateIssueAsync(request).Result;
         }
 
         private static long? SelectSprint(JiraConnector jiraConnector)
@@ -136,9 +163,9 @@ namespace DevEx.Modules.Jira.Handlers
             return new JiraUser { AccountId = selectedAccountId };
         }
 
-        private static JiraParent SelectParent(JiraConnector jiraConnector, string projectKey)
+        private static JiraParent SelectParent(JiraConnector jiraConnector, string projectKey, List<string> parentIssueTypes)
         {
-            var jql = $"issuetype=Epic AND status=\"In Progress\" AND project={projectKey}";
+            var jql = $"status=\"In Progress\" AND project={projectKey} AND ({string.Join(" OR ", parentIssueTypes.Select(type => $"issuetype={type}"))})";
             var issues = jiraConnector.RunJqlAsync(jql).Result;
             var parentOptions = issues.Select(i => $"{i.Key} - {i.Fields.Summary}").ToList();
             parentOptions.Insert(0, "None");

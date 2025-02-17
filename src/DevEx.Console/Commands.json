@@ -158,7 +158,12 @@
                     "Name": "create",
                     "Description": "Generate JIRA ticket",
                     "Handler": "DevEx.Modules.Jira.Handlers.JiraCreateHandler",
-                    "Parameters": []
+                    "Parameters": [
+                        {
+                            "Name": "isVerbose",
+                            "Description": "Show HTTP Request/Response"
+                        }
+                    ]
                 }
             ]
         }
