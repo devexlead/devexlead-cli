@@ -55,6 +55,7 @@ namespace DevEx.Modules.IntelliSense.Helpers
                                         // Use --paramName followed by its default value.
                                         line += $" --{param.Name} {param.DefaultValue}";
                                     }
+                                }
                             }
 
                             commandLines.Add($"dxc {line}");
