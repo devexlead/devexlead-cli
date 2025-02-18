@@ -61,8 +61,8 @@ namespace DevEx.Modules.Jira.Handlers
 
                 if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
                 {
-                    request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (optional, format: yyyy-MM-dd):", null);
-                    request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (optional, format: yyyy-MM-dd):", null);
+                    request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (format: yyyy-MM-dd):", null);
+                    request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (format: yyyy-MM-dd):", null);
                 }
 
                 request.Fields.Assignee = SelectAssignee(jiraConnector);
@@ -89,7 +89,7 @@ namespace DevEx.Modules.Jira.Handlers
 
             var selectedSprintName = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Select a sprint (optional):")
+                    .Title("Select a sprint:")
                     .AddChoices(sprintOptions)
             );
 
@@ -150,7 +150,7 @@ namespace DevEx.Modules.Jira.Handlers
 
             var selectedUser = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Select an assignee (optional):")
+                    .Title("Select an assignee:")
                     .AddChoices(userOptions.Select(u => $"{u.DisplayName} ({u.AccountId})").ToList())
             );
 
@@ -172,7 +172,7 @@ namespace DevEx.Modules.Jira.Handlers
 
             var selectedParent = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Select a parent issue (optional):")
+                    .Title("Select a parent issue:")
                     .AddChoices(parentOptions)
             );
 
