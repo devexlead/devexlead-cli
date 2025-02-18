@@ -45,9 +45,16 @@ namespace DevEx.Modules.IntelliSense.Helpers
                             {
                                 foreach (var param in sub.Parameters)
                                 {
-                                    // Use --paramName followed by a placeholder for its value.
-                                    line += $" --{param.Name} {{{param.Name}}}";
-                                }
+                                    if (string.IsNullOrEmpty(param.DefaultValue))
+                                    {
+                                        // Use --paramName followed by a placeholder for its value.
+                                        line += $" --{param.Name} {{{param.Name}}}";
+                                    }
+                                    else
+                                    {
+                                        // Use --paramName followed by its default value.
+                                        line += $" --{param.Name} {param.DefaultValue}";
+                                    }
                             }
 
                             commandLines.Add($"dxc {line}");

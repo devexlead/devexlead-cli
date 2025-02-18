@@ -161,7 +161,8 @@
                     "Parameters": [
                         {
                             "Name": "isVerbose",
-                            "Description": "Show HTTP Request/Response"
+                            "Description": "Show HTTP Request/Response",
+                            "DefaultValue": "false"
                         }
                     ]
                 }
