@@ -1,0 +1,171 @@
+{
+    "Commands": [
+        {
+            "Name": "vault",
+            "Description": "Vault operations",
+            "SubCommands": [
+                {
+                    "Name": "create",
+                    "Description": "Create a new entry",
+                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key for the entry"
+                        },
+                        {
+                            "Name": "value",
+                            "Description": "The value to store"
+                        }
+                    ]
+                },
+                {
+                    "Name": "read",
+                    "Description": "Read an entry",
+                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultReadCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key to retrieve"
+                        }
+                    ]
+                },
+                {
+                    "Name": "update",
+                    "Description": "Update an existing entry",
+                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultUpdateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key to update"
+                        },
+                        {
+                            "Name": "value",
+                            "Description": "The new value"
+                        }
+                    ]
+                },
+                {
+                    "Name": "delete",
+                    "Description": "Delete an entry",
+                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultDeleteCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "key",
+                            "Description": "The key to delete"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "configuration",
+            "Description": "Configuration Commands",
+            "SubCommands": [
+                {
+                    "Name": "application",
+                    "Description": "Application Configuration",
+                    "Handler": "DevEx.Modules.Configuration.Handlers.Application.ApplicationCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Command to Bookmark"
+                        },
+                        {
+                            "Name": "path",
+                            "Description": "Command to Bookmark"
+                        },
+                        {
+                            "Name": "command",
+                            "Description": "Command to Bookmark"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "run",
+            "Description": "Run operations",
+            "SubCommands": [
+                {
+                    "Name": "docker-compose",
+                    "Description": "Run Docker Compose Configuration",
+                    "Handler": "DevEx.Modules.Run.Docker.DockerComposeRunCommandHandler",
+                    "Parameters": []
+                },
+                {
+                    "Name": "application",
+                    "Description": "Run Application",
+                    "Handler": "DevEx.Modules.Run.Application.ApplicationRunHandler",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Application Name"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "intellisense",
+            "Description": "Configures CLI IntelliSense on PowerShell",
+            "SubCommands": [
+                {
+                    "Name": "clean",
+                    "Description": "Reset IntelliSense Commands",
+                    "Handler": "DevEx.Modules.IntelliSense.CleanHandler",
+                    "Parameters": []
+                },
+                {
+                    "Name": "bookmark",
+                    "Description": "Bookmark CLI Commands",
+                    "Handler": "DevEx.Modules.IntelliSense.Bookmark.BookmarkCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "command",
+                            "Description": "Command to Bookmark"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "tool",
+            "Description": "Developer Tools",
+            "SubCommands": [
+                {
+                    "Name": "waffle",
+                    "Description": "Generate Text Data for Testing",
+                    "Handler": "DevEx.Modules.Tools.Handlers.WaffleGeneratorHandler",
+                    "Parameters": [
+                        {
+                            "Name": "paragraphs",
+                            "Description": "Number of Paragraph"
+                        },
+                        {
+                            "Name": "includeHeading",
+                            "Description": "Generate Heading"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "jira",
+            "Description": "JIRA Commands",
+            "SubCommands": [
+                {
+                    "Name": "create",
+                    "Description": "Generate JIRA ticket",
+                    "Handler": "DevEx.Modules.Jira.Handlers.JiraCreateHandler",
+                    "Parameters": [
+                        {
+                            "Name": "isVerbose",
+                            "Description": "Show HTTP Request/Response"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

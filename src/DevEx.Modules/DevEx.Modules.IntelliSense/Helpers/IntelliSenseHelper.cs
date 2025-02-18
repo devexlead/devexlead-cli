@@ -1,0 +1,78 @@
+﻿using System.Text.Json;
+using DevEx.Core.Storage;
+using DevEx.Modules.IntelliSense.Model;
+using Spectre.Console;
+
+namespace DevEx.Modules.IntelliSense.Helpers
+{
+    public class IntelliSenseHelper
+    {
+        /// <summary>
+        /// Reads the JSON configuration from a file and returns a list of command lines,
+        /// one for each command and sub-command combination, with explicit parameter names.
+        /// </summary>
+        /// <param name="filePath">The path to the JSON configuration file.</param>
+        /// <returns>A list of strings representing the command lines.</returns>
+        public static List<string> GetCommandLinesFromFile(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The JSON configuration file was not found.", filePath);
+            }
+
+            // Read the JSON content from the file.
+            string json = File.ReadAllText(filePath);
+
+            // Deserialize the JSON into our classes.
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var root = JsonSerializer.Deserialize<Root>(json, options);
+
+            var commandLines = new List<string>();
+
+            if (root?.Commands != null)
+            {
+                foreach (var command in root.Commands)
+                {
+                    if (command.SubCommands != null)
+                    {
+                        foreach (var sub in command.SubCommands)
+                        {
+                            // Start building the command line with the command and sub-command names.
+                            var line = $"{command.Name} {sub.Name}";
+
+                            // Append each parameter with its explicit name.
+                            if (sub.Parameters != null)
+                            {
+                                foreach (var param in sub.Parameters)
+                                {
+                                    // Use --paramName followed by a placeholder for its value.
+                                    line += $" --{param.Name} {{{param.Name}}}";
+                                }
+                            }
+
+                            commandLines.Add($"dxc {line}");
+                        }
+                    }
+                }
+            }
+
+            return commandLines;
+        }
+
+        public static void ResetPsReadLineFile()
+        {
+            //Clean PSReadLine File
+            string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string psReadLineFile = Path.Combine(userFolder, "AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt");
+            File.WriteAllText(psReadLineFile, string.Empty);
+
+            //Insert DevEx and Bookmarked CLI Commands into PSReadLine File
+            var userStorage = UserStorageManager.GetUserStorage();
+            var commands = IntelliSenseHelper.GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
+            commands.AddRange(userStorage.Bookmarks);
+
+            File.AppendAllLines(psReadLineFile, commands);
+            AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
+        }
+    }
+}

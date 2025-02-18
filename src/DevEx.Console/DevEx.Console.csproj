@@ -8,6 +8,7 @@
 		<PackAsTool>true</PackAsTool>
 		<!-- The command users will run -->
 		<ToolCommandName>dxc</ToolCommandName>
+		<UserSecretsId>6b2e2731-a735-438e-bf6f-e749e0ebcd02</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,11 +21,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj"/>
-		<ProjectReference Include="..\DevEx.Plugins\DevEx.Plugins.Vault\DevEx.Plugins.Vault.csproj"/>
+		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.IntelliSense\DevEx.Modules.IntelliSense.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Run\DevEx.Modules.Run.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Tools\DevEx.Modules.Tools.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.UserStorage\DevEx.Modules.UserStorage.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Commands.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="version.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
