@@ -24,7 +24,7 @@ jobs:
       run: dotnet tool install --global nbgv
 
     - name: Set Version
-      run: nbgv cloud -c Release
+      run: nbgv cloud
 
     - name: Restore dependencies
       run: dotnet restore
