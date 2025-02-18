@@ -1,39 +1,44 @@
-name: Release Workflow
+name: .NET NuGet Publish
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build-test-publish-to-nuget:
-    runs-on: windows-latest
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Full history required by Nerdbank.GitVersioning
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: 9.0.x
 
-    - name: Restore Dependencies
+    - name: Install Nerdbank.GitVersioning
+      run: dotnet tool install --global nbgv
+
+    - name: Set Version
+      run: nbgv cloud
+
+    - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build Application
-      run: dotnet build --configuration Release --no-restore
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
 
-    - name: Run Tests
-      run: dotnet test --configuration Release --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --no-build --configuration Release --verbosity normal
 
-    - name: Pack Nuget Package
-      run: dotnet pack --configuration Release --output ${{ github.workspace }}\dx-cli\nupkgs
+    - name: Pack
+      run: dotnet pack --no-build --configuration Release --output nupkgs
 
-    - name: List files in dx-cli\nupkgs
-      run: dir ${{ github.workspace }}\dx-cli\nupkgs
-
-    - name: Publish to NuGet.org
-      run: dotnet nuget push ${{ github.workspace }}\dx-cli\nupkgs\*.nupkg --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+    - name: Push to NuGet
+      run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+      env:
+        DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 1
