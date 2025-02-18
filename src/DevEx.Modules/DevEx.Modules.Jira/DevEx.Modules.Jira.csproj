@@ -8,7 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\devexlead-integrations\src\DevEx.Integrations.csproj" />
+    <PackageReference Include="DevEx.Integrations" Version="1.0.3-gff9540b623" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\DevEx.Core\DevEx.Core.csproj" />
   </ItemGroup>
 
