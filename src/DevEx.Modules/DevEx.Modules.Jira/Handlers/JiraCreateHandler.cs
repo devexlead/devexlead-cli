@@ -51,9 +51,10 @@ namespace DevEx.Modules.Jira.Handlers
                     request.Fields.IssueType.Name.Equals(IssueTypeConstants.TASK))
                 {
                     request.Fields.Parent = SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.EPIC]);
+                    request.Fields.SprintId = SelectSprint(jiraConnector);
                 }
 
-                if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.SUB_TASK))
+                if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.SUBTASK))
                 {
                     request.Fields.Parent = SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
                 }
@@ -65,11 +66,10 @@ namespace DevEx.Modules.Jira.Handlers
                 }
 
                 request.Fields.Assignee = SelectAssignee(jiraConnector);
-                request.Fields.SprintId = SelectSprint(jiraConnector);
-
+                
                 var result = jiraConnector.CreateIssueAsync(request).Result;
 
-                AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/{result.Key}[/]");
+                AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/browse/{result.Key}[/]");
 
             }
             catch (Exception ex)
@@ -127,7 +127,7 @@ namespace DevEx.Modules.Jira.Handlers
                 IssueTypeConstants.STORY,
                 IssueTypeConstants.BUG,
                 IssueTypeConstants.TASK,
-                IssueTypeConstants.SUB_TASK
+                IssueTypeConstants.SUBTASK
             };
 
             return AnsiConsole.Prompt(
