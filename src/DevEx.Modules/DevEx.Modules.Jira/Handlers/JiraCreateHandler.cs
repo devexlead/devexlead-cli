@@ -165,7 +165,7 @@ namespace DevEx.Modules.Jira.Handlers
 
         private static JiraParent SelectParent(JiraConnector jiraConnector, string projectKey, List<string> parentIssueTypes)
         {
-            var jql = $"status=\"In Progress\" AND project={projectKey} AND ({string.Join(" OR ", parentIssueTypes.Select(type => $"issuetype={type}"))})";
+            var jql = $"project={projectKey} AND ({string.Join(" OR ", parentIssueTypes.Select(type => $"issuetype={type}"))})";
             var issues = jiraConnector.RunJqlAsync(jql).Result;
             var parentOptions = issues.Select(i => $"{i.Key} - {i.Fields.Summary}").ToList();
             parentOptions.Insert(0, "None");
