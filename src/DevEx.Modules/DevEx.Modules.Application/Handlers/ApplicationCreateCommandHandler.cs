@@ -18,6 +18,10 @@ namespace DevEx.Modules.Application.Handlers
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
+
+            //remove existing application with the same name
+            userStorage.Applications.RemoveAll(a => a.Name == name);
+
             var application = new Core.Storage.Model.Application()
             {
                 Name = name,
