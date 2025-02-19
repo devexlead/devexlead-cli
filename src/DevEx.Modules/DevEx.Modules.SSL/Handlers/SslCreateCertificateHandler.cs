@@ -1,5 +1,6 @@
 ﻿using DevEx.Core;
 using DevEx.Core.Helpers;
+using DevEx.Core.Storage;
 using DevEx.Modules.SSL.Helpers;
 
 namespace DevEx.Modules.SSL.Handlers
@@ -9,8 +10,8 @@ namespace DevEx.Modules.SSL.Handlers
         public void Execute(Dictionary<string, string> options)
         {
             var sslConfigurationPath = CertificateHelper.GetSslConfigPath();
-            var password = "d3v3xl0c4l";
-            var domain = "devexlocal";
+            var sslCertificatePassword = UserStorageManager.GetDecryptedValue("SslCertificatePassword");
+            var sslCertificateDomain = UserStorageManager.GetDecryptedValue("SslCertificateDomain");
             var sslConfiguration = "ssl.cnf";
 
             //Generate the CA Private Key
@@ -23,14 +24,14 @@ namespace DevEx.Modules.SSL.Handlers
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Wsl, $"openssl genrsa -out wildcard.key 2048", sslConfigurationPath);
 
             //Create a CSR (Certificate Signing Request)
-            CertificateHelper.GenerateSslConfiguration(sslConfigurationPath, sslConfiguration, domain);
+            CertificateHelper.GenerateSslConfiguration(sslConfigurationPath, sslConfiguration, sslCertificateDomain);
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Wsl, $"openssl req -new -key wildcard.key -out wildcard.csr -config {sslConfiguration}", sslConfigurationPath);
 
             //Sign the Wildcard Certificate with the CA Root Certificate
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Wsl, $"openssl x509 -req -in wildcard.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out wildcard.crt -days 825 -sha256 -extfile ssl.cnf -extensions req_ext", sslConfigurationPath);
 
             //Generate the PFX (required for IIS)
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Wsl, $"openssl pkcs12 -export -out wildcard.pfx -inkey wildcard.key -in wildcard.crt -passout pass:{password}", sslConfigurationPath);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Wsl, $"openssl pkcs12 -export -out wildcard.pfx -inkey wildcard.key -in wildcard.crt -passout pass:{sslCertificatePassword}", sslConfigurationPath);
         }
     }
 }
