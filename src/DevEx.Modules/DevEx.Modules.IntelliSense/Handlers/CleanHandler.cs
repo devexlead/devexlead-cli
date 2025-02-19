@@ -1,7 +1,7 @@
 ﻿using DevEx.Core;
 using DevEx.Modules.IntelliSense.Helpers;
 
-namespace DevEx.Modules.IntelliSense
+namespace DevEx.Modules.IntelliSense.Handlers
 {
     public class CleanHandler : ICommandHandler
     {

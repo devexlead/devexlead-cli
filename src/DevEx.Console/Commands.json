@@ -113,7 +113,7 @@
                 {
                     "Name": "clean",
                     "Description": "Reset IntelliSense Commands",
-                    "Handler": "DevEx.Modules.IntelliSense.CleanHandler",
+                    "Handler": "DevEx.Modules.IntelliSense.Handlers.CleanHandler",
                     "Parameters": []
                 },
                 {
