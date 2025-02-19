@@ -5,9 +5,7 @@ namespace DevEx.Core.Helpers
 {
     public static class TerminalHelper
     {
-
-
-        public static void Run(ConsoleMode consoleMode, string command, string directory = null)
+        public static void Run(ConsoleMode consoleMode, string command, string? directory = null)
         {
             try
             {
@@ -27,35 +25,29 @@ namespace DevEx.Core.Helpers
 
         private static ProcessStartInfo InitializeProcessStartInfo(string? directory, string filename, string arguments)
         {
-            var processStartInfo = new ProcessStartInfo();
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = filename,
+                Arguments = arguments
+            };
+
             if (!string.IsNullOrEmpty(directory))
             {
                 processStartInfo.WorkingDirectory = directory;
             }
-            processStartInfo.FileName = filename;
-            processStartInfo.Arguments = arguments;
+
             return processStartInfo;
         }
 
-        private static ProcessStartInfo BuildCommandArguments(ConsoleMode consoleMode, string command, string directory)
+        private static ProcessStartInfo BuildCommandArguments(ConsoleMode consoleMode, string command, string? directory)
         {
-            var filename = string.Empty;
-            var arguments = string.Empty;
-            switch (consoleMode)
+            var (filename, arguments) = consoleMode switch
             {
-                case ConsoleMode.Cmd:
-                    filename = "cmd.exe";
-                    arguments = $"/C {command}";
-                    break;
-                case ConsoleMode.Powershell:
-                    filename = "powershell.exe";
-                    arguments = $" -noprofile -nologo -c {command}";
-                    break;
-                case ConsoleMode.Wsl:
-                    filename = "ubuntu";
-                    arguments = $"run \"{command}\"";
-                    break;
-            }
+                ConsoleMode.Cmd => ("cmd.exe", $"/C {command}"),
+                ConsoleMode.Powershell => ("powershell.exe", $"-noprofile -nologo -c {command}"),
+                ConsoleMode.Wsl => ("ubuntu", $"run \"{command}\""),
+                _ => throw new ArgumentOutOfRangeException(nameof(consoleMode), consoleMode, null)
+            };
 
             return InitializeProcessStartInfo(directory, filename, arguments);
         }
