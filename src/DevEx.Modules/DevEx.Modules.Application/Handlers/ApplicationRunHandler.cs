@@ -2,7 +2,7 @@
 using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
-namespace DevEx.Modules.Run.Application
+namespace DevEx.Modules.Application.Handlers
 {
     public class ApplicationRunHandler : ICommandHandler
     {
@@ -25,7 +25,7 @@ namespace DevEx.Modules.Run.Application
                 return;
             }
 
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, application.Command, application.Path);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, application.RunCommand, application.Path);
         }
     }
 }

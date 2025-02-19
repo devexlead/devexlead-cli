@@ -22,7 +22,7 @@ namespace DevEx.Modules.Configuration.Handlers.Application
             {
                 Name = name,
                 Path = path,
-                Command = command
+                RunCommand = command
             };
 
             userStorage.Applications.Add(application);

@@ -84,19 +84,46 @@
             ]
         },
         {
-            "Name": "run",
-            "Description": "Run operations",
+            "Name": "application",
+            "Description": "Application operations",
             "SubCommands": [
                 {
-                    "Name": "docker-compose",
-                    "Description": "Run Docker Compose Configuration",
-                    "Handler": "DevEx.Modules.Run.Docker.DockerComposeRunCommandHandler",
-                    "Parameters": []
+                    "Name": "restore",
+                    "Description": "Restore Application Dependencies",
+                    "Handler": "",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Application Name"
+                        }
+                    ]
                 },
                 {
-                    "Name": "application",
+                    "Name": "build",
+                    "Description": "Build Application",
+                    "Handler": "",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Application Name"
+                        }
+                    ]
+                },
+                {
+                    "Name": "test",
+                    "Description": "Run Application Unit Tests",
+                    "Handler": "",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": "Application Name"
+                        }
+                    ]
+                },
+                {
+                    "Name": "run",
                     "Description": "Run Application",
-                    "Handler": "DevEx.Modules.Run.Application.ApplicationRunHandler",
+                    "Handler": "DevEx.Modules.Application.Handlers.ApplicationRunHandler",
                     "Parameters": [
                         {
                             "Name": "name",
