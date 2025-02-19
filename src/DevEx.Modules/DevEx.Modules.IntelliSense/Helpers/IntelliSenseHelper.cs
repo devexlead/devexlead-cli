@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Reflection;
+using System.Text.Json;
 using DevEx.Core.Storage;
 using DevEx.Modules.IntelliSense.Model;
 using Spectre.Console;
@@ -80,7 +82,23 @@ namespace DevEx.Modules.IntelliSense.Helpers
             commands.AddRange(userStorage.Bookmarks);
 
             File.AppendAllLines(psReadLineFile, commands);
-            AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
+            //AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
+            RestartApplication();
+        }
+
+        private static void RestartApplication()
+        {
+            string executablePath = Assembly.GetExecutingAssembly().Location;
+
+            // Start a new instance of the current application
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = executablePath,
+                UseShellExecute = true
+            });
+
+            // Exit the current application
+            Environment.Exit(0);
         }
     }
 }
