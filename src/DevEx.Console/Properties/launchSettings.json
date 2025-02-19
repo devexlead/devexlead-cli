@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "ssl install"
+      "commandLineArgs": "application run --name frontend"
     }
   }
 }
