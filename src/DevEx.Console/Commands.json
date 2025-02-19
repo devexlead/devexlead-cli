@@ -59,34 +59,28 @@
             ]
         },
         {
-            "Name": "configuration",
-            "Description": "Configuration Commands",
+            "Name": "application",
+            "Description": "Application operations",
             "SubCommands": [
                 {
-                    "Name": "application",
-                    "Description": "Application Configuration",
-                    "Handler": "DevEx.Modules.Configuration.Handlers.Application.ApplicationCreateCommandHandler",
+                    "Name": "add",
+                    "Description": "Add new application",
+                    "Handler": "DevEx.Modules.Application.Handlers.ApplicationCreateCommandHandler",
                     "Parameters": [
                         {
                             "Name": "name",
-                            "Description": "Command to Bookmark"
+                            "Description": "Application Name"
                         },
                         {
                             "Name": "path",
-                            "Description": "Command to Bookmark"
+                            "Description": "Application Location"
                         },
                         {
                             "Name": "command",
                             "Description": "Command to Bookmark"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "Name": "application",
-            "Description": "Application operations",
-            "SubCommands": [
+                },
                 {
                     "Name": "restore",
                     "Description": "Restore Application Dependencies",

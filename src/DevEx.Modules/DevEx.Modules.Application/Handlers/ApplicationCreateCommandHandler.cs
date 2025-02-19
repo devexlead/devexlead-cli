@@ -1,7 +1,7 @@
 ﻿using DevEx.Core;
 using DevEx.Core.Storage;
 
-namespace DevEx.Modules.Configuration.Handlers.Application
+namespace DevEx.Modules.Application.Handlers
 {
     internal class ApplicationCreateCommandHandler : ICommandHandler
     {
