@@ -167,6 +167,24 @@
                     ]
                 }
             ]
+        },
+        {
+            "Name": "ssl",
+            "Description": "SSL Certificate Commands",
+            "SubCommands": [
+                {
+                    "Name": "create",
+                    "Description": "Generate Self-signed SSL Certificate",
+                    "Handler": "DevEx.Modules.SSL.Handlers.SslCreateCertificateHandler",
+                    "Parameters": []
+                },
+                {
+                    "Name": "install",
+                    "Description": "Install SSL Certificate",
+                    "Handler": "DevEx.Modules.SSL.Handlers.SslInstallCertificateHandler",
+                    "Parameters": []
+                }
+            ]
         }
     ]
 }

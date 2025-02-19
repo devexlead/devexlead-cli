@@ -1,0 +1,24 @@
+﻿[ req ]
+default_bits        = 2048
+prompt              = no
+default_md          = sha256
+distinguished_name  = req_distinguished_name
+req_extensions      = req_ext
+
+[ req_distinguished_name ]
+C= US
+ST= Global
+L= Global
+O= DevExLead
+OU= DevExLead
+CN= *.{{domain}}.local
+
+[ req_ext ]
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1   = *.{{domain}}.local
+DNS.2   = {{domain}}.local
+

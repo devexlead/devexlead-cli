@@ -25,6 +25,7 @@
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.IntelliSense\DevEx.Modules.IntelliSense.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Run\DevEx.Modules.Run.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.SSL\DevEx.Modules.SSL.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Tools\DevEx.Modules.Tools.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.UserStorage\DevEx.Modules.UserStorage.csproj" />
 	</ItemGroup>

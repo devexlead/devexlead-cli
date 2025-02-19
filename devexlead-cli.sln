@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.UserStorage",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Jira", "src\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj", "{0E6EBEE2-7D6C-49BA-8B0C-850277EEB227}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.SSL", "src\DevEx.Modules\DevEx.Modules.SSL\DevEx.Modules.SSL.csproj", "{DB53A9AA-9AA4-4C95-8CCB-4233219C0567}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{0E6EBEE2-7D6C-49BA-8B0C-850277EEB227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E6EBEE2-7D6C-49BA-8B0C-850277EEB227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E6EBEE2-7D6C-49BA-8B0C-850277EEB227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB53A9AA-9AA4-4C95-8CCB-4233219C0567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB53A9AA-9AA4-4C95-8CCB-4233219C0567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB53A9AA-9AA4-4C95-8CCB-4233219C0567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB53A9AA-9AA4-4C95-8CCB-4233219C0567}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,5 +88,6 @@ Global
 		{F0C65C5A-D604-4A77-AC59-6F74491899D0} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 		{2ED9EF77-C1CC-4858-BA77-5ADCC05A5039} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 		{0E6EBEE2-7D6C-49BA-8B0C-850277EEB227} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
+		{DB53A9AA-9AA4-4C95-8CCB-4233219C0567} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 	EndGlobalSection
 EndGlobal
