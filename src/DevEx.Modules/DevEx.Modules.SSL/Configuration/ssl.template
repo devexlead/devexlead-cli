@@ -21,4 +21,6 @@ subjectAltName = @alt_names
 [ alt_names ]
 DNS.1   = *.{{domain}}.local
 DNS.2   = {{domain}}.local
+DNS.3   = app.{{domain}}.local
+DNS.4   = api.{{domain}}.local
 

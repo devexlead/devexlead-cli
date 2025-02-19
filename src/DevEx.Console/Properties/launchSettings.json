@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "run docker-compose"
+      "commandLineArgs": "ssl install"
     }
   }
 }
