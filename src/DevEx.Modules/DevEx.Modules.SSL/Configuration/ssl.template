@@ -11,7 +11,7 @@ ST= Global
 L= Global
 O= DevExLead
 OU= DevExLead
-CN= *.{{domain}}.local
+CN= DevExLead Wildcard
 
 [ req_ext ]
 keyUsage = critical, digitalSignature, keyEncipherment

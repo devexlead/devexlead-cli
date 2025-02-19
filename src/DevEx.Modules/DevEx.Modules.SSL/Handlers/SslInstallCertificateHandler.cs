@@ -14,13 +14,13 @@ namespace DevEx.Modules.SSL.Handlers
             var domain = "devexlocal";
 
             //Delete existing certificates
-            CertificateHelper.DeleteCertificate($"{domain} Root CA", new X509Store(StoreName.Root, StoreLocation.LocalMachine));
-            CertificateHelper.DeleteCertificate($"*.{domain}.local", new X509Store(StoreName.My, StoreLocation.LocalMachine));
+            CertificateHelper.DeleteCertificate($"DevExLead Root CA", new X509Store(StoreName.Root, StoreLocation.LocalMachine));
+            CertificateHelper.DeleteCertificate($"DevExLead Wildcard", new X509Store(StoreName.My, StoreLocation.LocalMachine));
 
             //Add to the stores
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"certutil -addstore root {domain}-rootCA.pem", sslConfigPath);
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"certutil -addstore my {domain}-wildcard.crt", sslConfigPath);
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"Import-PfxCertificate -FilePath '{domain}-iis.pfx' -Password (ConvertTo-SecureString -String '{password}' -AsPlainText -Force) -CertStoreLocation 'Cert:\\LocalMachine\\My'", sslConfigPath);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"certutil -addstore root ca.crt", sslConfigPath);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"certutil -addstore my wildcard.crt", sslConfigPath);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"Import-PfxCertificate -FilePath 'wildcard.pfx' -Password (ConvertTo-SecureString -String '{password}' -AsPlainText -Force) -CertStoreLocation 'Cert:\\LocalMachine\\My'", sslConfigPath);
         }
     }
 }
