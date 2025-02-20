@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevEx.Integrations" Version="1.0.6-g44fd203009" />
+    <PackageReference Include="TextCopy" Version="6.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\DevEx.Core\DevEx.Core.csproj" />
   </ItemGroup>
 

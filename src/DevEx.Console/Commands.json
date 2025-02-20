@@ -206,6 +206,35 @@
                     "Parameters": []
                 }
             ]
+        },
+        {
+            "Name": "git",
+            "Description": "Git Commands",
+            "SubCommands": [
+                {
+                    "Name": "addRepository",
+                    "Description": "",
+                    "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
+                    "Parameters": [
+                        {
+                            "Name": "name",
+                            "Description": ""
+                        },
+                        {
+                            "Name": "remoteLocation",
+                            "Description": ""
+                        },
+                        {
+                            "Name": "workingFolder",
+                            "Description": ""
+                        },
+                        {
+                            "Name": "defaultBranch",
+                            "Description": ""
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
