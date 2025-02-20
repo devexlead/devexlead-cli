@@ -212,7 +212,7 @@
             "Description": "Git Commands",
             "SubCommands": [
                 {
-                    "Name": "addRepository",
+                    "Name": "add",
                     "Description": "",
                     "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
                     "Parameters": [
@@ -233,6 +233,18 @@
                             "Description": ""
                         }
                     ]
+                },
+                {
+                    "Name": "clone",
+                    "Description": "",
+                    "Handler": "DevEx.Modules.Git.Handlers.GitCloneHandler",
+                    "Parameters": []
+                },
+                {
+                    "Name": "latest",
+                    "Description": "",
+                    "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
+                    "Parameters": []
                 }
             ]
         }

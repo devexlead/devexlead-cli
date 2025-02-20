@@ -50,20 +50,13 @@ namespace DevEx.Modules.Git.Helpers
             }
         }
 
-        /// <summary>
-        /// Clone a specific repository to a specific working folder
-        /// </summary>
-        /// <param name="repoName"></param>
-        /// <param name="workingFolder"></param>
-        public static void Clone(string repoName, string workingFolder)
+        public static void Clone(Repository repository)
         {
-            var repository = GetRepositories().FirstOrDefault(r => r.Name.Equals(repoName));
-            if (!Directory.Exists(workingFolder))
+            if (!Directory.Exists(repository.WorkingFolder))
             {
-                Directory.CreateDirectory(workingFolder);
+                Directory.CreateDirectory(repository.WorkingFolder);
             }
-            AnsiConsole.MarkupLine($"[green]Cloning {repository.Name} to {workingFolder}...[/]");
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git clone {repository.RemoteLocation} {workingFolder}");
+            TerminalHelper.Run(ConsoleMode.Powershell, $"git clone {repository.RemoteLocation} {repository.WorkingFolder}");
         }
 
         public static void SyncUpSharedService(string hfPath)
@@ -95,43 +88,22 @@ namespace DevEx.Modules.Git.Helpers
             TerminalHelper.Run(ConsoleMode.Powershell, $"git push --set-upstream origin {issueId}", Path.Combine(hfPath, "HFSharedService"));
         }
 
-        public static void GetLatest(string branchName, bool isClean)
+        public static void GetLatest(Repository repository)
         {
-
-            var askToProceed = AnsiConsole.Ask<string>("All your local changes will be lost. Do you want to proceed? (y/n)");
+            var askToProceed = AnsiConsole.Ask<string>($"All your local changes in the {repository.Name} will be stashed. Do you want to proceed? (y/n)");
             if (askToProceed.ToLower().Equals("y"))
             {
-                var repositories = GetRepositories();
-
-                foreach (var repo in repositories)
-                {
-                    var checkOutBranch = repo.DefaultBranch;
-
-                    if (!string.IsNullOrEmpty(branchName))
-                    {
-                        checkOutBranch = branchName;
-                    }
-
-                    if (isClean)
-                    {
-                        TerminalHelper.Run(ConsoleMode.Powershell, $"git clean -fdx", repo.WorkingFolder);
-                    }
-                    else
-                    {
-                        TerminalHelper.Run(ConsoleMode.Powershell, $"git reset --hard", repo.WorkingFolder);
-                    }
-
-                    TerminalHelper.Run(ConsoleMode.Powershell, $"git fetch", repo.WorkingFolder);
-                    TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {checkOutBranch}", repo.WorkingFolder);
-                    TerminalHelper.Run(ConsoleMode.Powershell, $"git pull", repo.WorkingFolder);
-                }
+                TerminalHelper.Run(ConsoleMode.Powershell, $"git stash", repository.WorkingFolder);
+                TerminalHelper.Run(ConsoleMode.Powershell, $"git reset --hard", repository.WorkingFolder);
+                TerminalHelper.Run(ConsoleMode.Powershell, $"git fetch", repository.WorkingFolder);
+                TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {repository.DefaultBranch}", repository.WorkingFolder);
+                TerminalHelper.Run(ConsoleMode.Powershell, $"git pull", repository.WorkingFolder);
             }
             else
             {
                 AnsiConsole.MarkupLine($"[red]Operation has been cancelled[/]");
             }
         }
-
 
         public static List<Repository> GetRepositories()
         {
