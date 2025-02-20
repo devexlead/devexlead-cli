@@ -1,7 +1,6 @@
 ﻿using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 using DevEx.Core.Storage.Model;
-using DevEx.Integrations.GitHub;
 using Spectre.Console;
 using TextCopy;
 using static DevEx.Core.Helpers.TerminalHelper;
@@ -10,44 +9,12 @@ namespace DevEx.Modules.Git.Helpers
 {
     public static class GitHelper
     {
-        public static void ConfigureProfile()
+        public static void ConfigureProfile(Repository repository, string gitUsername, string gitEmail)
         {
-            var gitUsername = AnsiConsole.Ask<string>("Git Username: ");
-            var gitEmail = AnsiConsole.Ask<string>("Git Email Address: ");
-
-            //Global Profile
-            TerminalHelper.Run(ConsoleMode.Powershell, "git config --global user.name");
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --global user.email {gitEmail}");
-            TerminalHelper.Run(ConsoleMode.Powershell, "git config --global user.email");
-
-            //Set up Local Profile for all repos
-            var repositories = GetRepositories();
-
-            foreach (var repo in repositories)
-            {
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git config --local user.name {gitUsername}", repo.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, "git config --local user.name", repo.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git config --local user.email {gitEmail}", repo.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, "git config --local user.email", repo.WorkingFolder);
-            }
-        }
-
-        /// <summary>
-        /// Clone all repositories for the development working folder
-        /// </summary>
-        public static void Clone()
-        {
-            var repositories = GetRepositories();
-
-            foreach (var repository in repositories)
-            {
-                if (!Directory.Exists(repository.WorkingFolder))
-                {
-                    Directory.CreateDirectory(repository.WorkingFolder);
-                }
-
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git clone --branch {repository.DefaultBranch} {repository.RemoteLocation} {repository.WorkingFolder}");
-            }
+            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --local user.name {gitUsername}", repository.WorkingFolder);
+            TerminalHelper.Run(ConsoleMode.Powershell, "git config --local user.name", repository.WorkingFolder);
+            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --local user.email {gitEmail}", repository.WorkingFolder);
+            TerminalHelper.Run(ConsoleMode.Powershell, "git config --local user.email", repository.WorkingFolder);
         }
 
         public static void Clone(Repository repository)
@@ -59,33 +26,11 @@ namespace DevEx.Modules.Git.Helpers
             TerminalHelper.Run(ConsoleMode.Powershell, $"git clone {repository.RemoteLocation} {repository.WorkingFolder}");
         }
 
-        public static void SyncUpSharedService(string hfPath)
-        {
-            var askToProceed = AnsiConsole.Ask<string>("All your hf-sharedservice changes will be lost. Do you want to proceed? (y/n)");
-            if (askToProceed.ToLower().Equals("y"))
-            {
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git reset --hard", Path.Combine(hfPath, "HFSharedService"));
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git fetch", Path.Combine(hfPath, "HFSharedService"));
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout develop", Path.Combine(hfPath, "HFSharedService"));
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git pull", Path.Combine(hfPath, "HFSharedService"));
-            }
-            else
-            {
-                AnsiConsole.MarkupLine($"[red]Operation has been cancelled[/]");
-            }
-        }
-
         public static void CreateBranch(string hfPath, string issueId)
         {
-            //Web Repo
             TerminalHelper.Run(ConsoleMode.Powershell, $"git branch {issueId}", hfPath);
             TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {issueId}", hfPath);
             TerminalHelper.Run(ConsoleMode.Powershell, $"git push --set-upstream origin {issueId}", hfPath);
-
-            //Shared Service Repo
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git branch {issueId}", Path.Combine(hfPath, "HFSharedService"));
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {issueId}", Path.Combine(hfPath, "HFSharedService"));
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git push --set-upstream origin {issueId}", Path.Combine(hfPath, "HFSharedService"));
         }
 
         public static void GetLatest(Repository repository)

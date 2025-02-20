@@ -245,6 +245,12 @@
                     "Description": "",
                     "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
                     "Parameters": []
+                },
+                {
+                    "Name": "profile",
+                    "Description": "",
+                    "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
+                    "Parameters": []
                 }
             ]
         }
