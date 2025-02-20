@@ -39,6 +39,11 @@ namespace DevEx.Core.Storage
                 userStorage.Applications = new List<Application>();
             }
 
+            if (userStorage.Repositories == null)
+            {
+                userStorage.Repositories = new List<Repository>();
+            }
+
             if (userStorage.Bookmarks == null)
             {
                 userStorage.Bookmarks = new List<string>();
