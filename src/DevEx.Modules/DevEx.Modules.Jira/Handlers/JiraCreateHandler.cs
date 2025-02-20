@@ -66,7 +66,7 @@ namespace DevEx.Modules.Jira.Handlers
                 }
 
                 request.Fields.Assignee = SelectAssignee(jiraConnector);
-                
+
                 var result = jiraConnector.CreateIssueAsync(request).Result;
 
                 AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/browse/{result.Key}[/]");

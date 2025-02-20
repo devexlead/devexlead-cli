@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using DevEx.Core.Storage;
 using DevEx.Modules.IntelliSense.Model;
-using Spectre.Console;
 
 namespace DevEx.Modules.IntelliSense.Helpers
 {
@@ -83,20 +82,107 @@ namespace DevEx.Modules.IntelliSense.Helpers
 
             File.AppendAllLines(psReadLineFile, commands);
             //AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
-            RestartTerminal();
+            RestartTerminalInSameContext();
         }
 
-        private static void RestartTerminal()
+        static void RestartTerminalInSameContext()
         {
-            // Start a new instance of the current application
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "cmd.exe",
-                UseShellExecute = true
-            });
+            string executablePath = Process.GetCurrentProcess().MainModule.FileName;
 
-            // Exit the current application
-            Environment.Exit(0);
+            // Detect the parent process (which terminal launched this app)
+            string parentProcessName = GetParentProcessName();
+
+            Console.WriteLine($"\nDetected parent process: {parentProcessName}");
+
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                UseShellExecute = false
+            };
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                if (parentProcessName.Contains("powershell", StringComparison.OrdinalIgnoreCase))
+                {
+                    startInfo.FileName = "powershell";
+                    startInfo.Arguments = $"-NoExit -Command \"& '{executablePath}'\"";
+                }
+                else
+                {
+                    startInfo.FileName = "cmd";
+                    startInfo.Arguments = $"/k \"{executablePath}\"";
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                startInfo.FileName = "bash";
+                startInfo.Arguments = $"-c \"'{executablePath}'; exec bash\"";
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                startInfo.FileName = "open";
+                startInfo.Arguments = $"-a Terminal '{executablePath}'";
+                startInfo.UseShellExecute = true; // macOS requires this
+            }
+            else
+            {
+                Console.WriteLine("Unsupported OS");
+                return;
+            }
+
+            try
+            {
+                Process.Start(startInfo);
+                Console.WriteLine("Application restarted in the same terminal context.");
+                Environment.Exit(0); // Close the current instance
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error restarting: {ex.Message}");
+            }
+        }
+
+        static string GetParentProcessName()
+        {
+            try
+            {
+                using var currentProcess = Process.GetCurrentProcess();
+                int parentPid = 0;
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    // Windows: Use WMI to get parent process
+                    var query = $"SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {currentProcess.Id}";
+                    using var searcher = new System.Management.ManagementObjectSearcher(query);
+                    var result = searcher.Get().Cast<System.Management.ManagementObject>().FirstOrDefault();
+                    parentPid = result != null ? Convert.ToInt32(result["ParentProcessId"]) : 0;
+                }
+                else
+                {
+                    // Unix: Use ps command to get parent PID
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = "ps",
+                        Arguments = "-o ppid= -p " + currentProcess.Id,
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false
+                    };
+                    using var psProcess = Process.Start(psi);
+                    var output = psProcess.StandardOutput.ReadToEnd().Trim();
+                    parentPid = int.TryParse(output, out var pid) ? pid : 0;
+                }
+
+                if (parentPid > 0)
+                {
+                    var parentProcess = Process.GetProcessById(parentPid);
+                    return parentProcess?.ProcessName ?? "Unknown";
+                }
+
+                return "Unknown";
+            }
+            catch
+            {
+                return "Unknown";
+            }
         }
     }
 }
