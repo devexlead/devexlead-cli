@@ -83,17 +83,15 @@ namespace DevEx.Modules.IntelliSense.Helpers
 
             File.AppendAllLines(psReadLineFile, commands);
             //AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
-            RestartApplication();
+            RestartTerminal();
         }
 
-        private static void RestartApplication()
+        private static void RestartTerminal()
         {
-            string executablePath = Assembly.GetExecutingAssembly().Location;
-
             // Start a new instance of the current application
             Process.Start(new ProcessStartInfo
             {
-                FileName = executablePath,
+                FileName = "cmd.exe",
                 UseShellExecute = true
             });
 
