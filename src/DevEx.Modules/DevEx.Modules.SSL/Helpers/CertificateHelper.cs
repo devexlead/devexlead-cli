@@ -7,7 +7,7 @@ namespace DevEx.Modules.SSL.Helpers
     {
         public static string GetSslConfigPath()
         {
-            string sslConfigPath = Path.Combine(AppContext.BaseDirectory, "Configuration");
+            string sslConfigPath = Path.Combine(AppContext.BaseDirectory, "SSL");
             return sslConfigPath;
         }
 

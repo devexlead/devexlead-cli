@@ -251,6 +251,12 @@
                     "Description": "",
                     "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
                     "Parameters": []
+                },
+                {
+                    "Name": "ssh",
+                    "Description": "",
+                    "Handler": "DevEx.Modules.Git.Handlers.GitSshHandler",
+                    "Parameters": []
                 }
             ]
         }

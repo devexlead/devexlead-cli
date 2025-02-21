@@ -1,6 +1,7 @@
 ﻿using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 using DevEx.Core.Storage.Model;
+using HandlebarsDotNet;
 using Spectre.Console;
 using TextCopy;
 using static DevEx.Core.Helpers.TerminalHelper;
@@ -56,45 +57,54 @@ namespace DevEx.Modules.Git.Helpers
             return userStorage.Repositories;
         }
 
-        public static void ConfigureSSH(string toolPath)
+        public static string GetSshPath()
+        {
+            string sslConfigPath = Path.Combine(AppContext.BaseDirectory, "SSH");
+            return sslConfigPath;
+        }
+
+        public static void ConfigureSSH(string emailAddress)
         {
             var userProfileFolder = Environment.GetEnvironmentVariable("USERPROFILE");
-            var keyName = "id_rsa";
-            var sshKeyFile = $"{userProfileFolder}\\.ssh\\{keyName}";
-            var sshConfigFile = $"{userProfileFolder}\\.ssh\\Config";
-            var knownHostsFile = $"{userProfileFolder}\\.ssh\\known_hosts";
+            var keyName = "DevExLead";
 
-            //Clean Existing SSH Key
+           //Clean Existing SSH Key
+            var sshKeyFile = $"{userProfileFolder}\\.ssh\\{keyName}";
             if (File.Exists(sshKeyFile))
             {
                 File.Delete(sshKeyFile);
                 File.Delete($"{sshKeyFile}.pub");
             }
 
-            File.Copy($"{toolPath}\\Files\\SSH\\known_hosts", knownHostsFile, true);
+            //Copy known_hosts File
+            var knownHostsFile = $"{userProfileFolder}\\.ssh\\known_hosts";
+            File.Copy($"{GitHelper.GetSshPath()}\\known_hosts", knownHostsFile, true);
 
+            //Generate config file based on Template
+            var sshConfigTemplateFile = $"{GitHelper.GetSshPath()}\\config.template";
+            string templateContent = File.ReadAllText(sshConfigTemplateFile);
+            var template = Handlebars.Compile(templateContent);
+            var data = new { keyName = keyName };
+            string result = template(data);
+            File.WriteAllText($"{GitHelper.GetSshPath()}\\config", result);
+
+            //Copy config File
+            var sshConfigDestinationFile = $"{userProfileFolder}\\.ssh\\config";
+            File.Copy($"{GitHelper.GetSshPath()}\\config", sshConfigDestinationFile, true);
+
+            //Generate SSH Key
+            TerminalHelper.Run(ConsoleMode.Powershell, $"ssh-keygen -t ed25519 -C {emailAddress} -f \"{sshKeyFile}\"");
+
+            //Restart SSH Agent
             TerminalHelper.Run(ConsoleMode.Powershell, "Stop-Service ssh-agent");
-            TerminalHelper.Run(ConsoleMode.Powershell, "Get-Service -Name ssh-agent | Select-Object -ExpandProperty Status");
-            TerminalHelper.Run(ConsoleMode.Powershell, $"ssh-keygen -f \"{sshKeyFile}\"");
+            TerminalHelper.Run(ConsoleMode.Powershell, "Set-Service -Name ssh-agent -StartupType Automatic");
             TerminalHelper.Run(ConsoleMode.Powershell, "Start-Service ssh-agent");
-            TerminalHelper.Run(ConsoleMode.Powershell, "Get-Service -Name ssh-agent | Select-Object -ExpandProperty Status");
+            TerminalHelper.Run(ConsoleMode.Powershell, "Get-Service -Name ssh-agent");
+            
             string publicKey = File.ReadAllText($"{sshKeyFile}.pub");
             ClipboardService.SetText(publicKey);
-            AnsiConsole.MarkupLine($"[green]The public key has been copied to the clipboard. Add it to GitHub/BitBucket.[/]");
 
-
-            //Create Config File
-            if (!File.Exists(sshConfigFile))
-            {
-                string[] lines = { "Host bitbucket.org",
-                                       "    AddKeysToAgent yes",
-                                      $"    IdentityFile ~/.ssh/{keyName}",
-                                       "Host github.com",
-                                            "    AddKeysToAgent yes",
-                                           $"    IdentityFile ~/.ssh/{keyName}"};
-
-                File.WriteAllLines(sshConfigFile, lines);
-            }
+            AnsiConsole.MarkupLine($"[green]The public key has been copied to the clipboard. Go to https://github.com/settings/ssh/new to add it to your GitHub account.[/]");
 
             //List all identities: ssh-add -L
             //Delete all identities: ssh-add -D

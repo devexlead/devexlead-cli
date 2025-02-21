@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "application run --name containers"
+      "commandLineArgs": "git ssh"
     }
   }
 }
