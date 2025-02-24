@@ -2,6 +2,7 @@
 using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 using DevEx.Modules.Database.Helpers;
+using Spectre.Console;
 
 namespace DevEx.Modules.Database.Handlers
 {
@@ -32,6 +33,8 @@ namespace DevEx.Modules.Database.Handlers
                             ";
             
             DatabaseHelper.RunSqlCommand(masterConnectionString, command);
+
+            AnsiConsole.MarkupLine($"[green]{databaseName} has been restored.[/]");
         }
     }
 }
