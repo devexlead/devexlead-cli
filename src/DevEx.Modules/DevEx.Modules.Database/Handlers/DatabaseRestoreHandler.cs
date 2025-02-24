@@ -13,15 +13,16 @@ namespace DevEx.Modules.Database.Handlers
             var containerName = UserStorageManager.GetDecryptedValue("SqlContainerName");
             var backupLocation = UserStorageManager.GetDecryptedValue("SqlBackupLocation");
             var backupFilename = new FileInfo(backupLocation);
-            var masterConnectionString = UserStorageManager.GetDecryptedValue("SqlMasterConnectionString");
+            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString")
+                                                     .Replace("{{InitialCatalog}}", "master");
             var databaseName = UserStorageManager.GetDecryptedValue("SqlDatabaseName");
 
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"docker cp {backupLocation} {containerName}:/var/opt/mssql/backup/");
 
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"docker restart {containerName}");
 
-            // Wait for 30 seconds
-            Thread.Sleep(30000);
+            // Wait for 10 seconds
+            Thread.Sleep(10000);
 
             var command = @$"RESTORE DATABASE {databaseName} 
                              FROM DISK = N'/var/opt/mssql/backup/{backupFilename.Name}' 
@@ -32,7 +33,7 @@ namespace DevEx.Modules.Database.Handlers
                              RECOVERY;
                             ";
             
-            DatabaseHelper.RunSqlCommand(masterConnectionString, command);
+            DatabaseHelper.RunSqlCommand(connectionString, command);
 
             AnsiConsole.MarkupLine($"[green]{databaseName} has been restored.[/]");
         }
