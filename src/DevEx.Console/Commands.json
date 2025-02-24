@@ -207,58 +207,70 @@
                 }
             ]
         },
-        {
-            "Name": "git",
-            "Description": "Git Commands",
-            "SubCommands": [
-                {
-                    "Name": "add",
-                    "Description": "",
-                    "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "name",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "remoteLocation",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "workingFolder",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "defaultBranch",
-                            "Description": ""
-                        }
-                    ]
-                },
-                {
-                    "Name": "clone",
-                    "Description": "",
-                    "Handler": "DevEx.Modules.Git.Handlers.GitCloneHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "latest",
-                    "Description": "",
-                    "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "profile",
-                    "Description": "",
-                    "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "ssh",
-                    "Description": "",
-                    "Handler": "DevEx.Modules.Git.Handlers.GitSshHandler",
-                    "Parameters": []
-                }
+      {
+        "Name": "git",
+        "Description": "Git Commands",
+        "SubCommands": [
+          {
+            "Name": "add",
+            "Description": "",
+            "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
+            "Parameters": [
+              {
+                "Name": "name",
+                "Description": ""
+              },
+              {
+                "Name": "remoteLocation",
+                "Description": ""
+              },
+              {
+                "Name": "workingFolder",
+                "Description": ""
+              },
+              {
+                "Name": "defaultBranch",
+                "Description": ""
+              }
             ]
-        }
+          },
+          {
+            "Name": "clone",
+            "Description": "",
+            "Handler": "DevEx.Modules.Git.Handlers.GitCloneHandler",
+            "Parameters": []
+          },
+          {
+            "Name": "latest",
+            "Description": "",
+            "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
+            "Parameters": []
+          },
+          {
+            "Name": "profile",
+            "Description": "",
+            "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
+            "Parameters": []
+          },
+          {
+            "Name": "ssh",
+            "Description": "",
+            "Handler": "DevEx.Modules.Git.Handlers.GitSshHandler",
+            "Parameters": []
+          }
+        ]
+      },
+      {
+        "Name": "database",
+        "Description": "Database Commands",
+        "SubCommands": [
+          {
+            "Name": "restore",
+            "Description": "Restore Database Backup",
+            "Handler": "DevEx.Modules.Database.Handlers.DatabaseRestoreHandler",
+            "Parameters": []
+          }
+        ]
+      }
     ]
 }

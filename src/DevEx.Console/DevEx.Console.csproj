@@ -23,10 +23,10 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Application\DevEx.Modules.Application.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Database\DevEx.Modules.Database.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Git\DevEx.Modules.Git.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.IntelliSense\DevEx.Modules.IntelliSense.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Run\DevEx.Modules.Run.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.SSL\DevEx.Modules.SSL.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Tools\DevEx.Modules.Tools.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.UserStorage\DevEx.Modules.UserStorage.csproj" />

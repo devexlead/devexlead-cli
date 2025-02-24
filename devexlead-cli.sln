@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Git", "src\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Application", "src\DevEx.Modules\DevEx.Modules.Application\DevEx.Modules.Application.csproj", "{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Database", "src\DevEx.Modules\DevEx.Modules.Database\DevEx.Modules.Database.csproj", "{07C87D1A-28A6-4B27-AA07-CDF21A92CF93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07C87D1A-28A6-4B27-AA07-CDF21A92CF93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07C87D1A-28A6-4B27-AA07-CDF21A92CF93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07C87D1A-28A6-4B27-AA07-CDF21A92CF93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07C87D1A-28A6-4B27-AA07-CDF21A92CF93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{DB53A9AA-9AA4-4C95-8CCB-4233219C0567} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 		{73DD3426-5398-4168-BC0A-A329D98A5B5A} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 		{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
+		{07C87D1A-28A6-4B27-AA07-CDF21A92CF93} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 	EndGlobalSection
 EndGlobal
