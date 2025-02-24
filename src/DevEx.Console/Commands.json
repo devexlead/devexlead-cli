@@ -269,6 +269,18 @@
             "Description": "Restore Database Backup",
             "Handler": "DevEx.Modules.Database.Handlers.DatabaseRestoreHandler",
             "Parameters": []
+          },
+          {
+            "Name": "schema",
+            "Description": "Generate new DACPAC file",
+            "Handler": "DevEx.Modules.Database.Handlers.DatabaseDacpacHandler",
+            "Parameters": []
+          },
+          {
+            "Name": "upgrade",
+            "Description": "Schema Upgrade using DACPAC file",
+            "Handler": "DevEx.Modules.Database.Handlers.DatabaseUpgradeHandler",
+            "Parameters": []
           }
         ]
       }
