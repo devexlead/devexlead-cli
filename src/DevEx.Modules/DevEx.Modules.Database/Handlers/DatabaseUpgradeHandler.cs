@@ -13,9 +13,13 @@ namespace DevEx.Modules.Database.Handlers
             var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString")
                                                      .Replace("{{InitialCatalog}}", databaseName);
             var dacpacLocation = UserStorageManager.GetDecryptedValue("SqlDacpacLocation");
+            var sqlDeploymentReportLocation = UserStorageManager.GetDecryptedValue("SqlDeploymentReportLocation");
 
-            var command = @$"SqlPackage /Action:Publish /SourceFile:'{dacpacLocation}' /TargetConnectionString:'{connectionString}'";
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command);
+            var reportCommand = @$"SqlPackage /Action:DeployReport /SourceFile:'{dacpacLocation}' /TargetConnectionString:'{connectionString}' /OutputPath:'{sqlDeploymentReportLocation}'";
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, reportCommand);
+
+            var publishCommand = @$"SqlPackage /Action:Publish /SourceFile:'{dacpacLocation}' /TargetConnectionString:'{connectionString}' /p:DropObjectsNotInSource=True /p:BlockOnPossibleDataLoss=True";
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, publishCommand);
 
             AnsiConsole.MarkupLine($"[green]Database Schema has been updated.[/]");
         }
