@@ -14,7 +14,7 @@ namespace DevEx.Modules.Database.Handlers
                                                      .Replace("{{InitialCatalog}}", databaseName);
             var sqlDatabaseSeedCommand = UserStorageManager.GetDecryptedValue("SqlDatabaseSeedCommand");
             var sqlDatabaseSeedPath = UserStorageManager.GetDecryptedValue("SqlDatabaseSeedPath");
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, sqlDatabaseSeedCommand, sqlDatabaseSeedPath);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"{sqlDatabaseSeedCommand} '{connectionString}'", sqlDatabaseSeedPath);
             AnsiConsole.MarkupLine($"[green]{databaseName} has been seeded.[/]");
         }
     }
