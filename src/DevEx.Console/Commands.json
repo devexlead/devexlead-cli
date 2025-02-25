@@ -287,6 +287,12 @@
             "Description": "Seed the Database",
             "Handler": "DevEx.Modules.Database.Handlers.DatabaseSeedHandler",
             "Parameters": []
+          },
+          {
+            "Name": "model",
+            "Description": "Update Entity Framework Model (Database First)",
+            "Handler": "DevEx.Modules.Database.Handlers.DatabaseModelHandler",
+            "Parameters": []
           }
         ]
       }
