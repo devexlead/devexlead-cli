@@ -281,6 +281,12 @@
             "Description": "Schema Upgrade using DACPAC file",
             "Handler": "DevEx.Modules.Database.Handlers.DatabaseUpgradeHandler",
             "Parameters": []
+          },
+          {
+            "Name": "seed",
+            "Description": "Seed the Database",
+            "Handler": "DevEx.Modules.Database.Handlers.DatabaseSeedHandler",
+            "Parameters": []
           }
         ]
       }
