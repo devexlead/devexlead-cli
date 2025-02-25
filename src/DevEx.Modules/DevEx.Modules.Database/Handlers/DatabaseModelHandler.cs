@@ -13,7 +13,7 @@ namespace DevEx.Modules.Database.Handlers
             var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString")
                                                      .Replace("{{InitialCatalog}}", databaseName);
             var sqlEntityFrameworkProjectPath = UserStorageManager.GetDecryptedValue("SqlEntityFrameworkProjectPath");
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"dotnet ef dbcontext scaffold '{connectionString}' -f --project '{sqlEntityFrameworkProjectPath}'");
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, $"dotnet ef dbcontext scaffold '{connectionString}' Microsoft.EntityFrameworkCore.SqlServer -f --project '{sqlEntityFrameworkProjectPath}'");
             AnsiConsole.MarkupLine($"[green]{databaseName} Entity Framework Model has been updated.[/]");
         }
     }
