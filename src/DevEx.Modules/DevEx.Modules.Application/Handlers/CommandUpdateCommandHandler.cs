@@ -30,7 +30,7 @@ namespace DevEx.Modules.Command.Handlers
                 Body = body
             };
 
-            userStorage.Bookmarks.Add($"dxc command run \"{name}\"");
+            userStorage.Bookmarks.Add($"dxc command run --name \"{name}\"");
             userStorage.Commands.Add(command);
 
             UserStorageManager.SaveUserStorage(userStorage);
