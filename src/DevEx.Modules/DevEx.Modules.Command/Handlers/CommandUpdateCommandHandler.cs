@@ -11,9 +11,9 @@ namespace DevEx.Modules.Command.Handlers
             var path = options["path"];
             var body = options["body"];
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(path) || string.IsNullOrWhiteSpace(body))
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(body))
             {
-                Console.WriteLine("--name --path --body are required.");
+                Console.WriteLine("--name --body are required.");
                 return;
             }
 

@@ -1,6 +1,7 @@
 ﻿using DevEx.Core;
 using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
+using System.Text.RegularExpressions;
 
 namespace DevEx.Modules.Command.Handlers
 {
@@ -8,24 +9,36 @@ namespace DevEx.Modules.Command.Handlers
     {
         public void Execute(Dictionary<string, string> options)
         {
-            var applicationName = options["name"];
+            var commandName = options["name"];
 
-            if (string.IsNullOrWhiteSpace(applicationName))
+            if (string.IsNullOrWhiteSpace(commandName))
             {
                 Console.WriteLine("--name is required.");
                 return;
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
-            var application = userStorage.Commands.FirstOrDefault(a => a.Name == applicationName);
+            var command = userStorage.Commands.FirstOrDefault(a => a.Name == commandName);
 
-            if (application == null)
+            if (command == null)
             {
-                Console.WriteLine("Application not found.");
+                Console.WriteLine("Command not found.");
                 return;
             }
 
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, application.Body, application.Path);
+            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString");
+            command.Body = ReplacePlaceholders(command.Body);
+
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command.Body, command.Path);
+        }
+
+        private string ReplacePlaceholders(string input)
+        {
+            return Regex.Replace(input, @"\{\{(\w+)\}\}", match =>
+            {
+                var key = match.Groups[1].Value;
+                return UserStorageManager.GetDecryptedValue(key) ?? match.Value;
+            });
         }
     }
 }

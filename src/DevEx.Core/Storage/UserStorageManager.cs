@@ -66,7 +66,7 @@ namespace DevEx.Core.Storage
             var encryptedValue = userStorage.Vault.FirstOrDefault(v => v.Key.Equals(key)).Value;
             if (encryptedValue == null)
             {
-                var errorMessage = $"Error: {key} not found in user storage.";
+                var errorMessage = $"Error: {key} not found in Vault.";
                 AnsiConsole.MarkupLine($"[red]{errorMessage}[/]");
                 throw new ArgumentException(errorMessage);
             }
