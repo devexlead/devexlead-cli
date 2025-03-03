@@ -34,9 +34,9 @@ namespace DevEx.Core.Storage
                 userStorage.Vault = new Dictionary<string, string>();
             }
 
-            if (userStorage.Applications == null)
+            if (userStorage.Commands == null)
             {
-                userStorage.Applications = new List<Application>();
+                userStorage.Commands = new List<Command>();
             }
 
             if (userStorage.Repositories == null)

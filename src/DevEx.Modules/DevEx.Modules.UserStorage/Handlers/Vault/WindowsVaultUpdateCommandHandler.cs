@@ -18,10 +18,21 @@ namespace DevEx.Modules.Configuration.Handlers.Vault
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
-            userStorage.Vault[key] = EncryptionHelper.Encrypt(value);
-            UserStorageManager.SaveUserStorage(userStorage);
 
-            Console.WriteLine($"Modified item: Key={key}, New Value={value}");
+            value = EncryptionHelper.Encrypt(value);
+            var entryExists = userStorage.Vault.Any(v => v.Key == key);
+
+            if (entryExists)
+            {
+                userStorage.Vault[key] = value;
+            }
+            else
+            {
+                userStorage.Vault.Add(key, value);
+            }
+
+            UserStorageManager.SaveUserStorage(userStorage);
+            Console.WriteLine($"Vault Entry Saved: Key={key}, Value={value}");
         }
     }
 }

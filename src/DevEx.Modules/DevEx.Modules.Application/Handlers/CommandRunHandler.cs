@@ -2,9 +2,9 @@
 using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
-namespace DevEx.Modules.Application.Handlers
+namespace DevEx.Modules.Command.Handlers
 {
-    public class ApplicationRunHandler : ICommandHandler
+    public class CommandRunHandler : ICommandHandler
     {
         public void Execute(Dictionary<string, string> options)
         {
@@ -17,7 +17,7 @@ namespace DevEx.Modules.Application.Handlers
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
-            var application = userStorage.Applications.FirstOrDefault(a => a.Name == applicationName);
+            var application = userStorage.Commands.FirstOrDefault(a => a.Name == applicationName);
 
             if (application == null)
             {
@@ -25,7 +25,7 @@ namespace DevEx.Modules.Application.Handlers
                 return;
             }
 
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, application.RunCommand, application.Path);
+            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, application.Body, application.Path);
         }
     }
 }

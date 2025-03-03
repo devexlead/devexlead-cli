@@ -1,300 +1,229 @@
 {
-    "Commands": [
+  "Commands": [
+    {
+      "Name": "vault",
+      "Description": "Vault operations",
+      "SubCommands": [
         {
-            "Name": "vault",
-            "Description": "Vault operations",
-            "SubCommands": [
-                {
-                    "Name": "create",
-                    "Description": "Create a new entry",
-                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultCreateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key for the entry"
-                        },
-                        {
-                            "Name": "value",
-                            "Description": "The value to store"
-                        }
-                    ]
-                },
-                {
-                    "Name": "read",
-                    "Description": "Read an entry",
-                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultReadCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to retrieve"
-                        }
-                    ]
-                },
-                {
-                    "Name": "update",
-                    "Description": "Update an existing entry",
-                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultUpdateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to update"
-                        },
-                        {
-                            "Name": "value",
-                            "Description": "The new value"
-                        }
-                    ]
-                },
-                {
-                    "Name": "delete",
-                    "Description": "Delete an entry",
-                    "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultDeleteCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to delete"
-                        }
-                    ]
-                }
-            ]
+          "Name": "read",
+          "Description": "Read an entry",
+          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultReadCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to retrieve"
+            }
+          ]
         },
         {
-            "Name": "application",
-            "Description": "Application operations",
-            "SubCommands": [
-                {
-                    "Name": "add",
-                    "Description": "Add new application",
-                    "Handler": "DevEx.Modules.Application.Handlers.ApplicationCreateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "name",
-                            "Description": "Application Name"
-                        },
-                        {
-                            "Name": "path",
-                            "Description": "Application Location"
-                        },
-                        {
-                            "Name": "command",
-                            "Description": "Command to Bookmark"
-                        }
-                    ]
-                },
-                {
-                    "Name": "restore",
-                    "Description": "Restore Application Dependencies",
-                    "Handler": "",
-                    "Parameters": [
-                        {
-                            "Name": "name",
-                            "Description": "Application Name"
-                        }
-                    ]
-                },
-                {
-                    "Name": "build",
-                    "Description": "Build Application",
-                    "Handler": "",
-                    "Parameters": [
-                        {
-                            "Name": "name",
-                            "Description": "Application Name"
-                        }
-                    ]
-                },
-                {
-                    "Name": "test",
-                    "Description": "Run Application Unit Tests",
-                    "Handler": "",
-                    "Parameters": [
-                        {
-                            "Name": "name",
-                            "Description": "Application Name"
-                        }
-                    ]
-                },
-                {
-                    "Name": "run",
-                    "Description": "Run Application",
-                    "Handler": "DevEx.Modules.Application.Handlers.ApplicationRunHandler",
-                    "Parameters": [
-                        {
-                            "Name": "name",
-                            "Description": "Application Name"
-                        }
-                    ]
-                }
-            ]
+          "Name": "update",
+          "Description": "Update an entry",
+          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultUpdateCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to update"
+            },
+            {
+              "Name": "value",
+              "Description": "The new value"
+            }
+          ]
         },
         {
-            "Name": "intellisense",
-            "Description": "Configures CLI IntelliSense on PowerShell",
-            "SubCommands": [
-                {
-                    "Name": "clean",
-                    "Description": "Reset IntelliSense Commands",
-                    "Handler": "DevEx.Modules.IntelliSense.Handlers.CleanHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "bookmark",
-                    "Description": "Bookmark CLI Commands",
-                    "Handler": "DevEx.Modules.IntelliSense.Handlers.BookmarkCreateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "command",
-                            "Description": "Command to Bookmark"
-                        }
-                    ]
-                }
-            ]
+          "Name": "delete",
+          "Description": "Delete an entry",
+          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultDeleteCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to delete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "command",
+      "Description": "Saved Commands",
+      "SubCommands": [
+        {
+          "Name": "update",
+          "Description": "Update Command",
+          "Handler": "DevEx.Modules.Command.Handlers.CommandUpdateCommandHandler",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Description": "Command Name"
+            },
+            {
+              "Name": "path",
+              "Description": "Command Location"
+            },
+            {
+              "Name": "body",
+              "Description": "Command Body"
+            }
+          ]
         },
         {
-            "Name": "tool",
-            "Description": "Developer Tools",
-            "SubCommands": [
-                {
-                    "Name": "waffle",
-                    "Description": "Generate Text Data for Testing",
-                    "Handler": "DevEx.Modules.Tools.Handlers.WaffleGeneratorHandler",
-                    "Parameters": [
-                        {
-                            "Name": "paragraphs",
-                            "Description": "Number of Paragraph"
-                        },
-                        {
-                            "Name": "includeHeading",
-                            "Description": "Generate Heading"
-                        }
-                    ]
-                }
-            ]
+          "Name": "run",
+          "Description": "Run Commands",
+          "Handler": "DevEx.Modules.Command.Handlers.CommandRunHandler",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Description": "Command Name"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "intellisense",
+      "Description": "Configures CLI IntelliSense on PowerShell",
+      "SubCommands": [
+        {
+          "Name": "clean",
+          "Description": "Reset IntelliSense Commands",
+          "Handler": "DevEx.Modules.IntelliSense.Handlers.CleanHandler",
+          "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "tool",
+      "Description": "Developer Tools",
+      "SubCommands": [
+        {
+          "Name": "waffle",
+          "Description": "Generate Text Data for Testing",
+          "Handler": "DevEx.Modules.Tools.Handlers.WaffleGeneratorHandler",
+          "Parameters": [
+            {
+              "Name": "paragraphs",
+              "Description": "Number of Paragraph"
+            },
+            {
+              "Name": "includeHeading",
+              "Description": "Generate Heading"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "jira",
+      "Description": "JIRA Commands",
+      "SubCommands": [
+        {
+          "Name": "create",
+          "Description": "Generate JIRA ticket",
+          "Handler": "DevEx.Modules.Jira.Handlers.JiraCreateHandler",
+          "Parameters": [
+            {
+              "Name": "isVerbose",
+              "Description": "Show HTTP Request/Response",
+              "DefaultValue": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "ssl",
+      "Description": "SSL Certificate Commands",
+      "SubCommands": [
+        {
+          "Name": "create",
+          "Description": "Generate Self-signed SSL Certificate",
+          "Handler": "DevEx.Modules.SSL.Handlers.SslCreateCertificateHandler",
+          "Parameters": []
         },
         {
-            "Name": "jira",
-            "Description": "JIRA Commands",
-            "SubCommands": [
-                {
-                    "Name": "create",
-                    "Description": "Generate JIRA ticket",
-                    "Handler": "DevEx.Modules.Jira.Handlers.JiraCreateHandler",
-                    "Parameters": [
-                        {
-                            "Name": "isVerbose",
-                            "Description": "Show HTTP Request/Response",
-                            "DefaultValue": "false"
-                        }
-                    ]
-                }
-            ]
+          "Name": "install",
+          "Description": "Install SSL Certificate",
+          "Handler": "DevEx.Modules.SSL.Handlers.SslInstallCertificateHandler",
+          "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "git",
+      "Description": "Git Commands",
+      "SubCommands": [
+        {
+          "Name": "add",
+          "Description": "",
+          "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Description": ""
+            },
+            {
+              "Name": "remoteLocation",
+              "Description": ""
+            },
+            {
+              "Name": "workingFolder",
+              "Description": ""
+            },
+            {
+              "Name": "defaultBranch",
+              "Description": ""
+            }
+          ]
         },
         {
-            "Name": "ssl",
-            "Description": "SSL Certificate Commands",
-            "SubCommands": [
-                {
-                    "Name": "create",
-                    "Description": "Generate Self-signed SSL Certificate",
-                    "Handler": "DevEx.Modules.SSL.Handlers.SslCreateCertificateHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "install",
-                    "Description": "Install SSL Certificate",
-                    "Handler": "DevEx.Modules.SSL.Handlers.SslInstallCertificateHandler",
-                    "Parameters": []
-                }
-            ]
+          "Name": "clone",
+          "Description": "",
+          "Handler": "DevEx.Modules.Git.Handlers.GitCloneHandler",
+          "Parameters": []
         },
-      {
-        "Name": "git",
-        "Description": "Git Commands",
-        "SubCommands": [
-          {
-            "Name": "add",
-            "Description": "",
-            "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
-            "Parameters": [
-              {
-                "Name": "name",
-                "Description": ""
-              },
-              {
-                "Name": "remoteLocation",
-                "Description": ""
-              },
-              {
-                "Name": "workingFolder",
-                "Description": ""
-              },
-              {
-                "Name": "defaultBranch",
-                "Description": ""
-              }
-            ]
-          },
-          {
-            "Name": "clone",
-            "Description": "",
-            "Handler": "DevEx.Modules.Git.Handlers.GitCloneHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "latest",
-            "Description": "",
-            "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "profile",
-            "Description": "",
-            "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "ssh",
-            "Description": "",
-            "Handler": "DevEx.Modules.Git.Handlers.GitSshHandler",
-            "Parameters": []
-          }
-        ]
-      },
-      {
-        "Name": "database",
-        "Description": "Database Commands",
-        "SubCommands": [
-          {
-            "Name": "restore",
-            "Description": "Restore Database Backup",
-            "Handler": "DevEx.Modules.Database.Handlers.DatabaseRestoreHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "schema",
-            "Description": "Generate new DACPAC file",
-            "Handler": "DevEx.Modules.Database.Handlers.DatabaseDacpacHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "upgrade",
-            "Description": "Schema Upgrade using DACPAC file",
-            "Handler": "DevEx.Modules.Database.Handlers.DatabaseUpgradeHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "seed",
-            "Description": "Seed the Database",
-            "Handler": "DevEx.Modules.Database.Handlers.DatabaseSeedHandler",
-            "Parameters": []
-          },
-          {
-            "Name": "model",
-            "Description": "Update Entity Framework Model (Database First)",
-            "Handler": "DevEx.Modules.Database.Handlers.DatabaseModelHandler",
-            "Parameters": []
-          }
-        ]
-      }
-    ]
+        {
+          "Name": "latest",
+          "Description": "",
+          "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "profile",
+          "Description": "",
+          "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "ssh",
+          "Description": "",
+          "Handler": "DevEx.Modules.Git.Handlers.GitSshHandler",
+          "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "database",
+      "Description": "Database Commands",
+      "SubCommands": [
+        {
+          "Name": "restore",
+          "Description": "Restore Database Backup",
+          "Handler": "DevEx.Modules.Database.Handlers.DatabaseRestoreHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "upgrade",
+          "Description": "Schema Upgrade using DACPAC file",
+          "Handler": "DevEx.Modules.Database.Handlers.DatabaseUpgradeHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "seed",
+          "Description": "Seed the Database",
+          "Handler": "DevEx.Modules.Database.Handlers.DatabaseSeedHandler",
+          "Parameters": []
+        }
+      ]
+    }
+  ]
 }

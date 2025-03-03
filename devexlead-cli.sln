@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.IntelliSense"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Tools", "src\DevEx.Modules\DevEx.Modules.Tools\DevEx.Modules.Tools.csproj", "{F0C65C5A-D604-4A77-AC59-6F74491899D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.UserStorage", "src\DevEx.Modules\DevEx.Modules.UserStorage\DevEx.Modules.UserStorage.csproj", "{2ED9EF77-C1CC-4858-BA77-5ADCC05A5039}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Vault", "src\DevEx.Modules\DevEx.Modules.UserStorage\DevEx.Modules.Vault.csproj", "{2ED9EF77-C1CC-4858-BA77-5ADCC05A5039}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Jira", "src\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj", "{0E6EBEE2-7D6C-49BA-8B0C-850277EEB227}"
 EndProject
@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.SSL", "src\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Git", "src\DevEx.Modules\DevEx.Modules.Git\DevEx.Modules.Git.csproj", "{73DD3426-5398-4168-BC0A-A329D98A5B5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Application", "src\DevEx.Modules\DevEx.Modules.Application\DevEx.Modules.Application.csproj", "{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Command", "src\DevEx.Modules\DevEx.Modules.Application\DevEx.Modules.Command.csproj", "{F47ED8EC-49B2-4DC5-AC6D-25F5BE2AEE6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Database", "src\DevEx.Modules\DevEx.Modules.Database\DevEx.Modules.Database.csproj", "{07C87D1A-28A6-4B27-AA07-CDF21A92CF93}"
 EndProject
