@@ -10,7 +10,7 @@ namespace DevEx.Modules.Database.Handlers
         public void Execute(Dictionary<string, string> options)
         {
             var databaseName = UserStorageManager.GetDecryptedValue("SqlDatabaseName");
-            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString")
+            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionStringTemplate")
                                                      .Replace("{{InitialCatalog}}", databaseName);
             var dacpacLocation = UserStorageManager.GetDecryptedValue("SqlDacpacLocation");
             var sqlDeploymentReportLocation = UserStorageManager.GetDecryptedValue("SqlDeploymentReportLocation");

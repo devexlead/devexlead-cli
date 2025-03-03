@@ -13,7 +13,7 @@ namespace DevEx.Modules.Database.Handlers
             var containerName = UserStorageManager.GetDecryptedValue("SqlContainerName");
             var backupLocation = UserStorageManager.GetDecryptedValue("SqlBackupLocation");
             var backupFilename = new FileInfo(backupLocation);
-            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString")
+            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionStringTemplate")
                                                      .Replace("{{InitialCatalog}}", "master");
             var databaseName = UserStorageManager.GetDecryptedValue("SqlDatabaseName");
 
