@@ -68,7 +68,7 @@ namespace DevEx.Core.Storage
             {
                 var errorMessage = $"Error: {key} not found in Vault.";
                 AnsiConsole.MarkupLine($"[red]{errorMessage}[/]");
-                throw new ArgumentException(errorMessage);
+                return string.Empty;
             }
             return EncryptionHelper.Decrypt(encryptedValue);
         }

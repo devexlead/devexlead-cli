@@ -35,7 +35,9 @@ namespace DevEx.Modules.Command.Handlers
             return Regex.Replace(input, @"\{\{(\w+)\}\}", match =>
             {
                 var key = match.Groups[1].Value;
-                return UserStorageManager.GetDecryptedValue(key) ?? match.Value;
+                var placeHolder = UserStorageManager.GetDecryptedValue(key) ?? match.Value;
+                placeHolder = ReplacePlaceholders(placeHolder); // Recursively replace placeholders
+                return placeHolder;
             });
         }
     }

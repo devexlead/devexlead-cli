@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "vault list"
+      "commandLineArgs": "command run --name \"SqlDACPACGenerator\""
     }
   }
 }
