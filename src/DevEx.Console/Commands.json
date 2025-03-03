@@ -5,15 +5,10 @@
       "Description": "Vault operations",
       "SubCommands": [
         {
-          "Name": "read",
-          "Description": "Read an entry",
-          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultReadCommandHandler",
-          "Parameters": [
-            {
-              "Name": "key",
-              "Description": "The key to retrieve"
-            }
-          ]
+          "Name": "list",
+          "Description": "List Vault entries",
+          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultListCommandHandler",
+          "Parameters": []
         },
         {
           "Name": "update",
@@ -76,6 +71,12 @@
               "Description": "Command Name"
             }
           ]
+        },
+        {
+          "Name": "list",
+          "Description": "List Commands",
+          "Handler": "DevEx.Modules.Command.Handlers.CommandListHandler",
+          "Parameters": []
         }
       ]
     },
