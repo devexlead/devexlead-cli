@@ -26,9 +26,7 @@ namespace DevEx.Modules.Command.Handlers
                 return;
             }
 
-            var connectionString = UserStorageManager.GetDecryptedValue("SqlConnectionString");
             command.Body = ReplacePlaceholders(command.Body);
-
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command.Body, command.Path);
         }
 
