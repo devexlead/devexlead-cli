@@ -47,7 +47,7 @@ namespace DevEx.Console
                         }
 
                         // Assign handler dynamically, passing all options as a dictionary
-                        subCommand.SetHandler((context) =>
+                        subCommand.SetHandler(async (context) =>
                         {
                             var handlerInstance = GetHandlerInstance(subCmd.Handler);
                             var optionsDict = new Dictionary<string, string>();
@@ -62,7 +62,7 @@ namespace DevEx.Console
                                 }
                             }
 
-                            handlerInstance.Execute(optionsDict);
+                            await handlerInstance.ExecuteAsync(optionsDict);
                         });
 
                         mainCommand.AddCommand(subCommand);

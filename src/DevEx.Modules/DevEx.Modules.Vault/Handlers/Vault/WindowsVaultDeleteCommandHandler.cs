@@ -6,7 +6,7 @@ namespace DevEx.Modules.Configuration.Handlers.Vault
 
     public class WindowsVaultDeleteCommandHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var key = options["key"];
 

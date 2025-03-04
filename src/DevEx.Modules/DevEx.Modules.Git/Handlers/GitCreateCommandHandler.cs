@@ -5,7 +5,7 @@ namespace DevEx.Modules.Git.Handlers
 {
     internal class GitCreateCommandHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var name = options["name"];
             var remoteLocation = options["remoteLocation"];

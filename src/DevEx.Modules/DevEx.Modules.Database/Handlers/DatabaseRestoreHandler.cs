@@ -8,7 +8,7 @@ namespace DevEx.Modules.Database.Handlers
 {
     public class DatabaseRestoreHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var containerName = UserStorageManager.GetDecryptedValue("SqlContainerName");
             var backupLocation = UserStorageManager.GetDecryptedValue("SqlBackupLocation");

@@ -5,7 +5,7 @@ namespace DevEx.Modules.Tools.Handlers
 {
     public class WaffleGeneratorHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var paragraphs = options["paragraphs"];
             var includeHeading = options["includeHeading"];

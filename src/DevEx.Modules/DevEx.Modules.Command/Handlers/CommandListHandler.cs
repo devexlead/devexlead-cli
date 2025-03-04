@@ -6,7 +6,7 @@ namespace DevEx.Modules.Command.Handlers
 {
     internal class CommandListHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var userStorage = UserStorageManager.GetUserStorage();
             var commands = userStorage.Commands;

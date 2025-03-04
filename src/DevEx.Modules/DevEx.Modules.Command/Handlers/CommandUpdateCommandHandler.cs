@@ -6,7 +6,7 @@ namespace DevEx.Modules.Command.Handlers
 {
     internal class CommandUpdateCommandHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var name = options["name"];
             var body = options["body"];

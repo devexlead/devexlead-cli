@@ -7,7 +7,7 @@ namespace DevEx.Modules.Command.Handlers
 {
     public class CommandRunHandler : ICommandHandler
     {
-        public void Execute(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             var commandName = options["name"];
 
