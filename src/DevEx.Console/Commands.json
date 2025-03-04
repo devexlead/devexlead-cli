@@ -85,13 +85,19 @@
       "Description": "Developer Tools",
       "SubCommands": [
         {
+          "Name": "install",
+          "Description": "Install Software using Winget",
+          "Handler": "DevEx.Modules.Tools.Handlers.ToolsIntallHandler",
+          "Parameters": []
+        },
+        {
           "Name": "waffle",
           "Description": "Generate Text Data for Testing",
           "Handler": "DevEx.Modules.Tools.Handlers.WaffleGeneratorHandler",
           "Parameters": [
             {
               "Name": "paragraphs",
-              "Description": "Number of Paragraph"
+              "Description": "Number of Paragraphs"
             },
             {
               "Name": "includeHeading",

@@ -15,4 +15,23 @@
     <ProjectReference Include="..\..\DevEx.Core\DevEx.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Installation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Installation\post-install.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Installation\settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Installation\winget-config.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Installation\workloads.vsconfig">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
