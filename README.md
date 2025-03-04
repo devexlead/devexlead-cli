@@ -1,21 +1,36 @@
-# Developer Experience CLI
-
-[![CI](https://github.com/devexlead/devex-cli/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/devexlead/devex-cli/actions/workflows/ci-cd.yml)
-[![CI](https://github.com/devexlead/devex-cli/actions/workflows/release.yml/badge.svg)](https://github.com/devexlead/devex-cli/actions/workflows/release.yml)
 
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Contributors](https://img.shields.io/github/contributors/devexlead/devexlead-cli)
+[![Star this repo](https://img.shields.io/github/stars/devexlead/devexlead-cli?style=social)](https://github.com/devexlead/devexlead-cli/stargazers)
 
-## Install CI/CD Version
+> [!NOTE]
+> Suggestions, Ideas and Contributions are welcome.
+> If you find this project helpful, please give it a star 🌟
 
-1. Go to `GitHub` → `Settings` → `Developer settings` → `Personal access tokens` → `Tokens (classic)`
-2. Generate Personal Access Token (PAT) with the required scope: `read:packages` and `repo` 
-3. Run `dotnet nuget remove source DevExLeadPackages` and `dotnet nuget add source https://nuget.pkg.github.com/devexlead/index.json --name DevExLeadPackages --username <your-github-username> --password <your-github-token>`
-4. Check sources `dotnet nuget list source`
-5. Check the version you want to install from https://github.com/devexlead/devex-cli/pkgs/nuget/dxc
-6. Run `dotnet tool update --global dxc --no-cache --version <version> --verbosity detailed`
-7. Check global tools `dotnet tool list -g`
+# Installation
 
-**Troubleshooting**
-- Ensure your `nuget.config` file has the correct source and credentials. Open or create `nuget.config` in your user profile directory (e.g., `%AppData%\NuGet\nuget.config` on Windows).
-- Test Authentication `& "C:\Windows\System32\curl.exe" -u "$username:$pat" https://nuget.pkg.github.com/devexlead/index.json`
+`dotnet tool install --global dxc --version 0.0.33-gcd8751a12a`
 
+# Goals
+
+- Enhance the developer experience for local development and testing.
+- Accelerate the onboarding process for setting up a new laptop, reducing the time and effort required.
+- Streamline the configuration of the development environment, minimizing cognitive load.
+
+# Modules
+
+- `vault`: Save secrets encrypted locally
+- `command`: Create shorcuts for commonly used commands
+- `tool`: Developer tools
+- `git`: Git operations against a pre-defined set of repositories
+- `ssl`: Create and install Self Signed Certificates
+- `database`: Restore, upgrade and seed your SQL Server database
+- `jira`: https://github.com/devexlead/devexlead-cli/blob/main/docs/jira.md
+
+Links to be added (in the meantime you can check `dxc --help`)
+
+# Intellisense
+
+The tool relies on PowerShell [PSReadLine](https://learn.microsoft.com/en-us/powershell/module/psreadline/) to provide intellisense capabilities
+![WindowsTerminal_XzhdeUatYN](https://github.com/user-attachments/assets/288fbce1-6df6-4c90-a48f-436f2604f6d7)
