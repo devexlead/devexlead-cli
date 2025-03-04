@@ -9,8 +9,8 @@ namespace DevEx.Modules.Command.Handlers
         public void Execute(Dictionary<string, string> options)
         {
             var name = options["name"];
-            var path = options["path"];
             var body = options["body"];
+            options.TryGetValue("path", out var path);
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(body))
             {
