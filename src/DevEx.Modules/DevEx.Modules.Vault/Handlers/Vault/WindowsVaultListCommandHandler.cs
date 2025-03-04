@@ -17,7 +17,7 @@ namespace DevEx.Modules.Configuration.Handlers.Vault
             table.AddColumn("Decrypted Value");
             table.AddColumn("Encrypted Value");
 
-            foreach (var item in vaultItems)
+            foreach (var item in vaultItems.OrderBy(c => c.Key))
             {
                 table.AddRow(item.Key, EncryptionHelper.Decrypt(item.Value), item.Value);
             }

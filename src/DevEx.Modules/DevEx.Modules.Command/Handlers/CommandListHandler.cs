@@ -16,7 +16,7 @@ namespace DevEx.Modules.Command.Handlers
             table.AddColumn("Body");
             table.AddColumn("Path");
 
-            foreach (var command in commands)
+            foreach (var command in commands.OrderBy(c => c.Name))
             {
                 table.AddRow(command.Name, command.Body, command.Path);
             }
