@@ -27,11 +27,11 @@ namespace DevEx.Modules.Git.Helpers
             TerminalHelper.Run(ConsoleMode.Powershell, $"git clone {repository.RemoteLocation} {repository.WorkingFolder}");
         }
 
-        public static void CreateBranch(string hfPath, string issueId)
+        public static void CreateBranch(string path, string issueId)
         {
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git branch {issueId}", hfPath);
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {issueId}", hfPath);
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git push --set-upstream origin {issueId}", hfPath);
+            TerminalHelper.Run(ConsoleMode.Powershell, $"git branch {issueId}", path);
+            TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {issueId}", path);
+            TerminalHelper.Run(ConsoleMode.Powershell, $"git push --set-upstream origin {issueId}", path);
         }
 
         public static void GetLatest(Repository repository)

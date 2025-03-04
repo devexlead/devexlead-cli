@@ -117,6 +117,12 @@ Invoke-WebRequest -Uri $downloadUrl -OutFile $outFilePath -UseBasicParsing
 
 Write-Host "Import Visual Studio 2022 Configuration"
 .\vs_community.exe --config ".\workloads.vsconfig" --passive --norestart
+
+# Visual Studio Extensions
+# https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2
+# https://marketplace.visualstudio.com/items?itemName=ErikEJ.SQLServerCompactSQLiteToolbox
+# https://marketplace.visualstudio.com/items?itemName=SonarSource.SonarLintforVisualStudio2022
+
 ################################################################################################################################################
 
 # WSL 2
