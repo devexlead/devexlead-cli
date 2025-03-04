@@ -1,10 +1,9 @@
 ﻿namespace DevEx.Core.Model.Command
 {
-    public class SubCommandItem
+    public class DxcCommand
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Handler { get; set; }
-        public List<ParameterItem> Parameters { get; set; }
+        public DxcSubCommand[] SubCommands { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DevEx.Core;
+using DevEx.Core.Helpers;
 using DevEx.Core.Storage;
 
 namespace DevEx.Modules.Command.Handlers
@@ -34,8 +35,7 @@ namespace DevEx.Modules.Command.Handlers
             userStorage.Commands.Add(command);
 
             UserStorageManager.SaveUserStorage(userStorage);
-
-            Console.WriteLine($"Command has been updated.");
+            IntelliSenseHelper.ResetPsReadLineFile();
         }
     }
 }

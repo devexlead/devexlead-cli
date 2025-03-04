@@ -15,10 +15,10 @@ namespace DevEx.Console
             // Read and parse the JSON file
             string jsonFilePath = $"{AppContext.BaseDirectory}\\Commands.json"; // Ensure this file is placed in the project directory
             string jsonContent = File.ReadAllText(jsonFilePath);
-            CommandDefinition commandDefinition = JsonSerializer.Deserialize<CommandDefinition>(jsonContent);
+            DxcCommands commandList = JsonSerializer.Deserialize<DxcCommands>(jsonContent);
 
             // Build Commands dynamically
-            foreach (var cmd in commandDefinition.Commands)
+            foreach (var cmd in commandList.Commands)
             {
                 var mainCommand = new Command(cmd.Name, cmd.Description);
 

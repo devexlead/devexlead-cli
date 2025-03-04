@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
+using DevEx.Core.Model.Command;
 using DevEx.Core.Storage;
-using DevEx.Modules.IntelliSense.Model;
 using Spectre.Console;
 
-namespace DevEx.Modules.IntelliSense.Helpers
+namespace DevEx.Core.Helpers
 {
     public class IntelliSenseHelper
     {
@@ -25,7 +25,7 @@ namespace DevEx.Modules.IntelliSense.Helpers
 
             // Deserialize the JSON into our classes.
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var root = JsonSerializer.Deserialize<Root>(json, options);
+            var root = JsonSerializer.Deserialize<DxcCommands>(json, options);
 
             var commandLines = new List<string>();
 
@@ -76,7 +76,7 @@ namespace DevEx.Modules.IntelliSense.Helpers
 
             //Insert DevEx and Bookmarked CLI Commands into PSReadLine File
             var userStorage = UserStorageManager.GetUserStorage();
-            var commands = IntelliSenseHelper.GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
+            var commands = GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
             commands.AddRange(userStorage.Bookmarks);
 
             File.AppendAllLines(psReadLineFile, commands);
