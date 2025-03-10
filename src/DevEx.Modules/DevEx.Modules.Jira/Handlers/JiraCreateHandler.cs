@@ -30,7 +30,7 @@ namespace DevEx.Modules.Jira.Handlers
                 var atlassianUser = UserStorageManager.GetDecryptedValue("Atlassian:User");
                 if (atlassianUser == null) return;
 
-                var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:User");
+                var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:Key");
                 if (atlassianKey == null) return;
 
                 var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);

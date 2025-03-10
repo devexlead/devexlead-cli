@@ -10,10 +10,12 @@ namespace DevEx.Modules.Jira.Helpers
     {
         public static long? SelectSprint(JiraConnector jiraConnector)
         {
-            var atlassianTeamBoardId = UserStorageManager.GetDecryptedValue("AtlassianTeamBoardId");
+            var atlassianTeamBoardId = UserStorageManager.GetDecryptedValue("Atlassian:BoardId");
             if (atlassianTeamBoardId == null) return null;
 
-            var sprints = jiraConnector.FetchSprints(int.Parse(atlassianTeamBoardId)).Result;
+            var sprints = jiraConnector.FetchSprints(int.Parse(atlassianTeamBoardId))
+                                       .Result.Where(s => s.State.Equals("active") ||
+                                                          s.State.Equals("future"));
             var sprintOptions = sprints.Select(s => s.Name).ToList();
             sprintOptions.Insert(0, "None");
 

@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "variable configure"
+      "commandLineArgs": "jira create"
     }
   }
 }
