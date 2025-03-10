@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Command", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.Vault", "src\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Vault.csproj", "{0FFBEEFE-20B9-47AA-95C2-A509C854E5A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEx.Modules.EnvironmentVariables", "src\DevEx.Modules\DevEx.Modules.EnvironmentVariables\DevEx.Modules.EnvironmentVariables.csproj", "{C562C141-F315-44E2-946E-7A14FD0F100F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{0FFBEEFE-20B9-47AA-95C2-A509C854E5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FFBEEFE-20B9-47AA-95C2-A509C854E5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FFBEEFE-20B9-47AA-95C2-A509C854E5A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C562C141-F315-44E2-946E-7A14FD0F100F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C562C141-F315-44E2-946E-7A14FD0F100F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C562C141-F315-44E2-946E-7A14FD0F100F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C562C141-F315-44E2-946E-7A14FD0F100F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{07C87D1A-28A6-4B27-AA07-CDF21A92CF93} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 		{7A503BAA-00F8-46F3-AFE6-34EDCB1BB791} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 		{0FFBEEFE-20B9-47AA-95C2-A509C854E5A4} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
+		{C562C141-F315-44E2-946E-7A14FD0F100F} = {92F3FA74-1E19-46D4-8393-AC9C60BDC32D}
 	EndGlobalSection
 EndGlobal

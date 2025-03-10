@@ -33,14 +33,7 @@ namespace DevEx.Modules.Jira.Helpers
 
         public static string SelectPriority()
         {
-            var priorityOptions = new List<string>
-            {
-                PriorityConstants.HIGHEST,
-                PriorityConstants.HIGH,
-                PriorityConstants.MEDIUM,
-                PriorityConstants.LOW,
-                PriorityConstants.LOWEST
-            };
+            var priorityOptions = UserStorageManager.GetDecryptedValue("Atlassian:Jira:Priorities").Split("|");
 
             return AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -51,14 +44,7 @@ namespace DevEx.Modules.Jira.Helpers
 
         public static string SelectIssueType()
         {
-            var issueTypeOptions = new List<string>
-            {
-                IssueTypeConstants.EPIC,
-                IssueTypeConstants.STORY,
-                IssueTypeConstants.BUG,
-                IssueTypeConstants.TASK,
-                IssueTypeConstants.SUBTASK
-            };
+           var issueTypeOptions = UserStorageManager.GetDecryptedValue("Atlassian:Jira:IssueTypes").Split("|");
 
             return AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -69,7 +55,7 @@ namespace DevEx.Modules.Jira.Helpers
 
         public static JiraUser? SelectAssignee(JiraConnector jiraConnector)
         {
-            var atlassianUserGroupName = UserStorageManager.GetDecryptedValue("AtlassianUserGroupName");
+            var atlassianUserGroupName = UserStorageManager.GetDecryptedValue("Atlassian:Assignees");
             if (atlassianUserGroupName == null) return null;
 
             var jiraGroupMembersResponse = jiraConnector.GetJiraUsersByGroupName(atlassianUserGroupName).Result;

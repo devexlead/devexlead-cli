@@ -49,6 +49,11 @@ namespace DevEx.Core.Storage
                 userStorage.Bookmarks = new List<string>();
             }
 
+            if (userStorage.EnvironmentVariables == null)
+            {
+                userStorage.EnvironmentVariables = new Dictionary<string, string>();
+            }
+
             SaveUserStorage(userStorage);
         }
 

@@ -219,6 +219,50 @@
           "Parameters": []
         }
       ]
+    },
+    {
+      "Name": "variable",
+      "Description": "Environment Variables",
+      "SubCommands": [
+        {
+          "Name": "update",
+          "Description": "",
+          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableUpdateHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to update"
+            },
+            {
+              "Name": "value",
+              "Description": "The new value"
+            }
+          ]
+        },
+        {
+          "Name": "list",
+          "Description": "",
+          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableListHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "configure",
+          "Description": "Configure Environment Variables in Machine",
+          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableConfigureHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "delete",
+          "Description": "",
+          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableDeleteHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to update"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -2,7 +2,7 @@
   "profiles": {
     "DevEx.Console": {
       "commandName": "Project",
-      "commandLineArgs": "tool install"
+      "commandLineArgs": "variable delete --key \"ee\""
     }
   }
 }

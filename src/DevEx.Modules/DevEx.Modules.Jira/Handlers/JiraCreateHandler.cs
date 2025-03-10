@@ -24,13 +24,13 @@ namespace DevEx.Modules.Jira.Handlers
                     }
                 }
 
-                var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("AtlassianBaseUrl");
+                var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("Atlassian:BaseUrl");
                 if (atlassianBaseUrl == null) return;
 
-                var atlassianUser = UserStorageManager.GetDecryptedValue("AtlassianUser");
+                var atlassianUser = UserStorageManager.GetDecryptedValue("Atlassian:User");
                 if (atlassianUser == null) return;
 
-                var atlassianKey = UserStorageManager.GetDecryptedValue("AtlassianKey");
+                var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:User");
                 if (atlassianKey == null) return;
 
                 var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
@@ -39,7 +39,7 @@ namespace DevEx.Modules.Jira.Handlers
                 {
                     Fields = new JiraFieldsCreateRequest
                     {
-                        Project = new JiraProject { Key = AnsiConsole.Ask<string>("Enter project ID:") },
+                        Project = new JiraProject { Key = UserStorageManager.GetDecryptedValue("Atlassian:Jira:ProjectKey") },
                         Summary = AnsiConsole.Ask<string>("Enter summary:"),
                         Description = AnsiConsole.Ask<string>("Enter description:"),
                         IssueType = new JiraIssueType { Name = JiraHelper.SelectIssueType() },
@@ -66,7 +66,8 @@ namespace DevEx.Modules.Jira.Handlers
                     request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (format: yyyy-MM-dd):", null);
                 }
 
-                request.Fields.Assignee = JiraHelper.SelectAssignee(jiraConnector);
+                //TODO: Make this configurable in local config file
+                //request.Fields.Assignee = JiraHelper.SelectAssignee(jiraConnector);
 
                 var result = jiraConnector.CreateIssueAsync(request).Result;
 

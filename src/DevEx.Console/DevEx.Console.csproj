@@ -24,6 +24,7 @@
 		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Command\DevEx.Modules.Command.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Database\DevEx.Modules.Database.csproj" />
+		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.EnvironmentVariables\DevEx.Modules.EnvironmentVariables.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Git\DevEx.Modules.Git.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj" />
 		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.SSL\DevEx.Modules.SSL.csproj" />
