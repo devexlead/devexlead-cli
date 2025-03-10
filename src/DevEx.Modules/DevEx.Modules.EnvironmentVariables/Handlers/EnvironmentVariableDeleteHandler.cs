@@ -1,5 +1,6 @@
 ﻿using DevEx.Core;
 using DevEx.Core.Helpers;
+using DevEx.Modules.EnvironmentVariables.Helpers;
 using Spectre.Console;
 
 namespace DevEx.Modules.EnvironmentVariables.Handlers
@@ -16,7 +17,7 @@ namespace DevEx.Modules.EnvironmentVariables.Handlers
                 return;
             }
 
-            EnvironmentVariableHelper.DeleteEnvironmentVariable(key);
+            EnvironmentVariableHelper.Delete(key);
             AnsiConsole.MarkupLine($"[green]Environment variable deleted.[/]");
         }
     }

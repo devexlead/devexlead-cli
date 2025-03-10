@@ -6,28 +6,7 @@ namespace DevEx.Core.Helpers
 {
     public class HealthCheckHelper
     {
-        public static void CheckEnvironmentVariables()
-        {
-            Console.WriteLine();
-            AnsiConsole.MarkupLine($"[yellow]Checking Environment Variables...[/]");
-
-            var requiredVariables = EnvironmentVariableHelper.GetEnvironmentVariables();
-
-            foreach (var variable in requiredVariables)
-            {
-                var storedVariableValue = Environment.GetEnvironmentVariable(variable.Key);
-                if (!string.IsNullOrEmpty(storedVariableValue) &&
-                    storedVariableValue.Equals(variable.Value))
-                {
-                    AnsiConsole.MarkupLine($"[green]{variable.Key}: OK[/]");
-                }
-                else
-                {
-                    AnsiConsole.MarkupLine($"[red]{variable.Key}: Failed. Value should be {variable.Value}[/]");
-                }
-            }
-        }
-
+      
         //private static void CheckRedisHealth()
         //{
         //    Console.WriteLine();

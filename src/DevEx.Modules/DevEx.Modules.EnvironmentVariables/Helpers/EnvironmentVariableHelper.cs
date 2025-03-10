@@ -1,25 +1,15 @@
 ﻿using DevEx.Core.Storage;
 
-namespace DevEx.Core.Helpers
+namespace DevEx.Modules.EnvironmentVariables.Helpers
 {
     public static class EnvironmentVariableHelper
     {
-        public static void ConfigureMachineEnvironmentVariables()
-        {
-            var variables = UserStorageManager.GetUserStorage().EnvironmentVariables;
-
-            foreach (var variable in variables)
-            {
-                Environment.SetEnvironmentVariable(variable.Key, variable.Value, EnvironmentVariableTarget.Machine);
-            }
-        }
-
-        public static Dictionary<string, string> GetEnvironmentVariables()
+        public static Dictionary<string, string> List()
         {
             return UserStorageManager.GetUserStorage().EnvironmentVariables;
         }
 
-        public static void AddEnvironmentVariable(string key, string value)
+        public static void Add(string key, string value)
         {
             var userStorage = UserStorageManager.GetUserStorage();
 
@@ -35,7 +25,7 @@ namespace DevEx.Core.Helpers
             UserStorageManager.SaveUserStorage(userStorage);
         }
 
-        public static void DeleteEnvironmentVariable(string key)
+        public static void Delete(string key)
         {
             var userStorage = UserStorageManager.GetUserStorage();
 
