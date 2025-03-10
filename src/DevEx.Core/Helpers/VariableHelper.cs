@@ -7,7 +7,7 @@ namespace DevEx.Core.Helpers
     {
         public static string ReplacePlaceholders(string input)
         {
-            return Regex.Replace(input, @"\{\{(\w+)\}\}", match =>
+            return Regex.Replace(input, @"\{\{([^}]+)\}\}", match =>
             {
                 var key = match.Groups[1].Value;
                 var placeHolder = UserStorageManager.GetDecryptedValue(key) ?? match.Value;
