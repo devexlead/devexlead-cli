@@ -21,15 +21,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DevEx.Core\DevEx.Core.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Command\DevEx.Modules.Command.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Database\DevEx.Modules.Database.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.EnvironmentVariables\DevEx.Modules.EnvironmentVariables.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Git\DevEx.Modules.Git.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Jira\DevEx.Modules.Jira.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.SSL\DevEx.Modules.SSL.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Tools\DevEx.Modules.Tools.csproj" />
-		<ProjectReference Include="..\DevEx.Modules\DevEx.Modules.Vault\DevEx.Modules.Vault.csproj" />
+		<ProjectReference Include="..\DevExLead.Core\DevExLead.Core.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Command\DevExLead.Modules.Command.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Database\DevExLead.Modules.Database.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.EnvironmentVariables\DevExLead.Modules.EnvironmentVariables.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Git\DevExLead.Modules.Git.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Jira\DevExLead.Modules.Jira.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.SSL\DevExLead.Modules.SSL.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Tools\DevExLead.Modules.Tools.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Vault\DevExLead.Modules.Vault.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

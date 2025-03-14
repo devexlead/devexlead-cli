@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/.github/" />
-  <Folder Name="/.github/workflows/">
+  <Folder Name="/.github/workflows/" Id="e7a3c856-6834-d657-f2f0-05592df2dde9">
     <File Path=".github/workflows/ci-cd.yml" />
     <File Path=".github/workflows/release.yml" />
   </Folder>
@@ -8,17 +8,17 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/DevEx.Console/DevEx.Console.csproj" />
-    <Project Path="src/DevEx.Core/DevEx.Core.csproj" />
+    <Project Path="src/DevExLead.Console/DevExLead.CLI.csproj" Id="412ec254-46ae-d92e-f2d7-0e821cf9a9a5" />
+    <Project Path="src/DevExLead.Core/DevExLead.Core.csproj" />
   </Folder>
-  <Folder Name="/src/Modules/">
-    <Project Path="src/DevEx.Modules/DevEx.Modules.Command/DevEx.Modules.Command.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.Database/DevEx.Modules.Database.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.EnvironmentVariables/DevEx.Modules.EnvironmentVariables.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.Git/DevEx.Modules.Git.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.Jira/DevEx.Modules.Jira.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.SSL/DevEx.Modules.SSL.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.Tools/DevEx.Modules.Tools.csproj" />
-    <Project Path="src/DevEx.Modules/DevEx.Modules.Vault/DevEx.Modules.Vault.csproj" />
+  <Folder Name="/src/Modules/" Id="ec447dcf-abfa-6e24-52a5-d7fd48a5c558">
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Command/DevExLead.Modules.Command.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Database/DevExLead.Modules.Database.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.EnvironmentVariables/DevExLead.Modules.EnvironmentVariables.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Git/DevExLead.Modules.Git.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Jira/DevExLead.Modules.Jira.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.SSL/DevExLead.Modules.SSL.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Tools/DevExLead.Modules.Tools.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Vault/DevExLead.Modules.Vault.csproj" />
   </Folder>
 </Solution>

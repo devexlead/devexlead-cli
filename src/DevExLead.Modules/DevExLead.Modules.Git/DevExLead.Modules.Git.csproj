@@ -8,15 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevEx.Integrations" Version="1.0.6-g44fd203009" />
     <PackageReference Include="Handlebars.Net" Version="2.1.6" />
+    <PackageReference Include="TextCopy" Version="6.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DevEx.Core\DevEx.Core.csproj" />
+    <ProjectReference Include="..\..\DevExLead.Core\DevExLead.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SSL\ssl.template">
+    <None Update="SSH\config.template">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SSH\known_hosts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

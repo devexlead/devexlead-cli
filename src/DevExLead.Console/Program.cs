@@ -15,9 +15,11 @@ var builder = new CommandLineBuilder(rootCommand)
     .UseDefaults()
     .UseSuggestDirective();
 
+var parser = builder.Build();
+await parser.InvokeAsync(args);
+
 //Refresh Intellisense Commands
 IntelliSenseHelper.ResetPsReadLineFile();
 
-var parser = builder.Build();
-return await parser.InvokeAsync(args);
+return;
 
