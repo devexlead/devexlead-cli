@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Security.Principal;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public static class ProcessHelper
     {

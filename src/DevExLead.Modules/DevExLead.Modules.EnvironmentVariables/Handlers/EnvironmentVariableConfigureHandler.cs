@@ -1,10 +1,10 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
-using DevEx.Core.Storage;
-using DevEx.Modules.EnvironmentVariables.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage;
+using DevExLead.Modules.EnvironmentVariables.Helpers;
 using Spectre.Console;
 
-namespace DevEx.Modules.EnvironmentVariables.Handlers
+namespace DevExLead.Modules.EnvironmentVariables.Handlers
 {
     public class EnvironmentVariableConfigureHandler : ICommandHandler
     {

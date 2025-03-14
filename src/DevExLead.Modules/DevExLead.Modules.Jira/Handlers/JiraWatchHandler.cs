@@ -1,10 +1,10 @@
-﻿using DevEx.Core;
-using DevEx.Core.Storage;
-using DevEx.Integrations.JIRA;
-using DevEx.Modules.Jira.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Storage;
+using DevExLead.Integrations.JIRA;
+using DevExLead.Modules.Jira.Helpers;
 using Spectre.Console;
 
-namespace DevEx.Modules.Jira.Handlers
+namespace DevExLead.Modules.Jira.Handlers
 {
     public class JiraWatchHandler : ICommandHandler
     {

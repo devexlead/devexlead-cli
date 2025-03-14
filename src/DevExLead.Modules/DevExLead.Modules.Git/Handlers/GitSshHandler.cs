@@ -1,8 +1,8 @@
-﻿using DevEx.Core;
-using DevEx.Modules.Git.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Modules.Git.Helpers;
 using Spectre.Console;
 
-namespace DevEx.Modules.Git.Handlers
+namespace DevExLead.Modules.Git.Handlers
 {
     public class GitSshHandler : ICommandHandler
     {

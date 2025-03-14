@@ -1,7 +1,7 @@
-﻿using DevEx.Core;
-using DevEx.Core.Storage;
+﻿using DevExLead.Core;
+using DevExLead.Core.Storage;
 
-namespace DevEx.Modules.Command.Handlers
+namespace DevExLead.Modules.Command.Handlers
 {
     internal class CommandDeleteCommandHandler : ICommandHandler
     {

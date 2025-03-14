@@ -1,6 +1,6 @@
-﻿using DevEx.Core.Storage;
+﻿using DevExLead.Core.Storage;
 
-namespace DevEx.Modules.EnvironmentVariables.Helpers
+namespace DevExLead.Modules.EnvironmentVariables.Helpers
 {
     public static class EnvironmentVariableHelper
     {

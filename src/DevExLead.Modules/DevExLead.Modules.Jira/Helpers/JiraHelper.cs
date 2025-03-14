@@ -1,10 +1,10 @@
-﻿using DevEx.Core.Storage;
-using DevEx.Integrations.JIRA;
-using DevEx.Integrations.JIRA.Model;
+﻿using DevExLead.Core.Storage;
+using DevExLead.Integrations.JIRA;
+using DevExLead.Integrations.JIRA.Model;
 using devex_integrations.JIRA.Constants;
 using Spectre.Console;
 
-namespace DevEx.Modules.Jira.Helpers
+namespace DevExLead.Modules.Jira.Helpers
 {
     public static class JiraHelper
     {

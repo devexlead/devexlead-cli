@@ -1,9 +1,9 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using DevEx.Console;
-using DevEx.Core.Helpers;
-using DevEx.Core.Storage;
+using DevExLead.Cli;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage;
 
 var rootCommand = new RootCommand();
 

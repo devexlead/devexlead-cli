@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Spectre.Console;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public static class TerminalHelper
     {

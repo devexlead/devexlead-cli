@@ -1,4 +1,4 @@
-﻿namespace DevEx.Core
+﻿namespace DevExLead.Core
 {
     public interface ICommandHandler
     {

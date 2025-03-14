@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
-using DevEx.Core.Helpers;
-using DevEx.Core.Storage.Model;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage.Model;
 using Microsoft.Extensions.Configuration;
 using Spectre.Console;
 
-namespace DevEx.Core.Storage
+namespace DevExLead.Core.Storage
 {
     public static class UserStorageManager
     {

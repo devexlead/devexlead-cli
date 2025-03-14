@@ -4,9 +4,9 @@ using System.CommandLine;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
-using DevEx.Core.Model.Command;
+using DevExLead.Core.Model.Command;
 
-namespace DevEx.Console
+namespace DevExLead.Cli
 {
     public class Helper
     {

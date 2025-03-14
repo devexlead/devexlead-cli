@@ -1,8 +1,8 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
-using DevEx.Core.Storage;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage;
 
-namespace DevEx.Modules.Configuration.Handlers.Vault
+namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
     public class WindowsVaultUpdateCommandHandler : ICommandHandler
     {

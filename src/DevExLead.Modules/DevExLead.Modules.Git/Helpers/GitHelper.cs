@@ -1,12 +1,12 @@
-﻿using DevEx.Core.Helpers;
-using DevEx.Core.Storage;
-using DevEx.Core.Storage.Model;
+﻿using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage;
+using DevExLead.Core.Storage.Model;
 using HandlebarsDotNet;
 using Spectre.Console;
 using TextCopy;
-using static DevEx.Core.Helpers.TerminalHelper;
+using static DevExLead.Core.Helpers.TerminalHelper;
 
-namespace DevEx.Modules.Git.Helpers
+namespace DevExLead.Modules.Git.Helpers
 {
     public static class GitHelper
     {

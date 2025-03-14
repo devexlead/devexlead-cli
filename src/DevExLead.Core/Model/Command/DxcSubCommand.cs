@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Metadata;
 
-namespace DevEx.Core.Model.Command
+namespace DevExLead.Core.Model.Command
 {
     public class DxcSubCommand
     {

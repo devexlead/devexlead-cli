@@ -1,7 +1,7 @@
-﻿using DevEx.Core.Storage;
+﻿using DevExLead.Core.Storage;
 using System.Text.RegularExpressions;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public static class VariableHelper
     {

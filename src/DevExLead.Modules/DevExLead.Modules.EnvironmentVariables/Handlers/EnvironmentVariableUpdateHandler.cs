@@ -1,9 +1,9 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
-using DevEx.Modules.EnvironmentVariables.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Modules.EnvironmentVariables.Helpers;
 using Spectre.Console;
 
-namespace DevEx.Modules.EnvironmentVariables.Handlers
+namespace DevExLead.Modules.EnvironmentVariables.Handlers
 {
     public class EnvironmentVariableUpdateHandler : ICommandHandler
     {

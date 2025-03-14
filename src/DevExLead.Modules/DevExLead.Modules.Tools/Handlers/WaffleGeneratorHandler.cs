@@ -1,7 +1,7 @@
-﻿using DevEx.Core;
+﻿using DevExLead.Core;
 using WaffleGenerator;
 
-namespace DevEx.Modules.Tools.Handlers
+namespace DevExLead.Modules.Tools.Handlers
 {
     public class WaffleGeneratorHandler : ICommandHandler
     {

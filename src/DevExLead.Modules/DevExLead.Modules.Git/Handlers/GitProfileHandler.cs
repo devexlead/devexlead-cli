@@ -1,10 +1,10 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
-using DevEx.Modules.Git.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Modules.Git.Helpers;
 using Spectre.Console;
-using static DevEx.Core.Helpers.TerminalHelper;
+using static DevExLead.Core.Helpers.TerminalHelper;
 
-namespace DevEx.Modules.Git.Handlers
+namespace DevExLead.Modules.Git.Handlers
 {
     internal class GitProfileHandler : ICommandHandler
     {

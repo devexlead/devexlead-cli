@@ -7,13 +7,13 @@
         {
           "Name": "list",
           "Description": "List Vault entries",
-          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultListCommandHandler",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.WindowsVaultListCommandHandler",
           "Parameters": []
         },
         {
           "Name": "update",
           "Description": "Update an entry",
-          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultUpdateCommandHandler",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.WindowsVaultUpdateCommandHandler",
           "Parameters": [
             {
               "Name": "key",
@@ -28,7 +28,7 @@
         {
           "Name": "delete",
           "Description": "Delete an entry",
-          "Handler": "DevEx.Modules.Configuration.Handlers.Vault.WindowsVaultDeleteCommandHandler",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.WindowsVaultDeleteCommandHandler",
           "Parameters": [
             {
               "Name": "key",
@@ -45,7 +45,7 @@
         {
           "Name": "update",
           "Description": "Update Command",
-          "Handler": "DevEx.Modules.Command.Handlers.CommandUpdateCommandHandler",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandUpdateCommandHandler",
           "Parameters": [
             {
               "Name": "name",
@@ -64,7 +64,7 @@
         {
           "Name": "delete",
           "Description": "Delete Command",
-          "Handler": "DevEx.Modules.Command.Handlers.CommandDeleteCommandHandler",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandDeleteCommandHandler",
           "Parameters": [
             {
               "Name": "name",
@@ -75,7 +75,7 @@
         {
           "Name": "run",
           "Description": "Run Commands",
-          "Handler": "DevEx.Modules.Command.Handlers.CommandRunHandler",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandRunHandler",
           "Parameters": [
             {
               "Name": "name",
@@ -86,7 +86,7 @@
         {
           "Name": "list",
           "Description": "List Commands",
-          "Handler": "DevEx.Modules.Command.Handlers.CommandListHandler",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandListHandler",
           "Parameters": []
         }
       ]
@@ -98,13 +98,13 @@
         {
           "Name": "install",
           "Description": "Install Software using Winget",
-          "Handler": "DevEx.Modules.Tools.Handlers.ToolsIntallHandler",
+          "Handler": "DevExLead.Modules.Tools.Handlers.ToolsIntallHandler",
           "Parameters": []
         },
         {
           "Name": "waffle",
           "Description": "Generate Text Data for Testing",
-          "Handler": "DevEx.Modules.Tools.Handlers.WaffleGeneratorHandler",
+          "Handler": "DevExLead.Modules.Tools.Handlers.WaffleGeneratorHandler",
           "Parameters": [
             {
               "Name": "paragraphs",
@@ -125,7 +125,7 @@
         {
           "Name": "create",
           "Description": "Generate JIRA ticket",
-          "Handler": "DevEx.Modules.Jira.Handlers.JiraCreateHandler",
+          "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler",
           "Parameters": [
             {
               "Name": "isVerbose",
@@ -143,13 +143,13 @@
         {
           "Name": "create",
           "Description": "Generate Self-signed SSL Certificate",
-          "Handler": "DevEx.Modules.SSL.Handlers.SslCreateCertificateHandler",
+          "Handler": "DevExLead.Modules.SSL.Handlers.SslCreateCertificateHandler",
           "Parameters": []
         },
         {
           "Name": "install",
           "Description": "Install SSL Certificate",
-          "Handler": "DevEx.Modules.SSL.Handlers.SslInstallCertificateHandler",
+          "Handler": "DevExLead.Modules.SSL.Handlers.SslInstallCertificateHandler",
           "Parameters": []
         }
       ]
@@ -161,7 +161,7 @@
         {
           "Name": "add",
           "Description": "",
-          "Handler": "DevEx.Modules.Git.Handlers.GitCreateCommandHandler",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitCreateCommandHandler",
           "Parameters": [
             {
               "Name": "name",
@@ -184,25 +184,25 @@
         {
           "Name": "clone",
           "Description": "",
-          "Handler": "DevEx.Modules.Git.Handlers.GitCloneHandler",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitCloneHandler",
           "Parameters": []
         },
         {
           "Name": "latest",
           "Description": "",
-          "Handler": "DevEx.Modules.Git.Handlers.GitLatestHandler",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitLatestHandler",
           "Parameters": []
         },
         {
           "Name": "profile",
           "Description": "",
-          "Handler": "DevEx.Modules.Git.Handlers.GitProfileHandler",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitProfileHandler",
           "Parameters": []
         },
         {
           "Name": "ssh",
           "Description": "",
-          "Handler": "DevEx.Modules.Git.Handlers.GitSshHandler",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitSshHandler",
           "Parameters": []
         }
       ]
@@ -214,19 +214,19 @@
         {
           "Name": "restore",
           "Description": "Restore Database Backup",
-          "Handler": "DevEx.Modules.Database.Handlers.DatabaseRestoreHandler",
+          "Handler": "DevExLead.Modules.Database.Handlers.DatabaseRestoreHandler",
           "Parameters": []
         },
         {
           "Name": "upgrade",
           "Description": "Schema Upgrade using DACPAC file",
-          "Handler": "DevEx.Modules.Database.Handlers.DatabaseUpgradeHandler",
+          "Handler": "DevExLead.Modules.Database.Handlers.DatabaseUpgradeHandler",
           "Parameters": []
         },
         {
           "Name": "seed",
           "Description": "Seed the Database",
-          "Handler": "DevEx.Modules.Database.Handlers.DatabaseSeedHandler",
+          "Handler": "DevExLead.Modules.Database.Handlers.DatabaseSeedHandler",
           "Parameters": []
         }
       ]
@@ -238,7 +238,7 @@
         {
           "Name": "update",
           "Description": "",
-          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableUpdateHandler",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableUpdateHandler",
           "Parameters": [
             {
               "Name": "key",
@@ -253,19 +253,19 @@
         {
           "Name": "list",
           "Description": "",
-          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableListHandler",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableListHandler",
           "Parameters": []
         },
         {
           "Name": "configure",
           "Description": "Configure Environment Variables in Machine",
-          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableConfigureHandler",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableConfigureHandler",
           "Parameters": []
         },
         {
           "Name": "delete",
           "Description": "",
-          "Handler": "DevEx.Modules.EnvironmentVariables.Handlers.EnvironmentVariableDeleteHandler",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableDeleteHandler",
           "Parameters": [
             {
               "Name": "key",

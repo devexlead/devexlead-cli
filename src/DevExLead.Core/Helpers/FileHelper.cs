@@ -2,7 +2,7 @@
 using System.IO.Compression;
 using System.Xml;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public static class FileHelper
     {

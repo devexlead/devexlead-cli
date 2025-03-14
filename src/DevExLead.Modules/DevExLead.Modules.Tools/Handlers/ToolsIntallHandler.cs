@@ -1,8 +1,8 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 
 
-namespace DevEx.Modules.Tools.Handlers
+namespace DevExLead.Modules.Tools.Handlers
 {
     public class ToolsIntallHandler : ICommandHandler
     {

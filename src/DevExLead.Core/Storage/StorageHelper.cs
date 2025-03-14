@@ -1,4 +1,4 @@
-﻿namespace DevEx.Core.Storage
+﻿namespace DevExLead.Core.Storage
 {
     public static class StorageHelper
     {

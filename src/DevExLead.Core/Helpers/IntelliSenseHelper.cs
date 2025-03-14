@@ -1,9 +1,9 @@
-﻿using DevEx.Core.Model.Command;
-using DevEx.Core.Storage;
+﻿using DevExLead.Core.Model.Command;
+using DevExLead.Core.Storage;
 using Spectre.Console;
 using System.Text.Json;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public class IntelliSenseHelper
     {

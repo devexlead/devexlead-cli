@@ -1,13 +1,13 @@
-﻿using DevEx.Core;
-using DevEx.Core.Storage;
-using DevEx.Integrations.JIRA;
-using DevEx.Integrations.JIRA.Model;
-using DevEx.Integrations.JIRA.Model.Request;
-using DevEx.Modules.Jira.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Storage;
+using DevExLead.Integrations.JIRA;
+using DevExLead.Integrations.JIRA.Model;
+using DevExLead.Integrations.JIRA.Model.Request;
+using DevExLead.Modules.Jira.Helpers;
 using devex_integrations.JIRA.Constants;
 using Spectre.Console;
 
-namespace DevEx.Modules.Jira.Handlers
+namespace DevExLead.Modules.Jira.Handlers
 {
     public class JiraCreateHandler : ICommandHandler
     {

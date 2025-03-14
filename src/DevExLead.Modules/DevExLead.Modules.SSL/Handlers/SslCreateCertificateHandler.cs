@@ -1,9 +1,9 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
-using DevEx.Core.Storage;
-using DevEx.Modules.SSL.Helpers;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage;
+using DevExLead.Modules.SSL.Helpers;
 
-namespace DevEx.Modules.SSL.Handlers
+namespace DevExLead.Modules.SSL.Handlers
 {
     public class SslCreateCertificateHandler : ICommandHandler
     {

@@ -1,4 +1,4 @@
-﻿namespace DevEx.Core.Storage.Model
+﻿namespace DevExLead.Core.Storage.Model
 {
     public class Repository
     {

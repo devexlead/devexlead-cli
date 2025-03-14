@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.NetworkInformation;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public class HealthCheckHelper
     {

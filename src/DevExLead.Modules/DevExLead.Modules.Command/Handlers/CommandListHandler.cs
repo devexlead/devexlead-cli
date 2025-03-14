@@ -1,8 +1,8 @@
-﻿using DevEx.Core;
-using DevEx.Core.Storage;
+﻿using DevExLead.Core;
+using DevExLead.Core.Storage;
 using Spectre.Console;
 
-namespace DevEx.Modules.Command.Handlers
+namespace DevExLead.Modules.Command.Handlers
 {
     internal class CommandListHandler : ICommandHandler
     {

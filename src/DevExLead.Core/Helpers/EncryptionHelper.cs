@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DevEx.Core.Helpers
+namespace DevExLead.Core.Helpers
 {
     public class EncryptionHelper
     {

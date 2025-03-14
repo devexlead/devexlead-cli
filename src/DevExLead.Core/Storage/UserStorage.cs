@@ -1,6 +1,6 @@
-﻿using DevEx.Core.Storage.Model;
+﻿using DevExLead.Core.Storage.Model;
 
-namespace DevEx.Core.Storage
+namespace DevExLead.Core.Storage
 {
     public class UserStorage
     {

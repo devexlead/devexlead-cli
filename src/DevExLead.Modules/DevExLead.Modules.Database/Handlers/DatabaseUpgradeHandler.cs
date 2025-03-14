@@ -1,9 +1,9 @@
-﻿using DevEx.Core;
-using DevEx.Core.Helpers;
-using DevEx.Core.Storage;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Storage;
 using Spectre.Console;
 
-namespace DevEx.Modules.Database.Handlers
+namespace DevExLead.Modules.Database.Handlers
 {
     public class DatabaseUpgradeHandler : ICommandHandler
     {

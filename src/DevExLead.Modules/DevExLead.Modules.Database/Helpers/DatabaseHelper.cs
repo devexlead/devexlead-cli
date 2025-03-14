@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Spectre.Console;
 
-namespace DevEx.Modules.Database.Helpers
+namespace DevExLead.Modules.Database.Helpers
 {
     public class DatabaseHelper
     {

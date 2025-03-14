@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using HandlebarsDotNet;
 
-namespace DevEx.Modules.SSL.Helpers
+namespace DevExLead.Modules.SSL.Helpers
 {
     public class CertificateHelper
     {
