@@ -1,0 +1,24 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/ci-cd.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
+  <Folder Name="/docs/">
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/DevEx.Console/DevEx.Console.csproj" />
+    <Project Path="src/DevEx.Core/DevEx.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/">
+    <Project Path="src/DevEx.Modules/DevEx.Modules.Command/DevEx.Modules.Command.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.Database/DevEx.Modules.Database.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.EnvironmentVariables/DevEx.Modules.EnvironmentVariables.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.Git/DevEx.Modules.Git.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.Jira/DevEx.Modules.Jira.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.SSL/DevEx.Modules.SSL.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.Tools/DevEx.Modules.Tools.csproj" />
+    <Project Path="src/DevEx.Modules/DevEx.Modules.Vault/DevEx.Modules.Vault.csproj" />
+  </Folder>
+</Solution>
