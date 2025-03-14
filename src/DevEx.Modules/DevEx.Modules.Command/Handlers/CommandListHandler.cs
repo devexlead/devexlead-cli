@@ -18,7 +18,11 @@ namespace DevEx.Modules.Command.Handlers
 
             foreach (var command in commands.OrderBy(c => c.Name))
             {
-                table.AddRow(command.Name, command.Body, command.Path);
+                var name = command.Name ?? string.Empty;
+                var body = command.Body ?? string.Empty;
+                var path = command.Path ?? string.Empty;
+
+                table.AddRow(name, body, path);
             }
 
             AnsiConsole.Write(table);

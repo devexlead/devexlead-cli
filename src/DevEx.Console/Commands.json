@@ -62,6 +62,17 @@
           ]
         },
         {
+          "Name": "delete",
+          "Description": "Delete Command",
+          "Handler": "DevEx.Modules.Command.Handlers.CommandDeleteCommandHandler",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Description": "Command Name"
+            }
+          ]
+        },
+        {
           "Name": "run",
           "Description": "Run Commands",
           "Handler": "DevEx.Modules.Command.Handlers.CommandRunHandler",

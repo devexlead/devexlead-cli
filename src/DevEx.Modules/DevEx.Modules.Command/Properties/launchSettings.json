@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DevEx.Modules.Command": {
+      "commandName": "Project",
+      "commandLineArgs": "command list"
+    }
+  }
+}
