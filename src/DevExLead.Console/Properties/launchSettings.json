@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "DevEx.Console": {
+    "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "command delete --name \"b\""
+      "commandLineArgs": "command list"
     }
   }
 }

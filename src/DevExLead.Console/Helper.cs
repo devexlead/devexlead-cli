@@ -87,7 +87,7 @@ namespace DevExLead.Cli
         static Type FindTypeInReferencedAssemblies(string className)
         {
             string assemblyDirectory = AppContext.BaseDirectory;
-            foreach (var dllFile in Directory.GetFiles(assemblyDirectory, "DevEx.Modules.*.dll"))
+            foreach (var dllFile in Directory.GetFiles(assemblyDirectory, "DevExLead.Modules.*.dll"))
             {
                 Assembly externalAssembly = Assembly.LoadFrom(dllFile);
                 var type = externalAssembly.GetType(className, false, true);
