@@ -1,10 +1,10 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Storage;
 using DevExLead.Integrations.JIRA;
+using DevExLead.Integrations.JIRA.Constants;
 using DevExLead.Integrations.JIRA.Model;
 using DevExLead.Integrations.JIRA.Model.Request;
 using DevExLead.Modules.Jira.Helpers;
-using devex_integrations.JIRA.Constants;
 using Spectre.Console;
 
 namespace DevExLead.Modules.Jira.Handlers
