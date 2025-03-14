@@ -15,17 +15,8 @@ var builder = new CommandLineBuilder(rootCommand)
     .UseDefaults()
     .UseSuggestDirective();
 
-
-var userStorage = UserStorageManager.GetUserStorage();
-
-//Check if IntelliSense must be updated
-var currentVersion = Helper.GetCurrentVersion();
-if (!currentVersion.Equals(userStorage.Version))
-{
-    IntelliSenseHelper.ResetPsReadLineFile();
-    userStorage.Version = currentVersion;
-    UserStorageManager.SaveUserStorage(userStorage);
-}
+//Refresh Intellisense Commands
+IntelliSenseHelper.ResetPsReadLineFile();
 
 var parser = builder.Build();
 return await parser.InvokeAsync(args);

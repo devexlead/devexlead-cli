@@ -22,7 +22,6 @@ namespace DevEx.Modules.Command.Handlers
 
             //remove existing application with the same name
             userStorage.Commands.RemoveAll(c => c.Name == name);
-            userStorage.Bookmarks.RemoveAll(b => b.Contains(name));
 
             var command = new Core.Storage.Model.Command()
             {
@@ -31,11 +30,8 @@ namespace DevEx.Modules.Command.Handlers
                 Body = body
             };
 
-            userStorage.Bookmarks.Add($"dxc command run --name \"{name}\"");
             userStorage.Commands.Add(command);
-
             UserStorageManager.SaveUserStorage(userStorage);
-            IntelliSenseHelper.ResetPsReadLineFile();
         }
     }
 }
