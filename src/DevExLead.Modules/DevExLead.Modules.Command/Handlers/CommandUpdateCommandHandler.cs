@@ -10,7 +10,9 @@ namespace DevExLead.Modules.Command.Handlers
         {
             var name = options["name"];
             var body = options["body"];
+
             options.TryGetValue("path", out var path);
+            options.TryGetValue("group", out var group);
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(body))
             {
@@ -27,7 +29,8 @@ namespace DevExLead.Modules.Command.Handlers
             {
                 Name = name,
                 Path = path,
-                Body = body
+                Body = body,
+                Group = group
             };
 
             userStorage.Commands.Add(command);

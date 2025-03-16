@@ -58,6 +58,10 @@
             {
               "Name": "body",
               "Description": "Command Body"
+            },
+            {
+              "Name": "group",
+              "Description": "Command Group (for parallel execution)"
             }
           ]
         },
@@ -78,8 +82,12 @@
           "Handler": "DevExLead.Modules.Command.Handlers.CommandRunHandler",
           "Parameters": [
             {
-              "Name": "name",
+              "Name": "single",
               "Description": "Command Name"
+            },
+            {
+              "Name": "multiple",
+              "Description": "Command Group Name"
             }
           ]
         },

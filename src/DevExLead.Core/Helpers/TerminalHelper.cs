@@ -34,6 +34,8 @@ namespace DevExLead.Core.Helpers
             if (!string.IsNullOrEmpty(directory))
             {
                 processStartInfo.WorkingDirectory = directory;
+                processStartInfo.UseShellExecute = true;
+                processStartInfo.CreateNoWindow = false;
             }
 
             return processStartInfo;

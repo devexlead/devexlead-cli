@@ -15,14 +15,16 @@ namespace DevExLead.Modules.Command.Handlers
             table.AddColumn("Name");
             table.AddColumn("Body");
             table.AddColumn("Path");
+            table.AddColumn("Group");
 
             foreach (var command in commands.OrderBy(c => c.Name))
             {
                 var name = command.Name ?? string.Empty;
                 var body = command.Body ?? string.Empty;
                 var path = command.Path ?? string.Empty;
+                var group = command.Group ?? string.Empty;
 
-                table.AddRow(name, body, path);
+                table.AddRow(name, body, path, group);
             }
 
             AnsiConsole.Write(table);

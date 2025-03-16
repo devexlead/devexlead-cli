@@ -1,7 +1,7 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
-using System.Text.RegularExpressions;
+using DevExLead.Core.Storage.Model;
 
 namespace DevExLead.Modules.Command.Handlers
 {
@@ -9,15 +9,30 @@ namespace DevExLead.Modules.Command.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var commandName = options["name"];
+            options.TryGetValue("single", out var commandName);
+            options.TryGetValue("multiple", out var commandGroup);
 
-            if (string.IsNullOrWhiteSpace(commandName))
+            if (string.IsNullOrWhiteSpace(commandName) && string.IsNullOrWhiteSpace(commandGroup))
             {
-                Console.WriteLine("--name is required.");
+                Console.WriteLine("Specify either --single or --multiple option.");
                 return;
             }
 
             var userStorage = UserStorageManager.GetUserStorage();
+
+            if (!string.IsNullOrWhiteSpace(commandName))
+            {
+                RunSingle(commandName, userStorage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(commandGroup))
+            {
+                await RunMultiple(commandGroup, userStorage);
+            }   
+        }
+
+        private static void RunSingle(string commandName, UserStorage userStorage)
+        {
             var command = userStorage.Commands.FirstOrDefault(a => a.Name == commandName);
 
             if (command == null)
@@ -28,6 +43,28 @@ namespace DevExLead.Modules.Command.Handlers
 
             command.Body = VariableHelper.ReplacePlaceholders(command.Body);
             TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command.Body, command.Path);
+        }
+
+        private static async Task RunMultiple(string groupName, UserStorage userStorage)
+        {
+            var commands = userStorage.Commands.Where(a => a.Group == groupName).ToList();
+
+            if (commands == null)
+            {
+                Console.WriteLine("Group not found.");
+                return;
+            }
+
+            List<Task> tasks = new List<Task>();
+
+            foreach (var command in commands)
+            {
+                command.Body = VariableHelper.ReplacePlaceholders(command.Body);
+                var task = Task.Run(() => TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command.Body, command.Path));
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
         }
     }
 }
