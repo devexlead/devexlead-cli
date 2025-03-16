@@ -79,14 +79,20 @@ namespace DevExLead.Core.Helpers
             //Insert CLI Standard Commands
             var commands = GetCommandLinesFromFile($"{AppContext.BaseDirectory}\\Commands.json");
 
-            //Insert User-Defined Commands
+            //Insert Single User-Defined Commands
             foreach (var userDefinedCommand in userStorage.Commands)
             {
-                commands.Add($"dxc command run --name \"{userDefinedCommand.Name}\"");
+                commands.Add($"dxc command run --single \"{userDefinedCommand.Name}\"");
+            }
+
+            //Insert Multiple User-Defined Commands
+            var groups = userStorage.Commands.Where(c => c.Group != null).Select(c => c.Group).Distinct().ToList();
+            foreach (var userDefinedCommandGroup in groups)
+            {
+                commands.Add($"dxc command run --multiple \"{userDefinedCommandGroup}\"");
             }
 
             File.AppendAllLines(psReadLineFile, commands);
-            AnsiConsole.MarkupLine($"[Green]DevEx CLI IntelliSense is updated. Open a new PowerShell terminal.[/]");
         }
     }
 }
