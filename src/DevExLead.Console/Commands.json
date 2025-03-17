@@ -52,6 +52,12 @@
               "DefaultValue": "true"
             }
           ]
+        },
+        {
+          "Name": "reencrypt",
+          "Description": "Re-encrypt the Vault",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultReEncryptCommandHandler",
+          "Parameters": []
         }
       ]
     },

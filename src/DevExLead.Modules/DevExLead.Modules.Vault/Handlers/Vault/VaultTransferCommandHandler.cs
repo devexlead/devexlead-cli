@@ -36,6 +36,7 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
                 var userStorage = UserStorageManager.GetUserStorage();
                 userStorage.EncryptionKeys = SecurityHelper.EncryptKey(encryptionKey);
                 UserStorageManager.SaveUserStorage(userStorage);
+                File.Delete(filePath); //Delete the key file after importing
                 AnsiConsole.MarkupLine($"[green]Encryption Keys were imported[/]");
             }
         }

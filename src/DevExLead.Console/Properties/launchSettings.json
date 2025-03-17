@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "vault transfer --import \"true\""
+      "commandLineArgs": "vault reencrypt"
     }
   }
 }

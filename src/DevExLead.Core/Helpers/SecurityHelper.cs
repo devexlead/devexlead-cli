@@ -124,10 +124,10 @@ namespace DevExLead.Core.Helpers
             return plaintext;
         }
 
-        public static string EncryptVaultEntry(string vaultEntryValue)
+        public static string EncryptVaultEntry(string vaultEntryValue, string? reEncryptionKey=null)
         {
             var userStorage = UserStorageManager.GetUserStorage();
-            var keys = DecryptKey(userStorage.EncryptionKeys);
+            var keys = reEncryptionKey == null ? DecryptKey(userStorage.EncryptionKeys) : DecryptKey(reEncryptionKey);
 
             using (RSA rsa = RSA.Create())
             {
@@ -147,6 +147,22 @@ namespace DevExLead.Core.Helpers
                 rsa.FromXmlString(keys);
                 var decryptedData = rsa.Decrypt(Convert.FromBase64String(vaultEntryValue), RSAEncryptionPadding.OaepSHA1);
                 return Encoding.UTF8.GetString(decryptedData);
+            }
+        }
+
+        /// <summary>
+        /// Generate the RSA Public (to encrypt) and Private (to decrypt) key pair
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateRSAKeys()
+        {
+            using (RSA rsa = RSA.Create())
+            {
+                //export both the public and private key information. This is necessary when you need
+                //to transfer the complete key pair for vault export/import purposes.
+                rsa.KeySize = 2048;
+                string keys = rsa.ToXmlString(true);
+                return EncryptKey(keys);
             }
         }
     }

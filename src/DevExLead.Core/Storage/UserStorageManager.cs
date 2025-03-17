@@ -53,17 +53,7 @@ namespace DevExLead.Core.Storage
             // Generate Encryption Keys if not present
             if (string.IsNullOrEmpty(userStorage.EncryptionKeys))
             {
-                // Generate the RSA Public (to encrypt) and Private (to decrypt) key pair
-                using (RSA rsa = RSA.Create())
-                {
-                    //export both the public and private key information. This is necessary when you need
-                    //to transfer the complete key pair for vault export/import purposes.
-                    rsa.KeySize = 2048;
-                    string keys = rsa.ToXmlString(true);
-
-                    //Encrypt with machine specific algorithm
-                    userStorage.EncryptionKeys = SecurityHelper.EncryptKey(keys);
-                }
+                userStorage.EncryptionKeys = SecurityHelper.GenerateRSAKeys();
             }
 
             SaveUserStorage(userStorage);
