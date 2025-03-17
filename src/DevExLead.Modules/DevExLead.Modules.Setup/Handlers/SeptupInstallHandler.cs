@@ -2,9 +2,9 @@
 using DevExLead.Core.Helpers;
 
 
-namespace DevExLead.Modules.Tools.Handlers
+namespace DevExLead.Modules.Setup.Handlers
 {
-    public class ToolsIntallHandler : ICommandHandler
+    public class SeptupInstallHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {

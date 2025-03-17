@@ -61,6 +61,17 @@
       ]
     },
     {
+      "Name": "setup",
+      "Description": "Software Installation using WinGet",
+      "SubCommands": [
+        {
+          "Name": "install",
+          "Description": "Install Software",
+          "Handler": "DevExLead.Modules.Setup.Handlers.SeptupInstallHandler"
+        }
+      ]
+    },
+    {
       "Name": "command",
       "Description": "Saved Commands",
       "SubCommands": [
@@ -125,12 +136,6 @@
       "Name": "tool",
       "Description": "Developer Tools",
       "SubCommands": [
-        {
-          "Name": "install",
-          "Description": "Install Software using Winget",
-          "Handler": "DevExLead.Modules.Tools.Handlers.ToolsIntallHandler",
-          "Parameters": []
-        },
         {
           "Name": "waffle",
           "Description": "Generate Text Data for Testing",

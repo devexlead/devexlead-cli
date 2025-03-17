@@ -271,5 +271,14 @@ properties:
       settings:
         id: Microsoft.PCManager
         source: winget
+
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      id: sqlCmdPackage
+      directives:
+        description: Install SQL Command Line Utilities
+        allowPrerelease: false
+      settings:
+        id: Microsoft.Sqlcmd
+        source: winget
         
   configurationVersion: 0.2.0
