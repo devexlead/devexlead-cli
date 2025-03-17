@@ -81,7 +81,7 @@
           "Handler": "DevExLead.Modules.Command.Handlers.CommandUpdateCommandHandler",
           "Parameters": [
             {
-              "Name": "name",
+              "Name": "key",
               "Description": "Command Name"
             },
             {
@@ -104,7 +104,7 @@
           "Handler": "DevExLead.Modules.Command.Handlers.CommandDeleteCommandHandler",
           "Parameters": [
             {
-              "Name": "name",
+              "Name": "key",
               "Description": "Command Name"
             }
           ]
@@ -116,7 +116,7 @@
           "Parameters": [
             {
               "Name": "single",
-              "Description": "Command Name"
+              "Description": "Command Key"
             },
             {
               "Name": "multiple",
@@ -199,7 +199,7 @@
           "Handler": "DevExLead.Modules.Git.Handlers.GitCreateCommandHandler",
           "Parameters": [
             {
-              "Name": "name",
+              "Name": "key",
               "Description": ""
             },
             {
