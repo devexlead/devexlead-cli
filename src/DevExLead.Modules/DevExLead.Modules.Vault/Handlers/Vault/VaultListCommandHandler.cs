@@ -5,7 +5,7 @@ using Spectre.Console;
 
 namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
-    public class WindowsVaultListCommandHandler : ICommandHandler
+    public class VaultListCommandHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
@@ -19,7 +19,7 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
 
             foreach (var item in vaultItems.OrderBy(c => c.Key))
             {
-                table.AddRow(item.Key, EncryptionHelper.Decrypt(item.Value), item.Value);
+                table.AddRow(item.Key, SecurityHelper.DecryptVaultEntry(item.Value), item.Value);
             }
 
             AnsiConsole.Write(table);

@@ -7,13 +7,13 @@
         {
           "Name": "list",
           "Description": "List Vault entries",
-          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.WindowsVaultListCommandHandler",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultListCommandHandler",
           "Parameters": []
         },
         {
           "Name": "update",
           "Description": "Update an entry",
-          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.WindowsVaultUpdateCommandHandler",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultUpdateCommandHandler",
           "Parameters": [
             {
               "Name": "key",
@@ -28,7 +28,7 @@
         {
           "Name": "delete",
           "Description": "Delete an entry",
-          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.WindowsVaultDeleteCommandHandler",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultDeleteCommandHandler",
           "Parameters": [
             {
               "Name": "key",

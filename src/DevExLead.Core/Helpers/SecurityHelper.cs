@@ -1,15 +1,17 @@
-﻿using System.Management;
+﻿using DevExLead.Core.Storage;
+using System;
+using System.Management;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace DevExLead.Core.Helpers
 {
-    public class EncryptionHelper
+    public class SecurityHelper
     {
-        private static readonly byte[] _key = GenerateKey();
+        private static readonly byte[] _key = GenerateMachineSpecificKey();
         private static readonly byte[] _iv = GenerateIV();
 
-        private static byte[] GenerateKey()
+        private static byte[] GenerateMachineSpecificKey()
         {
             string machineId = GetMachineIdentifier();
             using (SHA256 sha256 = SHA256.Create())
@@ -52,10 +54,10 @@ namespace DevExLead.Core.Helpers
             return cpuId + motherboardSerial;
         }
 
-        public static string Encrypt(string plainText)
+        public static string EncryptKey(string encryptionKey)
         {
-            if (plainText == null || plainText.Length <= 0)
-                throw new ArgumentNullException(nameof(plainText));
+            if (encryptionKey == null || encryptionKey.Length <= 0)
+                throw new ArgumentNullException(nameof(encryptionKey));
             if (_key == null || _key.Length <= 0)
                 throw new ArgumentNullException(nameof(_key));
             if (_iv == null || _iv.Length <= 0)
@@ -76,7 +78,7 @@ namespace DevExLead.Core.Helpers
                     {
                         using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
-                            swEncrypt.Write(plainText);
+                            swEncrypt.Write(encryptionKey);
                         }
                         encrypted = msEncrypt.ToArray();
                     }
@@ -88,16 +90,16 @@ namespace DevExLead.Core.Helpers
             return result;
         }
 
-        public static string Decrypt(string encryptedText)
+        public static string DecryptKey(string encryptionKey)
         {
-            if (string.IsNullOrEmpty(encryptedText))
-                throw new ArgumentNullException(nameof(encryptedText));
+            if (string.IsNullOrEmpty(encryptionKey))
+                throw new ArgumentNullException(nameof(encryptionKey));
             if (_key == null || _key.Length <= 0)
                 throw new ArgumentNullException(nameof(_key));
             if (_iv == null || _iv.Length <= 0)
                 throw new ArgumentNullException(nameof(_iv));
 
-            byte[] cipherText = Convert.FromBase64String(encryptedText);
+            byte[] cipherText = Convert.FromBase64String(encryptionKey);
             string plaintext = null;
 
             using (Aes aesAlg = Aes.Create())
@@ -122,5 +124,30 @@ namespace DevExLead.Core.Helpers
             return plaintext;
         }
 
+        public static string EncryptVaultEntry(string vaultEntryValue)
+        {
+            var userStorage = UserStorageManager.GetUserStorage();
+            var keys = DecryptKey(userStorage.EncryptionKeys);
+
+            using (RSA rsa = RSA.Create())
+            {
+                rsa.FromXmlString(keys);
+                var encryptedData = rsa.Encrypt(Encoding.UTF8.GetBytes(vaultEntryValue), RSAEncryptionPadding.OaepSHA1);
+                return Convert.ToBase64String(encryptedData);
+            }
+        }
+
+        public static string DecryptVaultEntry(string vaultEntryValue)
+        {
+            var userStorage = UserStorageManager.GetUserStorage();
+            var keys = DecryptKey(userStorage.EncryptionKeys);
+
+            using (RSA rsa = RSA.Create())
+            {
+                rsa.FromXmlString(keys);
+                var decryptedData = rsa.Decrypt(Convert.FromBase64String(vaultEntryValue), RSAEncryptionPadding.OaepSHA1);
+                return Encoding.UTF8.GetString(decryptedData);
+            }
+        }
     }
 }

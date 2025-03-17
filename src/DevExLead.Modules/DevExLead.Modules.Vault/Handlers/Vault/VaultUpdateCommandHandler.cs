@@ -4,7 +4,7 @@ using DevExLead.Core.Storage;
 
 namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
-    public class WindowsVaultUpdateCommandHandler : ICommandHandler
+    public class VaultUpdateCommandHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
@@ -19,7 +19,7 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
 
             var userStorage = UserStorageManager.GetUserStorage();
 
-            value = EncryptionHelper.Encrypt(value);
+            value = SecurityHelper.EncryptVaultEntry(value);
             var entryExists = userStorage.Vault.Any(v => v.Key == key);
 
             if (entryExists)

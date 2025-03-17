@@ -4,7 +4,7 @@ using DevExLead.Core.Storage;
 namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
 
-    public class WindowsVaultDeleteCommandHandler : ICommandHandler
+    public class VaultDeleteCommandHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {

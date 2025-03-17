@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Security.Cryptography;
+using System.Text.Json;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage.Model;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,22 @@ namespace DevExLead.Core.Storage
                 userStorage.EnvironmentVariables = new Dictionary<string, string>();
             }
 
+            // Generate Encryption Keys if not present
+            if (string.IsNullOrEmpty(userStorage.EncryptionKeys))
+            {
+                // Generate the RSA Public (to encrypt) and Private (to decrypt) key pair
+                using (RSA rsa = RSA.Create())
+                {
+                    //export both the public and private key information. This is necessary when you need
+                    //to transfer the complete key pair for vault export/import purposes.
+                    rsa.KeySize = 2048;
+                    string keys = rsa.ToXmlString(true);
+
+                    //Encrypt with machine specific algorithm
+                    userStorage.EncryptionKeys = SecurityHelper.EncryptKey(keys);
+                }
+            }
+
             SaveUserStorage(userStorage);
         }
 
@@ -70,7 +87,7 @@ namespace DevExLead.Core.Storage
                 AnsiConsole.MarkupLine($"[red]{errorMessage}[/]");
                 return string.Empty;
             }
-            return EncryptionHelper.Decrypt(encryptedValue);
+            return SecurityHelper.DecryptVaultEntry(encryptedValue);
         }
 
         public static void SaveUserStorage(UserStorage userStorage)
