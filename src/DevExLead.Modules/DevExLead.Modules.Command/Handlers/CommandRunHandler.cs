@@ -33,7 +33,7 @@ namespace DevExLead.Modules.Command.Handlers
 
         private static void RunSingle(string commandName, UserStorage userStorage)
         {
-            var command = userStorage.Commands.FirstOrDefault(a => a.Name == commandName);
+            var command = userStorage.Commands.FirstOrDefault(a => a.Key == commandName);
 
             if (command == null)
             {

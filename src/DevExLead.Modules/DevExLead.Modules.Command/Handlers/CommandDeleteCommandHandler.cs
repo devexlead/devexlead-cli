@@ -18,7 +18,7 @@ namespace DevExLead.Modules.Command.Handlers
             var userStorage = UserStorageManager.GetUserStorage();
 
             //remove existing application with the same name
-            userStorage.Commands.RemoveAll(c => c.Name == name);
+            userStorage.Commands.RemoveAll(c => c.Key == name);
             UserStorageManager.SaveUserStorage(userStorage);
         }
     }

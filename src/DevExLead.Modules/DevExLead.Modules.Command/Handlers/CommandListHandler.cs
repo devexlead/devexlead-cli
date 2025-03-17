@@ -18,9 +18,9 @@ namespace DevExLead.Modules.Command.Handlers
             table.AddColumn("Group");
             table.AddColumn("Process");
 
-            foreach (var command in commands.OrderBy(c => c.Name))
+            foreach (var command in commands.OrderBy(c => c.Key))
             {
-                var name = command.Name ?? string.Empty;
+                var name = command.Key ?? string.Empty;
                 var body = command.Body ?? string.Empty;
                 var path = command.Path ?? string.Empty;
                 var group = command.Group ?? string.Empty;

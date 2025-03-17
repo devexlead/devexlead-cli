@@ -36,7 +36,7 @@ namespace DevExLead.Modules.Git.Helpers
 
         public static void GetLatest(Repository repository)
         {
-            var askToProceed = AnsiConsole.Ask<string>($"All your local changes in the {repository.Name} will be stashed. Do you want to proceed? (y/n)");
+            var askToProceed = AnsiConsole.Ask<string>($"All your local changes in the {repository.Key} will be stashed. Do you want to proceed? (y/n)");
             if (askToProceed.ToLower().Equals("y"))
             {
                 TerminalHelper.Run(PromptModeEnum.Powershell, $"git stash", repository.WorkingFolder);

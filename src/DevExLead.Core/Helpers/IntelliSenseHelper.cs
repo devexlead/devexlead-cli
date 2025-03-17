@@ -82,7 +82,7 @@ namespace DevExLead.Core.Helpers
             //Insert Single User-Defined Commands
             foreach (var userDefinedCommand in userStorage.Commands)
             {
-                commands.Add($"dxc command run --single \"{userDefinedCommand.Name}\"");
+                commands.Add($"dxc command run --single \"{userDefinedCommand.Key}\"");
             }
 
             //Insert Multiple User-Defined Commands

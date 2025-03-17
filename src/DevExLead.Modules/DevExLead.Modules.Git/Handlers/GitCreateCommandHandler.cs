@@ -7,12 +7,12 @@ namespace DevExLead.Modules.Git.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var name = options["name"];
+            var key = options["key"];
             var remoteLocation = options["remoteLocation"];
             var workingFolder = options["workingFolder"];
             var defaultBranch = options["defaultBranch"];
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(remoteLocation) || string.IsNullOrWhiteSpace(workingFolder) ||
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(remoteLocation) || string.IsNullOrWhiteSpace(workingFolder) ||
                 string.IsNullOrWhiteSpace(defaultBranch))
             {
                 Console.WriteLine("--name --remoteLocation --workingFolder --defaultBranch are required.");
@@ -22,11 +22,11 @@ namespace DevExLead.Modules.Git.Handlers
             var userStorage = UserStorageManager.GetUserStorage();
 
             //remove existing application with the same name
-            userStorage.Repositories.RemoveAll(a => a.Name == name);
+            userStorage.Repositories.RemoveAll(a => a.Key == key);
 
             var repository = new Core.Storage.Model.Repository()
             {
-                Name = name,
+                Key = key,
                 RemoteLocation = remoteLocation,
                 WorkingFolder = workingFolder,
                 DefaultBranch = defaultBranch

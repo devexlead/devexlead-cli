@@ -8,14 +8,14 @@ namespace DevExLead.Modules.Command.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var name = options["name"];
+            var key = options["key"];
             var body = options["body"];
 
             options.TryGetValue("path", out var path);
             options.TryGetValue("group", out var group);
             options.TryGetValue("process", out var process);
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(body))
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(body))
             {
                 Console.WriteLine("--name --body are required.");
                 return;
@@ -24,11 +24,11 @@ namespace DevExLead.Modules.Command.Handlers
             var userStorage = UserStorageManager.GetUserStorage();
 
             //remove existing application with the same name
-            userStorage.Commands.RemoveAll(c => c.Name == name);
+            userStorage.Commands.RemoveAll(c => c.Key == key);
 
             var command = new Core.Storage.Model.Command()
             {
-                Name = name,
+                Key = key,
                 Path = path,
                 Body = body,
                 Group = group,
