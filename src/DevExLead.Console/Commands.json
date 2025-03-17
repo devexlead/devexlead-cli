@@ -95,6 +95,10 @@
             {
               "Name": "group",
               "Description": "Command Group (for parallel execution)"
+            },
+            {
+              "Name": "process",
+              "Description": "Command Process (required for re-execution)"
             }
           ]
         },
