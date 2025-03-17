@@ -15,7 +15,11 @@ namespace DevExLead.Modules.Transfer.Handlers
             TransferHelper.SelectPath(out string folderPath);
 
             //Export Configuration
-            var configuration = JsonSerializer.Serialize(userStorage);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            var configuration = JsonSerializer.Serialize(userStorage, jsonOptions);
             var configurationPath = Path.Combine(folderPath, "configuration.json");
             FileHelper.SaveFile(configurationPath, configuration);
 

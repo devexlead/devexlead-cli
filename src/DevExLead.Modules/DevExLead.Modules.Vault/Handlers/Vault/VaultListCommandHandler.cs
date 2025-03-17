@@ -14,11 +14,10 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
             var table = new Table();
             table.AddColumn("Name");
             table.AddColumn("Decrypted Value");
-            table.AddColumn("Encrypted Value");
 
             foreach (var item in vaultItems.OrderBy(c => c.Key))
             {
-                table.AddRow(item.Key, UserStorageManager.GetDecryptedValue(item.Key), item.Value);
+                table.AddRow(item.Key, UserStorageManager.GetDecryptedValue(item.Key));
             }
 
             AnsiConsole.Write(table);
