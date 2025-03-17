@@ -32,7 +32,7 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
 
             UserStorageManager.SaveUserStorage(userStorage);
 
-            AnsiConsole.WriteLine("[green]Vault entries re-encrypted.[/]");
+            AnsiConsole.MarkupLine("[green]Vault entries re-encrypted.[/]");
         }
 
        
