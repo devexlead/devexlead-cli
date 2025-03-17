@@ -35,6 +35,23 @@
               "Description": "The key to delete"
             }
           ]
+        },
+        {
+          "Name": "transfer",
+          "Description": "Transfer Vault between computers",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultTransferCommandHandler",
+          "Parameters": [
+            {
+              "Name": "export",
+              "Description": "Export Encryption Keys",
+              "DefaultValue": "true"
+            },
+            {
+              "Name": "import",
+              "Description": "Import Encryption Keys",
+              "DefaultValue": "true"
+            }
+          ]
         }
       ]
     },

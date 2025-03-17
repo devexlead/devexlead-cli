@@ -48,6 +48,7 @@ namespace DevExLead.Core.Helpers
         public static void SaveFile(string fileLocation, string content)
         {
             File.WriteAllText(fileLocation, content);
+            AnsiConsole.MarkupLine($"[green]{fileLocation} saved successfully.[/]");
         }
 
         public static List<FileInfo> FindAllFiles(string path, string name)
