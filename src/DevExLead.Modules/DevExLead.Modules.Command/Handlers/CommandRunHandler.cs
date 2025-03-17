@@ -41,6 +41,7 @@ namespace DevExLead.Modules.Command.Handlers
                 return;
             }
 
+            KillProcess(command);
             command.Body = VariableHelper.ReplacePlaceholders(command.Body);
             TerminalHelper.Run(PromptModeEnum.Powershell, command.Body, command.Path);
         }
@@ -59,12 +60,21 @@ namespace DevExLead.Modules.Command.Handlers
 
             foreach (var command in commands)
             {
+                KillProcess(command);
                 command.Body = VariableHelper.ReplacePlaceholders(command.Body);
                 var task = Task.Run(() => TerminalHelper.Run(PromptModeEnum.Powershell, command.Body, command.Path, isMultipleExecution: true));
                 tasks.Add(task);
             }
 
             await Task.WhenAll(tasks);
+        }
+
+        private static void KillProcess(Core.Storage.Model.Command command)
+        {
+            if (!string.IsNullOrEmpty(command.Process))
+            {
+                ProcessHelper.KillProcess(command.Process);
+            }
         }
     }
 }

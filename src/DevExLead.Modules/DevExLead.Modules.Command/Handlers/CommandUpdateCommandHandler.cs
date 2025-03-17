@@ -13,6 +13,7 @@ namespace DevExLead.Modules.Command.Handlers
 
             options.TryGetValue("path", out var path);
             options.TryGetValue("group", out var group);
+            options.TryGetValue("process", out var process);
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(body))
             {
@@ -30,7 +31,8 @@ namespace DevExLead.Modules.Command.Handlers
                 Name = name,
                 Path = path,
                 Body = body,
-                Group = group
+                Group = group,
+                Process = process
             };
 
             userStorage.Commands.Add(command);

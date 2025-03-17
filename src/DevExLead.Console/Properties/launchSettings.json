@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "command run --multiple \"GroupA\""
+      "commandLineArgs": "command run --single \"devexlead-backend\""
     }
   }
 }
