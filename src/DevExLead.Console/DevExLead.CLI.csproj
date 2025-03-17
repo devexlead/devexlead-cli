@@ -23,7 +23,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DevExLead.Core\DevExLead.Core.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Command\DevExLead.Modules.Command.csproj" />
-		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Database\DevExLead.Modules.Database.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.EnvironmentVariables\DevExLead.Modules.EnvironmentVariables.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Git\DevExLead.Modules.Git.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Jira\DevExLead.Modules.Jira.csproj" />

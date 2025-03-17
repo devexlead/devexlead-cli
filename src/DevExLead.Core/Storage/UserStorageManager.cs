@@ -56,6 +56,12 @@ namespace DevExLead.Core.Storage
                 userStorage.EncryptionKeys = SecurityHelper.GenerateRSAKeys();
             }
 
+            // Sort by name
+            userStorage.Vault = userStorage.Vault.OrderBy(v => v.Key).ToDictionary();
+            userStorage.Commands = userStorage.Commands.OrderBy(c => c.Name).ToList();
+            userStorage.Repositories = userStorage.Repositories.OrderBy(c => c.Name).ToList();
+            userStorage.EnvironmentVariables = userStorage.EnvironmentVariables.OrderBy(v => v.Key).ToDictionary();
+
             SaveUserStorage(userStorage);
         }
 

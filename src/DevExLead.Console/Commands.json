@@ -243,30 +243,6 @@
       ]
     },
     {
-      "Name": "database",
-      "Description": "Database Commands",
-      "SubCommands": [
-        {
-          "Name": "restore",
-          "Description": "Restore Database Backup",
-          "Handler": "DevExLead.Modules.Database.Handlers.DatabaseRestoreHandler",
-          "Parameters": []
-        },
-        {
-          "Name": "upgrade",
-          "Description": "Schema Upgrade using DACPAC file",
-          "Handler": "DevExLead.Modules.Database.Handlers.DatabaseUpgradeHandler",
-          "Parameters": []
-        },
-        {
-          "Name": "seed",
-          "Description": "Seed the Database",
-          "Handler": "DevExLead.Modules.Database.Handlers.DatabaseSeedHandler",
-          "Parameters": []
-        }
-      ]
-    },
-    {
       "Name": "variable",
       "Description": "Environment Variables",
       "SubCommands": [
