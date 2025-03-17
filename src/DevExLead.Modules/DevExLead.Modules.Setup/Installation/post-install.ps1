@@ -95,7 +95,7 @@ dism /online /enable-feature /featurename:IIS-WebSockets /all /norestart
 ################################################################################################################################################
 Install-Module PSReadLine -Force; 
 New-Item -Path $PROFILE -ItemType File -Force
-Add-Content -Path $PROFILE -Value "Set-PSReadLineOption -PredictionViewStyle ListView -PredictionSource History -HistoryNoDuplicates -MaximumHistoryCount 10000"
+Add-Content -Path $PROFILE -Value "Set-PSReadLineOption -PredictionViewStyle ListView -PredictionSource History -MaximumHistoryCount 100"
 ################################################################################################################################################
 
 # VSCode Settings

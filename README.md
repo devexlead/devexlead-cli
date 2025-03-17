@@ -10,7 +10,7 @@
 
 # Installation
 
-`dotnet tool install --global dxc --version 0.0.37-g7eac6c729d`
+`dotnet tool install --global dxc --version 0.0.52-gd6ea61c85e`
 
 # Goals
 
@@ -20,12 +20,13 @@
 
 # Modules
 
-- `vault`: Save secrets encrypted locally
+- `vault`: Encrypt and save secrets locally
 - `command`: Create shorcuts for commonly used commands
+- `setup`: Install software for a new laptop
+- `transfer`: Transfer configuration between machines
 - `tool`: Developer tools
 - `git`: Git operations against a pre-defined set of repositories
 - `ssl`: Create and install Self Signed Certificates
-- `database`: Restore, upgrade and seed your SQL Server database
 - `jira`: https://github.com/devexlead/devexlead-cli/blob/main/docs/jira.md
 
 Links to be added (in the meantime you can check `dxc --help`)
