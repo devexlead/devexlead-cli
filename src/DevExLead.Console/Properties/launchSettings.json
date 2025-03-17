@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "setup install"
+      "commandLineArgs": "command run --multiple \"GroupA\""
     }
   }
 }

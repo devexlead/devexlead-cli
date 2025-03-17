@@ -1,10 +1,10 @@
 ﻿using DevExLead.Core.Helpers;
+using DevExLead.Core.Model.Enums;
 using DevExLead.Core.Storage;
 using DevExLead.Core.Storage.Model;
 using HandlebarsDotNet;
 using Spectre.Console;
 using TextCopy;
-using static DevExLead.Core.Helpers.TerminalHelper;
 
 namespace DevExLead.Modules.Git.Helpers
 {
@@ -12,10 +12,10 @@ namespace DevExLead.Modules.Git.Helpers
     {
         public static void ConfigureProfile(Repository repository, string gitUsername, string gitEmail)
         {
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --local user.name {gitUsername}", repository.WorkingFolder);
-            TerminalHelper.Run(ConsoleMode.Powershell, "git config --local user.name", repository.WorkingFolder);
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --local user.email {gitEmail}", repository.WorkingFolder);
-            TerminalHelper.Run(ConsoleMode.Powershell, "git config --local user.email", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git config --local user.name {gitUsername}", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, "git config --local user.name", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git config --local user.email {gitEmail}", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, "git config --local user.email", repository.WorkingFolder);
         }
 
         public static void Clone(Repository repository)
@@ -24,14 +24,14 @@ namespace DevExLead.Modules.Git.Helpers
             {
                 Directory.CreateDirectory(repository.WorkingFolder);
             }
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git clone {repository.RemoteLocation} {repository.WorkingFolder}");
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git clone {repository.RemoteLocation} {repository.WorkingFolder}");
         }
 
         public static void CreateBranch(string path, string issueId)
         {
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git branch {issueId}", path);
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {issueId}", path);
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git push --set-upstream origin {issueId}", path);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git branch {issueId}", path);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git checkout {issueId}", path);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git push --set-upstream origin {issueId}", path);
         }
 
         public static void GetLatest(Repository repository)
@@ -39,11 +39,11 @@ namespace DevExLead.Modules.Git.Helpers
             var askToProceed = AnsiConsole.Ask<string>($"All your local changes in the {repository.Name} will be stashed. Do you want to proceed? (y/n)");
             if (askToProceed.ToLower().Equals("y"))
             {
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git stash", repository.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git reset --hard", repository.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git fetch", repository.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git checkout {repository.DefaultBranch}", repository.WorkingFolder);
-                TerminalHelper.Run(ConsoleMode.Powershell, $"git pull", repository.WorkingFolder);
+                TerminalHelper.Run(PromptModeEnum.Powershell, $"git stash", repository.WorkingFolder);
+                TerminalHelper.Run(PromptModeEnum.Powershell, $"git reset --hard", repository.WorkingFolder);
+                TerminalHelper.Run(PromptModeEnum.Powershell, $"git fetch", repository.WorkingFolder);
+                TerminalHelper.Run(PromptModeEnum.Powershell, $"git checkout {repository.DefaultBranch}", repository.WorkingFolder);
+                TerminalHelper.Run(PromptModeEnum.Powershell, $"git pull", repository.WorkingFolder);
             }
             else
             {
@@ -93,13 +93,13 @@ namespace DevExLead.Modules.Git.Helpers
             File.Copy($"{GitHelper.GetSshPath()}\\config", sshConfigDestinationFile, true);
 
             //Generate SSH Key
-            TerminalHelper.Run(ConsoleMode.Powershell, $"ssh-keygen -t ed25519 -C {emailAddress} -f \"{sshKeyFile}\"");
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"ssh-keygen -t ed25519 -C {emailAddress} -f \"{sshKeyFile}\"");
 
             //Restart SSH Agent
-            TerminalHelper.Run(ConsoleMode.Powershell, "Stop-Service ssh-agent");
-            TerminalHelper.Run(ConsoleMode.Powershell, "Set-Service -Name ssh-agent -StartupType Automatic");
-            TerminalHelper.Run(ConsoleMode.Powershell, "Start-Service ssh-agent");
-            TerminalHelper.Run(ConsoleMode.Powershell, "Get-Service -Name ssh-agent");
+            TerminalHelper.Run(PromptModeEnum.Powershell, "Stop-Service ssh-agent");
+            TerminalHelper.Run(PromptModeEnum.Powershell, "Set-Service -Name ssh-agent -StartupType Automatic");
+            TerminalHelper.Run(PromptModeEnum.Powershell, "Start-Service ssh-agent");
+            TerminalHelper.Run(PromptModeEnum.Powershell, "Get-Service -Name ssh-agent");
             
             string publicKey = File.ReadAllText($"{sshKeyFile}.pub");
             ClipboardService.SetText(publicKey);

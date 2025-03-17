@@ -1,7 +1,7 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Helpers;
+using DevExLead.Core.Model.Enums;
 using DevExLead.Core.Storage;
-using DevExLead.Core.Storage.Model;
 
 namespace DevExLead.Modules.Command.Handlers
 {
@@ -42,7 +42,7 @@ namespace DevExLead.Modules.Command.Handlers
             }
 
             command.Body = VariableHelper.ReplacePlaceholders(command.Body);
-            TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command.Body, command.Path);
+            TerminalHelper.Run(PromptModeEnum.Powershell, command.Body, command.Path);
         }
 
         private static async Task RunMultiple(string groupName, UserStorage userStorage)
@@ -60,7 +60,7 @@ namespace DevExLead.Modules.Command.Handlers
             foreach (var command in commands)
             {
                 command.Body = VariableHelper.ReplacePlaceholders(command.Body);
-                var task = Task.Run(() => TerminalHelper.Run(TerminalHelper.ConsoleMode.Powershell, command.Body, command.Path));
+                var task = Task.Run(() => TerminalHelper.Run(PromptModeEnum.Powershell, command.Body, command.Path, isMultipleExecution: true));
                 tasks.Add(task);
             }
 

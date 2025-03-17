@@ -1,5 +1,6 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Helpers;
+using DevExLead.Core.Model.Enums;
 using DevExLead.Modules.Git.Helpers;
 using Spectre.Console;
 using static DevExLead.Core.Helpers.TerminalHelper;
@@ -14,10 +15,10 @@ namespace DevExLead.Modules.Git.Handlers
             var gitEmail = AnsiConsole.Ask<string>("Git Email Address: ");
 
             //Global Profile
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --global user.name {gitUsername}");
-            TerminalHelper.Run(ConsoleMode.Powershell, "git config --global user.name");
-            TerminalHelper.Run(ConsoleMode.Powershell, $"git config --global user.email {gitEmail}");
-            TerminalHelper.Run(ConsoleMode.Powershell, "git config --global user.email");
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git config --global user.name {gitUsername}");
+            TerminalHelper.Run(PromptModeEnum.Powershell, "git config --global user.name");
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git config --global user.email {gitEmail}");
+            TerminalHelper.Run(PromptModeEnum.Powershell, "git config --global user.email");
 
             //Set up Local Profile for all repositories
             var repositories = GitHelper.GetRepositories();

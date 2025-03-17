@@ -1,16 +1,28 @@
-﻿using System.Diagnostics;
+﻿using DevExLead.Core.Model.Enums;
 using Spectre.Console;
+using System.Diagnostics;
 
 namespace DevExLead.Core.Helpers
 {
     public static class TerminalHelper
     {
-        public static void Run(ConsoleMode consoleMode, string command, string? directory = null)
+        public static void Run(PromptModeEnum promptModeEnum, string command, string? directory = null, bool isMultipleExecution = false)
         {
             try
             {
                 DisplayLogInConsole(command, directory);
-                var processStartInfo = BuildCommandArguments(consoleMode, command, directory);
+
+                //Configure Prompt
+                var (filename, arguments) = promptModeEnum switch
+                {
+                    PromptModeEnum.Cmd => ("cmd.exe", $"/C {command}"),
+                    PromptModeEnum.Powershell => ("powershell.exe", $"-noprofile -nologo -c {command}"),
+                    PromptModeEnum.Wsl => ("ubuntu", $"run \"{command}\"")
+                };
+
+                //Configure ProcessStartInfo
+                var processStartInfo = ConfigureProcessStartInfo(directory, filename, arguments, isMultipleExecution);
+
                 using (var process = new Process { StartInfo = processStartInfo })
                 {
                     process.Start();
@@ -23,7 +35,7 @@ namespace DevExLead.Core.Helpers
             }
         }
 
-        private static ProcessStartInfo InitializeProcessStartInfo(string? directory, string filename, string arguments)
+        private static ProcessStartInfo ConfigureProcessStartInfo(string? directory, string filename, string arguments, bool isMultipleExecution)
         {
             var processStartInfo = new ProcessStartInfo
             {
@@ -34,24 +46,15 @@ namespace DevExLead.Core.Helpers
             if (!string.IsNullOrEmpty(directory))
             {
                 processStartInfo.WorkingDirectory = directory;
+            }
+
+            if (isMultipleExecution)
+            {
                 processStartInfo.UseShellExecute = true;
                 processStartInfo.CreateNoWindow = false;
             }
 
             return processStartInfo;
-        }
-
-        private static ProcessStartInfo BuildCommandArguments(ConsoleMode consoleMode, string command, string? directory)
-        {
-            var (filename, arguments) = consoleMode switch
-            {
-                ConsoleMode.Cmd => ("cmd.exe", $"/C {command}"),
-                ConsoleMode.Powershell => ("powershell.exe", $"-noprofile -nologo -c {command}"),
-                ConsoleMode.Wsl => ("ubuntu", $"run \"{command}\""),
-                _ => throw new ArgumentOutOfRangeException(nameof(consoleMode), consoleMode, null)
-            };
-
-            return InitializeProcessStartInfo(directory, filename, arguments);
         }
 
         private static void DisplayLogInConsole(string command, string? directory)
@@ -62,13 +65,6 @@ namespace DevExLead.Core.Helpers
             {
                 AnsiConsole.MarkupLine($"[yellow]Directory: {directory}[/]");
             }
-        }
-
-        public enum ConsoleMode
-        {
-            Cmd,
-            Powershell,
-            Wsl
         }
     }
 }
