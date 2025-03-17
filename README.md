@@ -10,7 +10,7 @@
 
 # Installation
 
-`dotnet tool install --global dxc --version 0.0.52-gd6ea61c85e`
+`dotnet tool install --global dxc --version 0.0.53-ga74c99d943`
 
 # Goals
 
