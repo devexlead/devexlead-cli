@@ -16,6 +16,7 @@ namespace DevExLead.Modules.Command.Handlers
             table.AddColumn("Body");
             table.AddColumn("Path");
             table.AddColumn("Group");
+            table.AddColumn("Process");
 
             foreach (var command in commands.OrderBy(c => c.Name))
             {
@@ -23,8 +24,9 @@ namespace DevExLead.Modules.Command.Handlers
                 var body = command.Body ?? string.Empty;
                 var path = command.Path ?? string.Empty;
                 var group = command.Group ?? string.Empty;
+                var process = command.Process ?? string.Empty;
 
-                table.AddRow(name, body, path, group);
+                table.AddRow(name, body, path, group, process);
             }
 
             AnsiConsole.Write(table);
