@@ -66,10 +66,55 @@ namespace DevExLead.Core.Helpers
                 Directory.Delete(zipFolder, true);
             }
             Directory.CreateDirectory(zipFolder);
-            ZipFile.ExtractToDirectory(zipFile, zipFolder);
+
+            using (ZipArchive archive = ZipFile.OpenRead(zipFile))
+            {
+                //Limit to prevent zip bomb attacks
+                //https://sonarsource.github.io/rspec/#/rspec/S5042
+                var MaxFileCount = 1000 ;
+                var MaxExtractedSize = 100 * 1024 * 1024; // 100 MB;
+
+                long totalSize = 0;
+                int fileCount = 0;
+
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    if (fileCount >= MaxFileCount)
+                    {
+                        throw new InvalidOperationException("Zip file contains too many files.");
+                    }
+
+                    string destinationPath = Path.GetFullPath(Path.Combine(zipFolder, entry.FullName));
+
+                    if (!destinationPath.StartsWith(zipFolder, StringComparison.Ordinal))
+                    {
+                        throw new InvalidOperationException("Zip file contains invalid file paths.");
+                    }
+
+                    totalSize += entry.Length;
+                    if (totalSize > MaxExtractedSize)
+                    {
+                        throw new InvalidOperationException("Zip file is too large.");
+                    }
+
+                    if (entry.Name == "")
+                    {
+                        // Assuming it's a directory
+                        Directory.CreateDirectory(destinationPath);
+                    }
+                    else
+                    {
+                        entry.ExtractToFile(destinationPath, true);
+                    }
+
+                    fileCount++;
+                }
+            }
+
+            AnsiConsole.MarkupLine($"[green]Zip file extracted to {zipFolder}[/]");
         }
 
-     
+
         public static void CopyAllContent(string sourceDirectory, string targetDirectory)
         {
             Directory.CreateDirectory(targetDirectory);
