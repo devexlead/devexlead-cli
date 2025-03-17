@@ -3,6 +3,7 @@ using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 using DevExLead.Modules.Transfer.Helpers;
 using Spectre.Console;
+using System.Text.Json;
 
 namespace DevExLead.Modules.Transfer.Handlers
 {
@@ -10,12 +11,20 @@ namespace DevExLead.Modules.Transfer.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            string folderPath;
-            var keys = SecurityHelper.DecryptKey(UserStorageManager.GetUserStorage().EncryptionKeys);
-            TransferHelper.SelectPath(out folderPath);
-            var filePath = Path.Combine(folderPath, "dxc.key");
-            FileHelper.SaveFile(filePath, keys);
-            AnsiConsole.MarkupLine($"[green]Keys exported to {filePath}[/]");
+            var userStorage = UserStorageManager.GetUserStorage();
+            TransferHelper.SelectPath(out string folderPath);
+
+            //Export Configuration
+            var configuration = JsonSerializer.Serialize(userStorage);
+            var configurationPath = Path.Combine(folderPath, "configuration.json");
+            FileHelper.SaveFile(configurationPath, configuration);
+
+            //Export Keys
+            var keys = SecurityHelper.DecryptKey(userStorage.EncryptionKeys);
+            var keyPath = Path.Combine(folderPath, "dxc.key");
+            FileHelper.SaveFile(keyPath, keys);
+
+            AnsiConsole.MarkupLine($"[green]Configuration and encryption key exported to {folderPath}[/]");
         }
     }
 }

@@ -3,6 +3,7 @@ using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 using DevExLead.Modules.Transfer.Helpers;
 using Spectre.Console;
+using System.Text.Json;
 
 namespace DevExLead.Modules.Transfer.Handlers
 {
@@ -10,15 +11,25 @@ namespace DevExLead.Modules.Transfer.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            string folderPath;
-            TransferHelper.SelectPath(out folderPath);
-            var filePath = Path.Combine(folderPath, "dxc.key");
-            var encryptionKey = FileHelper.ReadFile(filePath);
-            var userStorage = UserStorageManager.GetUserStorage();
+            TransferHelper.SelectPath(out string folderPath);
+
+            //Import Configuration
+            var configurationPath = Path.Combine(folderPath, "configuration.json");
+            var configuration = FileHelper.ReadFile(configurationPath);
+            var userStorage = JsonSerializer.Deserialize<UserStorage>(configuration);
+
+            //Import Keys
+            var keyPath = Path.Combine(folderPath, "dxc.key");
+            var encryptionKey = FileHelper.ReadFile(keyPath);
             userStorage.EncryptionKeys = SecurityHelper.EncryptKey(encryptionKey);
+
             UserStorageManager.SaveUserStorage(userStorage);
-            File.Delete(filePath); //Delete the key file after importing
-            AnsiConsole.MarkupLine($"[green]Encryption Keys were imported[/]");
+
+            //Delete files after importing
+            File.Delete(configurationPath); 
+            File.Delete(keyPath);
+
+            AnsiConsole.MarkupLine($"[green]Configuration and encryption key imported from {folderPath}[/]");
         }
     }
 }

@@ -47,7 +47,6 @@
     {
       "Name": "transfer",
       "Description": "Transfer CLI Configuration between computers",
-      "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultTransferCommandHandler",
       "SubCommands": [
         {
           "Name": "export",
