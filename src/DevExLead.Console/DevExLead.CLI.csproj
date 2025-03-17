@@ -29,6 +29,7 @@
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Jira\DevExLead.Modules.Jira.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.SSL\DevExLead.Modules.SSL.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Tools\DevExLead.Modules.Tools.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Transfer\DevExLead.Modules.Transfer.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Vault\DevExLead.Modules.Vault.csproj" />
 	</ItemGroup>
 

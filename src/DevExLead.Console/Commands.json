@@ -37,27 +37,27 @@
           ]
         },
         {
-          "Name": "transfer",
-          "Description": "Transfer Vault between computers",
-          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultTransferCommandHandler",
-          "Parameters": [
-            {
-              "Name": "export",
-              "Description": "Export Encryption Keys",
-              "DefaultValue": "true"
-            },
-            {
-              "Name": "import",
-              "Description": "Import Encryption Keys",
-              "DefaultValue": "true"
-            }
-          ]
-        },
-        {
           "Name": "reencrypt",
           "Description": "Re-encrypt the Vault",
           "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultReEncryptCommandHandler",
           "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "transfer",
+      "Description": "Transfer CLI Configuration between computers",
+      "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultTransferCommandHandler",
+      "SubCommands": [
+        {
+          "Name": "export",
+          "Description": "Export Configuration",
+          "Handler": "DevExLead.Modules.Transfer.Handlers.TransferExportCommandHandler"
+        },
+        {
+          "Name": "import",
+          "Description": "Import Configuration",
+          "Handler": "DevExLead.Modules.Transfer.Handlers.TransferImportCommandHandler"
         }
       ]
     },

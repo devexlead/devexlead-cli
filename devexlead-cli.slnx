@@ -19,6 +19,7 @@
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Jira/DevExLead.Modules.Jira.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.SSL/DevExLead.Modules.SSL.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Tools/DevExLead.Modules.Tools.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Transfer/DevExLead.Modules.Transfer.csproj" Id="e008339c-2e6b-4312-9f3c-3b5e99fa50d0" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Vault/DevExLead.Modules.Vault.csproj" />
   </Folder>
 </Solution>

@@ -1,6 +1,7 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
+using Spectre.Console;
 
 namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
@@ -30,6 +31,8 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
             userStorage.EncryptionKeys = reEncryptionKey;
 
             UserStorageManager.SaveUserStorage(userStorage);
+
+            AnsiConsole.WriteLine("[green]Vault entries re-encrypted.[/]");
         }
 
        
