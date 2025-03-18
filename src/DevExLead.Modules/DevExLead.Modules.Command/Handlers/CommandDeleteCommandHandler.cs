@@ -7,7 +7,7 @@ namespace DevExLead.Modules.Command.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var name = options["name"];
+            var name = options["key"];
 
             if (string.IsNullOrWhiteSpace(name))
             {

@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "vault list"
+      "commandLineArgs": "command update --key \"devexlead-mocks\" --body \"devproxy --mocks-file .\\mocks.json\""
     }
   }
 }
