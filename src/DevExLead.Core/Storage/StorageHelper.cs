@@ -9,6 +9,11 @@
 
         public static void SaveFile(string fileLocation, string content)
         {
+            var directory = Path.GetDirectoryName(fileLocation);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
             File.WriteAllText(fileLocation, content);
         }
     }
