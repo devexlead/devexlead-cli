@@ -1,4 +1,5 @@
-﻿using DevExLead.Core.Helpers;
+﻿using System.Diagnostics;
+using DevExLead.Core.Helpers;
 using DevExLead.Core.Model.Enums;
 using DevExLead.Core.Storage;
 using DevExLead.Core.Storage.Model;
@@ -66,10 +67,17 @@ namespace DevExLead.Modules.Git.Helpers
         public static void ConfigureSSH(string emailAddress)
         {
             var userProfileFolder = Environment.GetEnvironmentVariable("USERPROFILE");
+            var sshDirectory = $"{userProfileFolder}\\.ssh";
             var keyName = "DevExLead";
 
-           //Clean Existing SSH Key
-            var sshKeyFile = $"{userProfileFolder}\\.ssh\\{keyName}";
+            //Create SSH Directory if not exists
+            if (!Directory.Exists(sshDirectory))
+            {
+                Directory.CreateDirectory(sshDirectory);
+            }
+
+            //Clean Existing SSH Key
+            var sshKeyFile = $"{sshDirectory}\\{keyName}";
             if (File.Exists(sshKeyFile))
             {
                 File.Delete(sshKeyFile);
@@ -77,7 +85,7 @@ namespace DevExLead.Modules.Git.Helpers
             }
 
             //Copy known_hosts File
-            var knownHostsFile = $"{userProfileFolder}\\.ssh\\known_hosts";
+            var knownHostsFile = $"{sshDirectory}\\known_hosts";
             File.Copy($"{GitHelper.GetSshPath()}\\known_hosts", knownHostsFile, true);
 
             //Generate config file based on Template
@@ -89,17 +97,18 @@ namespace DevExLead.Modules.Git.Helpers
             File.WriteAllText($"{GitHelper.GetSshPath()}\\config", result);
 
             //Copy config File
-            var sshConfigDestinationFile = $"{userProfileFolder}\\.ssh\\config";
+            var sshConfigDestinationFile = $"{sshDirectory}\\config";
             File.Copy($"{GitHelper.GetSshPath()}\\config", sshConfigDestinationFile, true);
 
+           
             //Generate SSH Key
             TerminalHelper.Run(PromptModeEnum.Powershell, $"ssh-keygen -t ed25519 -C {emailAddress} -f \"{sshKeyFile}\"");
 
             //Restart SSH Agent
-            TerminalHelper.Run(PromptModeEnum.Powershell, "Stop-Service ssh-agent");
-            TerminalHelper.Run(PromptModeEnum.Powershell, "Set-Service -Name ssh-agent -StartupType Automatic");
-            TerminalHelper.Run(PromptModeEnum.Powershell, "Start-Service ssh-agent");
-            TerminalHelper.Run(PromptModeEnum.Powershell, "Get-Service -Name ssh-agent");
+            //TerminalHelper.Run(PromptModeEnum.Powershell, "Stop-Service ssh-agent", null, false, true);
+            //TerminalHelper.Run(PromptModeEnum.Powershell, "Set-Service -Name ssh-agent -StartupType Automatic");
+            //TerminalHelper.Run(PromptModeEnum.Powershell, "Start-Service ssh-agent");
+            //TerminalHelper.Run(PromptModeEnum.Powershell, "Get-Service -Name ssh-agent");
             
             string publicKey = File.ReadAllText($"{sshKeyFile}.pub");
             ClipboardService.SetText(publicKey);
@@ -115,20 +124,20 @@ namespace DevExLead.Modules.Git.Helpers
         //    var repositories = GetRepositories();
         //    var repository = repositories.FirstOrDefault(r => r.Name.Equals(repositoryName));
 
-        //    //Ensure there are no pending changes
-        //    TerminalHelper.Run(ConsoleMode.Powershell, $"git reset --hard", repository.WorkingFolder);
+            //    //Ensure there are no pending changes
+            //    TerminalHelper.Run(ConsoleMode.Powershell, $"git reset --hard", repository.WorkingFolder);
 
-        //    var gitHubConnector = new GitHubConnector();
-        //    var commits = await gitHubConnector.GetCommits(owner, repository.Name, branchName);
-        //    commits = commits.Where(c => c.commit.message.Contains(revertTicketId)).ToList();
-        //    foreach (var commit in commits)
-        //    {
-        //        TerminalHelper.Run(ConsoleMode.Powershell, $"git revert {commit.sha}", repository.WorkingFolder);
-        //    }
+            //    var gitHubConnector = new GitHubConnector();
+            //    var commits = await gitHubConnector.GetCommits(owner, repository.Name, branchName);
+            //    commits = commits.Where(c => c.commit.message.Contains(revertTicketId)).ToList();
+            //    foreach (var commit in commits)
+            //    {
+            //        TerminalHelper.Run(ConsoleMode.Powershell, $"git revert {commit.sha}", repository.WorkingFolder);
+            //    }
 
-        //    GitHelper.SyncUpSharedService(repository.WorkingFolder);
+            //    GitHelper.SyncUpSharedService(repository.WorkingFolder);
 
-        //    TerminalHelper.Run(ConsoleMode.Powershell, $"git push", repository.WorkingFolder);
-        //}
+            //    TerminalHelper.Run(ConsoleMode.Powershell, $"git push", repository.WorkingFolder);
+            //}
     }
 }
