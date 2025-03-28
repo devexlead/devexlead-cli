@@ -71,9 +71,9 @@ namespace DevExLead.Core.Storage
             if (encryptedValue == null)
             {
                 var errorMessage = $"Error: {key} not found in Vault.";
-                AnsiConsole.MarkupLine($"[red]{errorMessage}[/]");
-                return string.Empty;
+                throw new Exception(errorMessage);
             }
+
             return SecurityHelper.DecryptVaultEntry(encryptedValue);
         }
 

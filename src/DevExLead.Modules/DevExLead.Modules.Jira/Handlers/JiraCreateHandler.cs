@@ -41,7 +41,6 @@ namespace DevExLead.Modules.Jira.Handlers
                     {
                         Project = new JiraProject { Key = UserStorageManager.GetDecryptedValue("Atlassian:Jira:ProjectKey") },
                         Summary = AnsiConsole.Ask<string>("Enter summary:"),
-                        Description = AnsiConsole.Ask<string>("Enter description:"),
                         IssueType = new JiraIssueType { Name = JiraHelper.SelectIssueType() },
                         Priority = new JiraPriority { Name = JiraHelper.SelectPriority() },
                     }
@@ -60,11 +59,11 @@ namespace DevExLead.Modules.Jira.Handlers
                     request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
                 }
 
-                if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
-                {
-                    request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (format: yyyy-MM-dd):", null);
-                    request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (format: yyyy-MM-dd):", null);
-                }
+                //if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
+                //{
+                //    request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (format: yyyy-MM-dd):", null);
+                //    request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (format: yyyy-MM-dd):", null);
+                //}
 
                 //TODO: Make this configurable in local config file
                 //request.Fields.Assignee = JiraHelper.SelectAssignee(jiraConnector);

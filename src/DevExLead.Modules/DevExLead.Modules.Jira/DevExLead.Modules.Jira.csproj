@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExLead.Integrations" Version="0.2.1-g3f62bbd878" />
+    <PackageReference Include="DevExLead.Integrations" Version="0.2.5-gdaab44c4aa" />
   </ItemGroup>
 
   <ItemGroup>
