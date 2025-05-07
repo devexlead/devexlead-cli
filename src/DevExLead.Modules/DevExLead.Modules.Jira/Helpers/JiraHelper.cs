@@ -80,9 +80,14 @@ namespace DevExLead.Modules.Jira.Helpers
             return new JiraUser { AccountId = selectedAccountId };
         }
 
-        public static JiraParent SelectParent(JiraConnector jiraConnector, string projectKey, List<string> parentIssueTypes)
+        public static JiraParent SelectParent(JiraConnector jiraConnector, string projectKey, long? sprintId, List<string> parentIssueTypes)
         {
             var jql = $"project={projectKey} AND ({string.Join(" OR ", parentIssueTypes.Select(type => $"issuetype={type}"))})";
+            if (sprintId is not null)
+            {
+                jql += $" AND sprint = {sprintId}";
+            }
+
             var issues = jiraConnector.RunJqlAsync(jql).Result;
             var parentOptions = issues.Select(i => $"{i.Key} - {i.Fields.Summary}").ToList();
             parentOptions.Insert(0, "None");

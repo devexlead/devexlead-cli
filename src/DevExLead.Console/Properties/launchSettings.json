@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "jira watch"
+      "commandLineArgs": "jira create --isVerbose true"
     }
   }
 }

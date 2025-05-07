@@ -33,6 +33,8 @@ namespace DevExLead.Modules.Jira.Handlers
                 var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:Key");
                 if (atlassianKey == null) return;
 
+
+
                 var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
 
                 var request = new JiraIssueCreateRequest
@@ -46,17 +48,19 @@ namespace DevExLead.Modules.Jira.Handlers
                     }
                 };
 
+                var sprintId = JiraHelper.SelectSprint(jiraConnector);
+
                 if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.STORY) ||
                     request.Fields.IssueType.Name.Equals(IssueTypeConstants.BUG) ||
                     request.Fields.IssueType.Name.Equals(IssueTypeConstants.TASK))
                 {
-                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.EPIC]);
-                    request.Fields.SprintId = JiraHelper.SelectSprint(jiraConnector);
+                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, sprintId, [IssueTypeConstants.EPIC]);
+                    request.Fields.SprintId = sprintId;
                 }
 
                 if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.SUBTASK))
                 {
-                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
+                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, sprintId, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
                 }
 
                 //if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
