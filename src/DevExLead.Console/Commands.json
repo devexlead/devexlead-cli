@@ -162,16 +162,28 @@
       "Description": "JIRA Commands",
       "SubCommands": [
         {
-          "Name": "create",
-          "Description": "Generate JIRA ticket",
-          "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler",
-          "Parameters": [
-            {
-              "Name": "isVerbose",
-              "Description": "Show HTTP Request/Response",
-              "DefaultValue": "false"
-            }
-          ]
+            "Name": "create",
+            "Description": "Generate JIRA ticket",
+            "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler",
+            "Parameters": [
+                {
+                    "Name": "isVerbose",
+                    "Description": "Show HTTP Request/Response",
+                    "DefaultValue": "false"
+                }
+            ]
+        },
+        {
+            "Name": "watch",
+            "Description": "Watch JIRA tickets by JQL",
+            "Handler": "DevExLead.Modules.Jira.Handlers.JiraWatchHandler",
+            "Parameters": [
+                {
+                    "Name": "isVerbose",
+                    "Description": "Show HTTP Request/Response",
+                    "DefaultValue": "false"
+                }
+            ]
         }
       ]
     },
@@ -203,7 +215,7 @@
           "Handler": "DevExLead.Modules.Git.Handlers.GitCreateCommandHandler",
           "Parameters": [
             {
-              "Name": "key",
+              "Name": "repository",
               "Description": ""
             },
             {
@@ -230,7 +242,16 @@
           "Name": "latest",
           "Description": "",
           "Handler": "DevExLead.Modules.Git.Handlers.GitLatestHandler",
-          "Parameters": []
+            "Parameters": [
+                {
+                    "Name": "repository",
+                    "Description": ""
+                },
+                {
+                    "Name": "branch",
+                    "Description": ""
+                }
+            ]
         },
         {
           "Name": "profile",

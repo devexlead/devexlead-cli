@@ -1,7 +1,6 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Storage;
 using DevExLead.Integrations.JIRA;
-using DevExLead.Modules.Jira.Helpers;
 using Spectre.Console;
 
 namespace DevExLead.Modules.Jira.Handlers
@@ -12,31 +11,36 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             try
             {
-                //bool isVerbose = false;
-                //if (options.TryGetValue("isVerbose", out var isVerboseString))
-                //{
-                //    if (!bool.TryParse(isVerboseString, out isVerbose))
-                //    {
-                //        throw new ArgumentException("Invalid value for isVerbose. It must be a boolean.");
-                //    }
-                //}
+                bool isVerbose = false;
+                if (options.TryGetValue("isVerbose", out var isVerboseString))
+                {
+                    if (!bool.TryParse(isVerboseString, out isVerbose))
+                    {
+                        throw new ArgumentException("Invalid value for isVerbose. It must be a boolean.");
+                    }
+                }
 
-                //var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("AtlassianBaseUrl");
-                //if (atlassianBaseUrl == null) return;
+                var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("Atlassian:BaseUrl");
+                if (atlassianBaseUrl == null) return;
 
-                //var atlassianUser = UserStorageManager.GetDecryptedValue("AtlassianUser");
-                //if (atlassianUser == null) return;
+                var atlassianUser = UserStorageManager.GetDecryptedValue("Atlassian:User");
+                if (atlassianUser == null) return;
 
-                //var atlassianKey = UserStorageManager.GetDecryptedValue("AtlassianKey");
-                //if (atlassianKey == null) return;
+                var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:Key");
+                if (atlassianKey == null) return;
 
-                //var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
+                var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
 
-                //var jiraIssue = JiraHelper.SelectParent(jiraConnector);
+                var jiraWatchJql = UserStorageManager.GetDecryptedValue("Jira:WatchJql");
+                var jiraIssues = jiraConnector.RunJqlAsync(jiraWatchJql).Result;
 
-                //await jiraConnector.WatchIssueAsync(jiraIssue.Key, "attlasianUserId");
+                var jiraWatchUserEmail = UserStorageManager.GetDecryptedValue("Jira:WatchUserEmail");
 
-                //AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/browse/{result.Key}[/]");
+                foreach (var jiraIssue in jiraIssues)
+                {
+                    AnsiConsole.MarkupLine($"[green]Watching: {atlassianBaseUrl}/browse/{jiraIssue.Key} [/]");
+                    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraWatchUserEmail);
+                }
 
             }
             catch (Exception ex)

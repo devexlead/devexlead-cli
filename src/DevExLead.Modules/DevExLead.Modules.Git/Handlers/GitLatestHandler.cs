@@ -7,11 +7,15 @@ namespace DevExLead.Modules.Git.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var repositories = GitHelper.GetRepositories();
-            foreach (var repository in repositories)
+            var key = options["repository"];
+            var branch = options["branch"];
+
+            var repository = GitHelper.GetRepositories().FirstOrDefault(r => r.Key.Equals(key));
+            if (repository != null)
             {
-                GitHelper.GetLatest(repository);
+                GitHelper.GetLatest(repository, branch);
             }
+            
         }
     }
 }

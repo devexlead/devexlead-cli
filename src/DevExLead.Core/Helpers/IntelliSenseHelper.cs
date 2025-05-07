@@ -92,6 +92,12 @@ namespace DevExLead.Core.Helpers
                 commands.Add($"dxc command run --multiple \"{userDefinedCommandGroup}\"");
             }
 
+            //Insert Repository Operations
+            foreach (var repository in userStorage.Repositories)
+            {
+                commands.Add($"dxc git latest --repository \"{repository.Key}\"  --branch \"{repository.DefaultBranch}\"");
+            }
+
             File.AppendAllLines(psReadLineFile, commands);
         }
     }
