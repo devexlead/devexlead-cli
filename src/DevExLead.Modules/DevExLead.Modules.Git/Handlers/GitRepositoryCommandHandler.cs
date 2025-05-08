@@ -3,7 +3,7 @@ using DevExLead.Core.Storage;
 
 namespace DevExLead.Modules.Git.Handlers
 {
-    internal class GitCreateCommandHandler : ICommandHandler
+    internal class GitRepositoryCommandHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
@@ -15,7 +15,7 @@ namespace DevExLead.Modules.Git.Handlers
             if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(remoteLocation) || string.IsNullOrWhiteSpace(workingFolder) ||
                 string.IsNullOrWhiteSpace(defaultBranch))
             {
-                Console.WriteLine("--name --remoteLocation --workingFolder --defaultBranch are required.");
+                Console.WriteLine("--key --remoteLocation --workingFolder --defaultBranch are required.");
                 return;
             }
 

@@ -33,6 +33,7 @@ namespace DevExLead.Modules.Jira.Handlers
 
                 var jiraWatchJql = UserStorageManager.GetDecryptedValue("Jira:WatchJql");
                 var jiraIssues = jiraConnector.RunJqlAsync(jiraWatchJql).Result;
+                AnsiConsole.MarkupLine($"[green]Query: {jiraWatchJql} [/]");
 
                 var jiraWatchUserEmail = UserStorageManager.GetDecryptedValue("Jira:WatchUserEmail");
 

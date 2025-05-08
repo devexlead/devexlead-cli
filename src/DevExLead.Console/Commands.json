@@ -210,27 +210,27 @@
       "Description": "Git Commands",
       "SubCommands": [
         {
-          "Name": "add",
-          "Description": "",
-          "Handler": "DevExLead.Modules.Git.Handlers.GitCreateCommandHandler",
-          "Parameters": [
-            {
-              "Name": "repository",
-              "Description": ""
-            },
-            {
-              "Name": "remoteLocation",
-              "Description": ""
-            },
-            {
-              "Name": "workingFolder",
-              "Description": ""
-            },
-            {
-              "Name": "defaultBranch",
-              "Description": ""
-            }
-          ]
+            "Name": "repository",
+            "Description": "",
+            "Handler": "DevExLead.Modules.Git.Handlers.GitRepositoryCommandHandler",
+            "Parameters": [
+                {
+                    "Name": "key",
+                    "Description": ""
+                },
+                {
+                    "Name": "remoteLocation",
+                    "Description": ""
+                },
+                {
+                    "Name": "workingFolder",
+                    "Description": ""
+                },
+                {
+                    "Name": "defaultBranch",
+                    "Description": ""
+                }
+            ]
         },
         {
           "Name": "clone",
