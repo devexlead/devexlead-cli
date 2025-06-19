@@ -7,7 +7,7 @@ namespace DevExLead.Modules.Git.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var key = options["repository"];
+            var key = options["key"];
             var branch = options["branch"];
 
             var repository = GitHelper.GetRepositories().FirstOrDefault(r => r.Key.Equals(key));

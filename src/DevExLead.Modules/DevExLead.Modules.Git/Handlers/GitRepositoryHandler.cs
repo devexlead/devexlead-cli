@@ -3,7 +3,7 @@ using DevExLead.Core.Storage;
 
 namespace DevExLead.Modules.Git.Handlers
 {
-    internal class GitRepositoryCommandHandler : ICommandHandler
+    internal class GitRepositoryHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {

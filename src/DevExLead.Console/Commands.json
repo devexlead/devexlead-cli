@@ -212,7 +212,7 @@
         {
             "Name": "repository",
             "Description": "",
-            "Handler": "DevExLead.Modules.Git.Handlers.GitRepositoryCommandHandler",
+            "Handler": "DevExLead.Modules.Git.Handlers.GitRepositoryHandler",
             "Parameters": [
                 {
                     "Name": "key",
@@ -244,7 +244,7 @@
           "Handler": "DevExLead.Modules.Git.Handlers.GitLatestHandler",
             "Parameters": [
                 {
-                    "Name": "repository",
+                    "Name": "key",
                     "Description": ""
                 },
                 {
