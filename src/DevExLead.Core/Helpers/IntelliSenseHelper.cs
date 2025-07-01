@@ -95,8 +95,8 @@ namespace DevExLead.Core.Helpers
             //Insert Repository Operations
             foreach (var repository in userStorage.Repositories)
             {
-                commands.Add($"dxc git latest --repository \"{repository.Key}\"");
-                commands.Add($"dxc git latest --repository \"{repository.Key}\" --branch \"{{Branch}}\"");
+                commands.Add($"dxc git latest --key \"{repository.Key}\"");
+                commands.Add($"dxc git latest --key \"{repository.Key}\" --branch \"{{Branch}}\"");
             }
 
             File.AppendAllLines(psReadLineFile, commands);
