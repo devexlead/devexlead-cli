@@ -175,12 +175,17 @@
         },
         {
             "Name": "watch",
-            "Description": "Watch JIRA tickets by JQL",
+            "Description": "Monitor changes during the Sprint",
             "Handler": "DevExLead.Modules.Jira.Handlers.JiraWatchHandler",
             "Parameters": [
                 {
                     "Name": "isVerbose",
                     "Description": "Show HTTP Request/Response",
+                    "DefaultValue": "false"
+                },
+                {
+                    "Name": "isSnapshot",
+                    "Description": "Take a Backlog Snapshot after Sprint Planning",
                     "DefaultValue": "false"
                 }
             ]
