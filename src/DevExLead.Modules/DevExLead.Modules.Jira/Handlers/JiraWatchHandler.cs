@@ -4,6 +4,7 @@ using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 using DevExLead.Integrations.JIRA;
 using DevExLead.Integrations.JIRA.Model;
+using DevExLead.Modules.Jira.Model;
 using Spectre.Console;
 
 namespace DevExLead.Modules.Jira.Handlers
@@ -40,18 +41,25 @@ namespace DevExLead.Modules.Jira.Handlers
                 if (isSnapshot)
                 {
                     SaveJsonFile(jiraIssues, filePath);
+                    await WatchIssues(atlassianBaseUrl, jiraConnector, jiraIssues);
                 }
                 else
                 {
                     var json = File.ReadAllText(filePath);
                     var plannedIssues = JsonSerializer.Deserialize<List<JiraIssue>>(json);
 
-                    FindAddedIssues(jiraIssues, plannedIssues);
-                    FindDeletedIssues(jiraIssues, plannedIssues);
-                    FindReestimatedIssues(jiraIssues, plannedIssues);
+                    var addedIssues = FindAddedIssues(jiraIssues, plannedIssues);
+                    addedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[green]+ {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Fields.Summary})[/]"));
+                    await WatchIssues(atlassianBaseUrl, jiraConnector, addedIssues);
+
+                    var deletedIssues = FindDeletedIssues(jiraIssues, plannedIssues);
+                    deletedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[red]- {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Fields.Summary})[/]"));
+
+                    var reestimatedIssues = FindReestimatedIssues(jiraIssues, plannedIssues);
+                    reestimatedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[blue]* {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Summary})[/] [grey](Estimate changed from {jiraIssue.OldEstimate ?? 0} to {jiraIssue.NewEstimate ?? 0})[/]"));
                 }
 
-                await WatchIssues(atlassianBaseUrl, jiraConnector, jiraIssues);
+               
             }
             catch (Exception ex)
             {
@@ -70,42 +78,31 @@ namespace DevExLead.Modules.Jira.Handlers
             }
         }
 
-        private static void FindDeletedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
+        private static List<JiraIssue> FindDeletedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
         {
             var deletedIssues = plannedIssues == null
                                     ? new List<JiraIssue>()
                                     : plannedIssues.Where(p => !jiraIssues.Any(j => j.Key == p.Key)).ToList();
 
-            AnsiConsole.MarkupLine($"[yellow]Deleted Issues: {deletedIssues.Count}[/]");
-            foreach (var issue in deletedIssues)
-            {
-                AnsiConsole.MarkupLine($"[red]- {issue.Key}: {issue.Fields.Summary}[/]");
-            }
+            return deletedIssues;
         }
 
-        private static void FindAddedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
+        private static List<JiraIssue> FindAddedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
         {
             var addedIssues = jiraIssues
                                     .Where(j => plannedIssues == null || !plannedIssues.Any(p => p.Key == j.Key))
                                     .ToList();
 
-            // Output results
-            AnsiConsole.MarkupLine($"[yellow]Added Issues: {addedIssues.Count}[/]");
-            foreach (var issue in addedIssues)
-            {
-                AnsiConsole.MarkupLine($"[green]+ {issue.Key}: {issue.Fields.Summary}[/]");
-            }
+           return addedIssues;
         }
 
-        private static void FindReestimatedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
+        private static List<JiraIssueReestimate> FindReestimatedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
         {
-            if (plannedIssues == null) return;
-
             var reestimatedIssues = jiraIssues
                 .Join(plannedIssues,
                       current => current.Key,
                       planned => planned.Key,
-                      (current, planned) => new
+                      (current, planned) => new JiraIssueReestimate()
                       {
                           Key = current.Key,
                           Summary = current.Fields.Summary,
@@ -115,12 +112,7 @@ namespace DevExLead.Modules.Jira.Handlers
                 .Where(x => x.OldEstimate != x.NewEstimate)
                 .ToList();
 
-            AnsiConsole.MarkupLine($"[yellow]Re-estimated Issues: {reestimatedIssues.Count}[/]");
-            foreach (var issue in reestimatedIssues)
-            {
-                AnsiConsole.MarkupLine(
-                    $"[blue]* {issue.Key}: {issue.Summary}[/] [grey](Estimate changed from {issue.OldEstimate ?? 0} to {issue.NewEstimate ?? 0})[/]");
-            }
+            return reestimatedIssues;
         }
 
         private static void SaveJsonFile(List<JiraIssue> jiraIssues, string filePath)
