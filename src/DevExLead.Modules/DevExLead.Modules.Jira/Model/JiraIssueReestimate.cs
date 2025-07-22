@@ -1,4 +1,6 @@
-﻿namespace DevExLead.Modules.Jira.Model
+﻿using DevExLead.Integrations.JIRA.Model;
+
+namespace DevExLead.Modules.Jira.Model
 {
     internal class JiraIssueReestimate
     {
@@ -10,5 +12,6 @@
         public string Summary { get; set; }
         public double? OldEstimate { get; set; }
         public double? NewEstimate { get; set; }
+        public JiraIssueType IssueType { get; set; }
     }
 }

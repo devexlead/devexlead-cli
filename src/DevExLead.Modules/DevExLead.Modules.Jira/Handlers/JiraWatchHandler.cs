@@ -41,25 +41,32 @@ namespace DevExLead.Modules.Jira.Handlers
                 if (isSnapshot)
                 {
                     SaveJsonFile(jiraIssues, filePath);
-                    await WatchIssues(atlassianBaseUrl, jiraConnector, jiraIssues);
                 }
                 else
                 {
                     var json = File.ReadAllText(filePath);
                     var plannedIssues = JsonSerializer.Deserialize<List<JiraIssue>>(json);
 
+                    AnsiConsole.MarkupLine($"[blue]Added to Sprint...[/]");
                     var addedIssues = FindAddedIssues(jiraIssues, plannedIssues);
-                    addedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[green]+ {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Fields.Summary})[/]"));
-                    await WatchIssues(atlassianBaseUrl, jiraConnector, addedIssues);
+                    addedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[green]+ {atlassianBaseUrl}/browse/{jiraIssue.Key} |  {jiraIssue.Fields.IssueType.Name}  |  {jiraIssue.Fields.Summary}[/]"));
 
+                    AnsiConsole.MarkupLine($"[blue]Removed from Sprint...[/]");
                     var deletedIssues = FindDeletedIssues(jiraIssues, plannedIssues);
-                    deletedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[red]- {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Fields.Summary})[/]"));
+                    deletedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[red]- {atlassianBaseUrl}/browse/{jiraIssue.Key} | {jiraIssue.Fields.IssueType.Name} | {jiraIssue.Fields.Summary}[/]"));
 
+                    AnsiConsole.MarkupLine($"[blue]Re-Estimated during Sprint...[/]");
                     var reestimatedIssues = FindReestimatedIssues(jiraIssues, plannedIssues);
-                    reestimatedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[blue]* {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Summary})[/] [grey](Estimate changed from {jiraIssue.OldEstimate ?? 0} to {jiraIssue.NewEstimate ?? 0})[/]"));
+                    reestimatedIssues.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[yellow]* {atlassianBaseUrl}/browse/{jiraIssue.Key}  | {jiraIssue.IssueType.Name} | {jiraIssue.Summary}[/] [grey](Estimate changed from {jiraIssue.OldEstimate ?? 0} to {jiraIssue.NewEstimate ?? 0})[/]"));
                 }
 
-               
+                AnsiConsole.MarkupLine($"[blue]Issues with no estimation...[/]");
+                var nonEstimatedTickets = jiraIssues.Where(i => i.Fields.Points == null || i.Fields.Points == 0).ToList();
+                nonEstimatedTickets.ForEach(jiraIssue => AnsiConsole.MarkupLine($"[grey]~ {atlassianBaseUrl}/browse/{jiraIssue.Key} | {jiraIssue.Fields.IssueType.Name} | {jiraIssue.Fields.Summary}[/]"));
+
+                AnsiConsole.MarkupLine($"[blue]Watching issues in the current sprint...[/]");
+                await WatchIssues(atlassianBaseUrl, jiraConnector, jiraIssues);
+
             }
             catch (Exception ex)
             {
@@ -73,7 +80,7 @@ namespace DevExLead.Modules.Jira.Handlers
 
             foreach (var jiraIssue in jiraIssues)
             {
-                AnsiConsole.MarkupLine($"[green]Watching: {atlassianBaseUrl}/browse/{jiraIssue.Key} ({jiraIssue.Fields.Summary}) [/]");
+                AnsiConsole.MarkupLine($"[grey]~ {atlassianBaseUrl}/browse/{jiraIssue.Key} | {jiraIssue.Fields.IssueType.Name} | {jiraIssue.Fields.Summary}[/]");
                 await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraWatchUserEmail);
             }
         }
@@ -106,6 +113,7 @@ namespace DevExLead.Modules.Jira.Handlers
                       {
                           Key = current.Key,
                           Summary = current.Fields.Summary,
+                          IssueType = current.Fields.IssueType,
                           OldEstimate = planned.Fields.Points,
                           NewEstimate = current.Fields.Points
                       })
