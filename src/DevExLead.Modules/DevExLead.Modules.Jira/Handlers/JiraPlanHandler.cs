@@ -36,6 +36,7 @@ namespace DevExLead.Modules.Jira.Handlers
                 }
                 else
                 {
+                    AnsiConsole.MarkupLine($"[yellow]Read {jiraIssues.Count} issues from {filePath}[/]");
                     var json = File.ReadAllText(filePath);
                     var plannedIssues = JsonSerializer.Deserialize<List<JiraIssue>>(json);
 
