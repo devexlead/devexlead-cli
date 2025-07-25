@@ -7,29 +7,39 @@ namespace DevExLead.Modules.Jira.Helpers
 {
     public static class JiraHelper
     {
-        public static long? SelectSprint(JiraConnector jiraConnector)
+        public static JiraConnector? GetJiraConnector(bool isVerbose, out string atlassianBaseUrl)
+        {
+            atlassianBaseUrl = UserStorageManager.GetDecryptedValue("Atlassian:BaseUrl");
+            if (atlassianBaseUrl == null) return null;
+
+            var atlassianUser = UserStorageManager.GetDecryptedValue("Atlassian:User");
+            if (atlassianUser == null) return null;
+
+            var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:Key");
+            if (atlassianKey == null) return null;
+
+            var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
+
+            return jiraConnector;
+        }
+
+        public static JiraSprint? SelectSprint(JiraConnector jiraConnector)
         {
             var atlassianTeamBoardId = UserStorageManager.GetDecryptedValue("Atlassian:BoardId");
             if (atlassianTeamBoardId == null) return null;
 
-            var sprints = jiraConnector.FetchSprints(int.Parse(atlassianTeamBoardId))
+            var jiraSprints = jiraConnector.FetchSprints(int.Parse(atlassianTeamBoardId))
                                        .Result.Where(s => s.State.Equals("active") ||
                                                           s.State.Equals("future"));
-            var sprintOptions = sprints.Select(s => s.Name).ToList();
-            sprintOptions.Insert(0, "None");
-
-            var selectedSprintName = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select a sprint:")
-                    .AddChoices(sprintOptions)
+            // Let user select a single sprint
+            var selectedSprint = AnsiConsole.Prompt(
+                new SelectionPrompt<JiraSprint>()
+                    .Title("Select Sprint:")
+                    .UseConverter(s => $"{s.Name}")
+                    .AddChoices(jiraSprints)
             );
 
-            long? selectedSprintId = null;
-            if (selectedSprintName != "None")
-            {
-                selectedSprintId = sprints.First(s => s.Name == selectedSprintName).Id;
-            }
-            return selectedSprintId;
+            return selectedSprint;
         }
 
         public static string SelectPriority()

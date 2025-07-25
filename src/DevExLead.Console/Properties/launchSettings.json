@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "jira watch --isVerbose false --isSnapshot false"
+      "commandLineArgs": "jira plan --isVerbose false --isSnapshot false"
     }
   }
 }

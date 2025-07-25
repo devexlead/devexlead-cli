@@ -160,37 +160,49 @@
     {
       "Name": "jira",
       "Description": "JIRA Commands",
-      "SubCommands": [
-        {
-            "Name": "create",
-            "Description": "Generate JIRA ticket",
-            "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler",
-            "Parameters": [
-                {
-                    "Name": "isVerbose",
-                    "Description": "Show HTTP Request/Response",
-                    "DefaultValue": "false"
-                }
-            ]
-        },
-        {
-            "Name": "watch",
-            "Description": "Monitor changes during the Sprint",
-            "Handler": "DevExLead.Modules.Jira.Handlers.JiraWatchHandler",
-            "Parameters": [
-                {
-                    "Name": "isVerbose",
-                    "Description": "Show HTTP Request/Response",
-                    "DefaultValue": "false"
-                },
-                {
-                    "Name": "isSnapshot",
-                    "Description": "Take a Backlog Snapshot after Sprint Planning",
-                    "DefaultValue": "false"
-                }
-            ]
-        }
-      ]
+        "SubCommands": [
+            {
+                "Name": "create",
+                "Description": "Generate JIRA ticket",
+                "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler",
+                "Parameters": [
+                    {
+                        "Name": "isVerbose",
+                        "Description": "Show HTTP Request/Response",
+                        "DefaultValue": "false"
+                    }
+                ]
+            },
+            {
+                "Name": "watch",
+                "Description": "Watch Issues to Improve Async Team Collaboration",
+                "Handler": "DevExLead.Modules.Jira.Handlers.JiraWatchHandler",
+                "Parameters": [
+                    {
+                        "Name": "isVerbose",
+                        "Description": "Show HTTP Request/Response",
+                        "DefaultValue": "false"
+                    }
+                ]
+            },
+            {
+                "Name": "plan",
+                "Description": "Monitor Backlog Changes during the Sprint",
+                "Handler": "DevExLead.Modules.Jira.Handlers.JiraPlanHandler",
+                "Parameters": [
+                    {
+                        "Name": "isVerbose",
+                        "Description": "Show HTTP Request/Response",
+                        "DefaultValue": "false"
+                    },
+                    {
+                        "Name": "isSnapshot",
+                        "Description": "Take a Backlog Snapshot after Sprint Planning",
+                        "DefaultValue": "false"
+                    }
+                ]
+            }
+        ]
     },
     {
       "Name": "ssl",

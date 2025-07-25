@@ -48,19 +48,19 @@ namespace DevExLead.Modules.Jira.Handlers
                     }
                 };
 
-                var sprintId = JiraHelper.SelectSprint(jiraConnector);
+                var jiraSprint = JiraHelper.SelectSprint(jiraConnector);
 
                 if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.STORY) ||
                     request.Fields.IssueType.Name.Equals(IssueTypeConstants.BUG) ||
                     request.Fields.IssueType.Name.Equals(IssueTypeConstants.TASK))
                 {
-                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, sprintId, [IssueTypeConstants.EPIC]);
-                    request.Fields.SprintId = sprintId;
+                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, jiraSprint?.Id, [IssueTypeConstants.EPIC]);
+                    request.Fields.SprintId = jiraSprint?.Id;
                 }
 
                 if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.SUBTASK))
                 {
-                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, sprintId, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
+                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, jiraSprint?.Id, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
                 }
 
                 //if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
