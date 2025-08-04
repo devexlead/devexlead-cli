@@ -199,6 +199,16 @@
                         "Name": "isSnapshot",
                         "Description": "Take a Backlog Snapshot after Sprint Planning",
                         "DefaultValue": "false"
+                    },
+                    {
+                        "Name": "isChangeTracker",
+                        "Description": "Show Backlog Changes after Planning (Snapshot is required)",
+                        "DefaultValue": "false"
+                    },
+                    {
+                        "Name": "isSprintPlanning",
+                        "Description": "Show Sprint Planning Stats",
+                        "DefaultValue": "false"
                     }
                 ]
             }
