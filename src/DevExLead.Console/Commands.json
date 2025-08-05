@@ -174,18 +174,6 @@
                 ]
             },
             {
-                "Name": "watch",
-                "Description": "Watch Issues to Improve Async Team Collaboration",
-                "Handler": "DevExLead.Modules.Jira.Handlers.JiraWatchHandler",
-                "Parameters": [
-                    {
-                        "Name": "isVerbose",
-                        "Description": "Show HTTP Request/Response",
-                        "DefaultValue": "false"
-                    }
-                ]
-            },
-            {
                 "Name": "plan",
                 "Description": "Monitor Backlog Changes during the Sprint",
                 "Handler": "DevExLead.Modules.Jira.Handlers.JiraPlanHandler",

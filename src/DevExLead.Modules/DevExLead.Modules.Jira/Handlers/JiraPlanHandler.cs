@@ -40,11 +40,37 @@ namespace DevExLead.Modules.Jira.Handlers
                     ShowSprintMetrics(jiraIssues);
                     ShowSprintBacklog(atlassianBaseUrl, jiraIssues);
                     ShowBacklogChanges(atlassianBaseUrl, jiraIssues, filePath);
+                    await WatchJiraIssues(jiraConnector, jiraIssues);
                 }
             }
             catch (Exception ex)
             {
                 AnsiConsole.MarkupLine($"[red]Error: {ex}[/]");
+            }
+        }
+
+        private static async Task WatchJiraIssues(JiraConnector jiraConnector, List<JiraIssue> jiraIssues)
+        {
+            foreach (var jiraIssue in jiraIssues)
+            {
+                //TODO: Can issue be watched by Reporter and Assignee using JIRA ID instead of email?
+
+                //if (jiraIssue.Fields.Reporter != null)
+                //{
+                //    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.EmailAddress);
+                //}
+
+                //if (jiraIssue.Fields.Assignee != null)
+                //{
+                //    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.EmailAddress);
+                //}
+
+                var jiraWatchUserEmail = UserStorageManager.GetDecryptedValue("Jira:WatchUserEmail");
+
+                if (!string.IsNullOrEmpty(jiraWatchUserEmail))
+                {
+                    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraWatchUserEmail);
+                }
             }
         }
 
