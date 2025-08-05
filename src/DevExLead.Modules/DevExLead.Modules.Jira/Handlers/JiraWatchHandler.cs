@@ -67,25 +67,7 @@ namespace DevExLead.Modules.Jira.Handlers
            return addedIssues;
         }
 
-        private static List<JiraIssueReestimate> FindReestimatedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
-        {
-            var reestimatedIssues = jiraIssues
-                .Join(plannedIssues,
-                      current => current.Key,
-                      planned => planned.Key,
-                      (current, planned) => new JiraIssueReestimate()
-                      {
-                          Key = current.Key,
-                          Summary = current.Fields.Summary,
-                          IssueType = current.Fields.IssueType,
-                          OldEstimate = planned.Fields.Points,
-                          NewEstimate = current.Fields.Points
-                      })
-                .Where(x => x.OldEstimate != x.NewEstimate)
-                .ToList();
 
-            return reestimatedIssues;
-        }
 
         private static void SaveJsonFile(List<JiraIssue> jiraIssues, string filePath)
         {

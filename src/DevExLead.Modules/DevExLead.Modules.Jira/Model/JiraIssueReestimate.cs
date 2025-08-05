@@ -8,12 +8,8 @@ namespace DevExLead.Modules.Jira.Model
         {
         }
 
-        public string Key { get; set; }
-        public string Summary { get; set; }
-        public string? Assignee { get; set; }
+        public JiraIssue Issue { get; set; }
         public double? OldEstimate { get; set; }
         public double? NewEstimate { get; set; }
-        public JiraIssueType IssueType { get; set; }
-        
     }
 }
