@@ -13,6 +13,8 @@ namespace DevExLead.Modules.Jira.Handlers
 {
     public class JiraPlanHandler : ICommandHandler
     {
+        JiraConnector? _jiraConnector;
+
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             try
@@ -20,13 +22,12 @@ namespace DevExLead.Modules.Jira.Handlers
                 bool isVerbose = ParameterHelper.ReadBoolParameter(options, "isVerbose");
                 bool isSnapshot = ParameterHelper.ReadBoolParameter(options, "isSnapshot");
 
-                var jiraConnector = JiraHelper.GetJiraConnector(isVerbose, out string atlassianBaseUrl);
-
-                var selectedSprint = JiraHelper.SelectSprint(jiraConnector);
+                _jiraConnector = JiraHelper.GetJiraConnector(isVerbose, out string atlassianBaseUrl);
+                var selectedSprint = JiraHelper.SelectSprint(_jiraConnector);
 
                 var jiraWatchJql = $"sprint = {selectedSprint?.Id}";
                 AnsiConsole.MarkupLine($"[blue]Query: {jiraWatchJql} [/]");
-                var jiraIssues = jiraConnector.RunJqlAsync(jiraWatchJql).Result;
+                var jiraIssues = _jiraConnector.RunJqlAsync(jiraWatchJql).Result;
 
                 var appFolder = AppContext.BaseDirectory;
                 var filePath = Path.Combine(appFolder, $"jira-issues-{selectedSprint?.Id}.json");
@@ -38,9 +39,10 @@ namespace DevExLead.Modules.Jira.Handlers
                 else
                 {
                     ShowSprintMetrics(jiraIssues);
+                    ShowRemainingPointsPerEpic(atlassianBaseUrl, jiraIssues);
                     ShowSprintBacklog(atlassianBaseUrl, jiraIssues);
                     ShowBacklogChanges(atlassianBaseUrl, jiraIssues, filePath);
-                    await WatchJiraIssues(jiraConnector, jiraIssues);
+                    await WatchJiraIssues(jiraIssues);
                 }
             }
             catch (Exception ex)
@@ -49,27 +51,26 @@ namespace DevExLead.Modules.Jira.Handlers
             }
         }
 
-        private static async Task WatchJiraIssues(JiraConnector jiraConnector, List<JiraIssue> jiraIssues)
+        private async Task WatchJiraIssues(List<JiraIssue> jiraIssues)
         {
             foreach (var jiraIssue in jiraIssues)
             {
-                //TODO: Can issue be watched by Reporter and Assignee using JIRA ID instead of email?
-
+                //TODO: TEST
                 //if (jiraIssue.Fields.Reporter != null)
                 //{
-                //    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.EmailAddress);
+                //    await jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.AccountId);
                 //}
 
                 //if (jiraIssue.Fields.Assignee != null)
                 //{
-                //    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.EmailAddress);
+                //    await jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.AccountId);
                 //}
 
                 var jiraWatchUserEmail = UserStorageManager.GetDecryptedValue("Jira:WatchUserEmail");
 
                 if (!string.IsNullOrEmpty(jiraWatchUserEmail))
                 {
-                    await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraWatchUserEmail);
+                    await _jiraConnector.WatchIssueWithEmailAddressAsync(jiraIssue.Key, jiraWatchUserEmail);
                 }
             }
         }
@@ -88,6 +89,42 @@ namespace DevExLead.Modules.Jira.Handlers
             AnsiConsole.MarkupLine($"[blue]Remaining Points: {remainingPoints}[/]");
         }
 
+        private static void ShowRemainingPointsPerEpic(string atlassianBaseUrl, List<JiraIssue> jiraIssues)
+        {
+            var epics = jiraIssues
+                .Where(i => !i.Fields.IssueType.Name.Equals("Sub-task"))
+                .GroupBy(i => i.Fields.Parent?.Key)
+                .OrderBy(g => g.Key ?? "No Epic");
+
+            var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Grey);
+            table.AddColumn("Epic");
+            table.AddColumn("Total Points");
+            table.AddColumn("Remaining Points");
+
+            foreach (var epic in epics)
+            {
+                var epicKey = epic.Key;
+                var total = epic.Sum(i => i.Fields.Points) ?? 0;
+                var remaining = epic.Sum(i => CalculateRemainingPoints(i)) ?? 0;
+
+                string epicMarkup = GetEpicMarkup(atlassianBaseUrl, epic.FirstOrDefault()?.Fields.Parent);
+
+                string totalMarkup = total > 0
+                   ? $"[grey]{total}[/]"
+                   : "[red]0[/]";
+
+                string remainingMarkup = remaining > 0
+                    ? $"[red]{remaining}[/]"
+                    : "[green]0[/]";
+
+                table.AddRow(epicMarkup, totalMarkup, remainingMarkup);
+            }
+
+            AnsiConsole.MarkupLine("[blue]Remaining Points per Epic[/]");
+            AnsiConsole.Write(table);
+        }
+
+
         private static void ShowSprintBacklog(string atlassianBaseUrl, List<JiraIssue> jiraIssues)
         {
             AnsiConsole.WriteLine();
@@ -103,6 +140,7 @@ namespace DevExLead.Modules.Jira.Handlers
 
             table.AddColumn(new TableColumn("Epic"));
             table.AddColumn(new TableColumn("Type"));
+            table.AddColumn(new TableColumn("Priority"));
             table.AddColumn(new TableColumn("Status"));
             table.AddColumn(new TableColumn("Summary"));
 
@@ -117,8 +155,9 @@ namespace DevExLead.Modules.Jira.Handlers
                 table.AddRow(
                     GetEpicMarkup(atlassianBaseUrl, jiraIssue.Fields.Parent),
                     GetIssueTypeMarkup(jiraIssue.Fields.IssueType.Name),
+                    GetPriorityMarkup(jiraIssue.Fields.Priority.Name),
                     GetStatusMarkup(jiraIssue.Fields.Status.Name),
-                    $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}]{jiraIssue.Key} | {jiraIssue.Fields.Summary}[/]",
+                    $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}][grey]{jiraIssue.Key} | {jiraIssue.Fields.Summary}[/][/]",
                     GetPointsMarkup(jiraIssue.Fields.Points),
                     GetRemainingPointsMarkup(CalculateRemainingPoints(jiraIssue)),
                     GetAssigneeMarkup(jiraIssue.Fields.Assignee),
@@ -128,6 +167,20 @@ namespace DevExLead.Modules.Jira.Handlers
 
             AnsiConsole.Write(table);
         }
+
+        private static string GetPriorityMarkup(string? priorityName)
+        {
+            if (string.IsNullOrWhiteSpace(priorityName))
+                return "[grey]None[/]";
+                return priorityName.ToLower() switch
+                {
+                    "high" or "highest" => "[red]High[/]",
+                    "medium" => "[orange1]Medium[/]",
+                    "low" or "lowest" => "[blue]Low[/]",
+                    _ => $"[grey]{priorityName}[/]"
+                };
+        }
+
 
         private static string GetRemainingPointsMarkup(double? remaining)
         {
@@ -222,41 +275,31 @@ namespace DevExLead.Modules.Jira.Handlers
 
         private static double? CalculateRemainingPoints(JiraIssue issue)
         {
-            var remainingPointsPrefix = "REM_";
-
-            foreach (var label in issue.Fields.Labels)
-            {
-                //Override Original Estimation when the work has started
-                Regex regex = new Regex($@"{remainingPointsPrefix}\d+");
-                Match match = regex.Match(label.ToUpper());
-                if (match.Success)
-                {
-                    var number = match.Value.Replace(remainingPointsPrefix, string.Empty);
-                    return short.Parse(number);
-                }
-            }
-
             if (issue.Fields.Status.Name.Equals("Done") ||
                 issue.Fields.Status.Name.Equals("Not Doing") ||
-                issue.Fields.Status.Name.Equals("Duplicate"))
+                issue.Fields.Status.Name.Equals("Duplicate") ||
+                issue.Fields.Status.Name.Equals("Ready to Release"))
             {
                 return 0;
             }
             else
             {
+                var remainingPointsPrefix = "REM_";
+
+                foreach (var label in issue.Fields.Labels)
+                {
+                    //Override Original Estimation when the work has started
+                    Regex regex = new Regex($@"{remainingPointsPrefix}\d+");
+                    Match match = regex.Match(label.ToUpper());
+                    if (match.Success)
+                    {
+                        var number = match.Value.Replace(remainingPointsPrefix, string.Empty);
+                        return short.Parse(number);
+                    }
+                }
+
                 //If REM is not found return original estimate
                 return issue.Fields.Points;
-            }
-        }
-
-        private static async Task WatchIssues(string atlassianBaseUrl, JiraConnector jiraConnector, List<JiraIssue> jiraIssues)
-        {
-            var jiraWatchUserEmail = UserStorageManager.GetDecryptedValue("Jira:WatchUserEmail");
-
-            foreach (var jiraIssue in jiraIssues)
-            {
-                AnsiConsole.MarkupLine($"[grey]~ {atlassianBaseUrl}/browse/{jiraIssue.Key} | {jiraIssue.Fields.IssueType.Name} | {jiraIssue.Fields.Summary}[/]");
-                await jiraConnector.WatchIssueAsync(jiraIssue.Key, jiraWatchUserEmail);
             }
         }
 
