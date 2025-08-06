@@ -157,7 +157,7 @@ namespace DevExLead.Modules.Jira.Handlers
                     GetIssueTypeMarkup(jiraIssue.Fields.IssueType.Name),
                     GetPriorityMarkup(jiraIssue.Fields.Priority.Name),
                     GetStatusMarkup(jiraIssue.Fields.Status.Name),
-                    $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}][grey]{jiraIssue.Key} | {jiraIssue.Fields.Summary}[/][/]",
+                    $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}][grey]{jiraIssue.Key} | {TruncateWithEllipsis(jiraIssue.Fields.Summary, 40)}[/][/]",
                     GetPointsMarkup(jiraIssue.Fields.Points),
                     GetRemainingPointsMarkup(CalculateRemainingPoints(jiraIssue)),
                     GetAssigneeMarkup(jiraIssue.Fields.Assignee),
@@ -167,6 +167,16 @@ namespace DevExLead.Modules.Jira.Handlers
 
             AnsiConsole.Write(table);
         }
+
+        private static string TruncateWithEllipsis(string? text, int maxLength)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+            return text.Length > maxLength
+                ? text.Substring(0, maxLength) + "..."
+                : text;
+        }
+
 
         private static string GetPriorityMarkup(string? priorityName)
         {
@@ -193,7 +203,7 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             if (parent == null || string.IsNullOrWhiteSpace(parent.Key))
                 return "[red]No Epic[/]";
-            return $"[link={atlassianBaseUrl}/browse/{parent.Key}][grey]{parent.Key} | {parent.Fields.Summary}[/][/]";
+            return $"[link={atlassianBaseUrl}/browse/{parent.Key}][grey]{parent.Key} | {TruncateWithEllipsis(parent.Fields.Summary, 40)}[/][/]";
         }
 
 
