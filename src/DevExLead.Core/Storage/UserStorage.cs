@@ -10,5 +10,6 @@ namespace DevExLead.Core.Storage
         public List<Command> Commands { get; set; }
         public List<Repository> Repositories { get; set; }
         public Dictionary<string, string> EnvironmentVariables { get; set; }
+        public List<JiraTemplate> JiraTemplates { get; set; }
     }
 }

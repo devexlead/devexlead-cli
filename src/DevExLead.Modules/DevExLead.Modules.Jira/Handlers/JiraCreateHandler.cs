@@ -1,6 +1,7 @@
 ﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
-using DevExLead.Integrations.JIRA;
+using DevExLead.Core.Storage.Model;
 using DevExLead.Integrations.JIRA.Constants;
 using DevExLead.Integrations.JIRA.Model;
 using DevExLead.Integrations.JIRA.Model.Request;
@@ -15,53 +16,22 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             try
             {
-                bool isVerbose = false;
-                if (options.TryGetValue("isVerbose", out var isVerboseString))
-                {
-                    if (!bool.TryParse(isVerboseString, out isVerbose))
-                    {
-                        throw new ArgumentException("Invalid value for isVerbose. It must be a boolean.");
-                    }
-                }
-
-                var atlassianBaseUrl = UserStorageManager.GetDecryptedValue("Atlassian:BaseUrl");
-                if (atlassianBaseUrl == null) return;
-
-                var atlassianUser = UserStorageManager.GetDecryptedValue("Atlassian:User");
-                if (atlassianUser == null) return;
-
-                var atlassianKey = UserStorageManager.GetDecryptedValue("Atlassian:Key");
-                if (atlassianKey == null) return;
-
-
-
-                var jiraConnector = new JiraConnector(atlassianBaseUrl, atlassianUser, atlassianKey, isVerbose);
+                bool isVerbose = ParameterHelper.ReadBoolParameter(options, "isVerbose");
+                var jiraConnector = JiraHelper.GetJiraConnector(isVerbose, out string atlassianBaseUrl);
 
                 var request = new JiraIssueCreateRequest
                 {
                     Fields = new JiraFieldsCreateRequest
                     {
-                        Project = new JiraProject { Key = UserStorageManager.GetDecryptedValue("Atlassian:Jira:ProjectKey") },
                         Summary = AnsiConsole.Ask<string>("Enter summary:"),
                         IssueType = new JiraIssueType { Name = JiraHelper.SelectIssueType() },
                         Priority = new JiraPriority { Name = JiraHelper.SelectPriority() },
                     }
                 };
 
-                var jiraSprint = JiraHelper.SelectSprint(jiraConnector);
+                ApplyTemplateToRequest(request);
 
-                if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.STORY) ||
-                    request.Fields.IssueType.Name.Equals(IssueTypeConstants.BUG) ||
-                    request.Fields.IssueType.Name.Equals(IssueTypeConstants.TASK))
-                {
-                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, jiraSprint?.Id, [IssueTypeConstants.EPIC]);
-                    request.Fields.SprintId = jiraSprint?.Id;
-                }
-
-                if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.SUBTASK))
-                {
-                    request.Fields.Parent = JiraHelper.SelectParent(jiraConnector, request.Fields.Project.Key, jiraSprint?.Id, [IssueTypeConstants.STORY, IssueTypeConstants.BUG, IssueTypeConstants.TASK]);
-                }
+                ApplySprintToRequest(jiraConnector, request);
 
                 //if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
                 //{
@@ -81,6 +51,35 @@ namespace DevExLead.Modules.Jira.Handlers
             {
                 AnsiConsole.MarkupLine($"[red]Error: {ex}[/]");
             }
+        }
+
+        private static void ApplySprintToRequest(Integrations.JIRA.JiraConnector? jiraConnector, JiraIssueCreateRequest request)
+        {
+            var selectedSprint = JiraHelper.SelectSprint(jiraConnector);
+
+            var jiraSprint = selectedSprint?.Id > 0 ? selectedSprint : null;
+
+            if (request.Fields.IssueType.Name.Equals(IssueTypeConstants.STORY) ||
+                request.Fields.IssueType.Name.Equals(IssueTypeConstants.BUG) ||
+                request.Fields.IssueType.Name.Equals(IssueTypeConstants.TASK))
+            {
+                request.Fields.SprintId = jiraSprint?.Id;
+            }
+        }
+
+        private static void ApplyTemplateToRequest(JiraIssueCreateRequest request)
+        {
+            var templates = UserStorageManager.GetUserStorage().JiraTemplates;
+            //show templates in a list with AnsiConsole, choose by name and return JiraTemplate object
+            var selectedTemplate = AnsiConsole.Prompt(
+                new SelectionPrompt<JiraTemplate>()
+                    .Title("Select a template:")
+                    .UseConverter(t => t.Name)
+                    .AddChoices(templates)
+            );
+
+            request.Fields.Project = new JiraProject { Key = selectedTemplate.ProjectKey };
+            request.Fields.Parent = new JiraParent { Key = selectedTemplate.ParentKey };
         }
     }
 }
