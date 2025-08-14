@@ -1,7 +1,7 @@
-﻿using DevExLead.Core.Model.Command;
+﻿using System.Text.Json;
+using DevExLead.Core.Model.Command;
 using DevExLead.Core.Storage;
 using Spectre.Console;
-using System.Text.Json;
 
 namespace DevExLead.Core.Helpers
 {
@@ -98,6 +98,8 @@ namespace DevExLead.Core.Helpers
                 commands.Add($"dxc git latest --key \"{repository.Key}\"");
                 commands.Add($"dxc git latest --key \"{repository.Key}\" --branch \"{{Branch}}\"");
             }
+
+            commands.Add($"dxc --config");
 
             File.AppendAllLines(psReadLineFile, commands);
         }
