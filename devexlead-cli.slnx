@@ -8,6 +8,7 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
+    <Project Path="../devexlead-integrations/src/DevExLead.Integrations.csproj" />
     <Project Path="src/DevExLead.Console/DevExLead.CLI.csproj" Id="412ec254-46ae-d92e-f2d7-0e821cf9a9a5" />
     <Project Path="src/DevExLead.Core/DevExLead.Core.csproj" />
   </Folder>

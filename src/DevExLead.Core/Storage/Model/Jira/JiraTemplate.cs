@@ -1,4 +1,4 @@
-﻿namespace DevExLead.Core.Storage.Model
+﻿namespace DevExLead.Core.Storage.Model.Jira
 {
     public class JiraTemplate
     {

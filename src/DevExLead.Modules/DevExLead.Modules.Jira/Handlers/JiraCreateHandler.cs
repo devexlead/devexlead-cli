@@ -1,7 +1,7 @@
 ﻿using DevExLead.Core;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
-using DevExLead.Core.Storage.Model;
+using DevExLead.Core.Storage.Model.Jira;
 using DevExLead.Integrations.JIRA.Constants;
 using DevExLead.Integrations.JIRA.Model;
 using DevExLead.Integrations.JIRA.Model.Request;
@@ -16,8 +16,8 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             try
             {
-                bool isVerbose = ParameterHelper.ReadBoolParameter(options, "isVerbose");
-                var jiraConnector = JiraHelper.GetJiraConnector(isVerbose, out string atlassianBaseUrl);
+                bool isLoggingEnabled = UserStorageManager.GetUserStorage().IsLoggingEnabled;
+                var jiraConnector = JiraHelper.GetJiraConnector(isLoggingEnabled, out string atlassianBaseUrl);
 
                 var request = new JiraIssueCreateRequest
                 {
@@ -33,19 +33,22 @@ namespace DevExLead.Modules.Jira.Handlers
 
                 ApplySprintToRequest(jiraConnector, request);
 
+                var newJiraIssue = jiraConnector.CreateIssueAsync(request).Result;
+
+                var assignee = JiraHelper.SelectAssignee(jiraConnector);
+
+                if (assignee != null)
+                {
+                    await jiraConnector.UpdateIssueAssigneeAsync(newJiraIssue.Key, assignee);
+                }
+
                 //if (request.Fields.IssueType.Name == IssueTypeConstants.EPIC)
                 //{
                 //    request.Fields.StartDate = AnsiConsole.Ask<DateOnly?>("Enter start date (format: yyyy-MM-dd):", null);
                 //    request.Fields.DueDate = AnsiConsole.Ask<DateOnly?>("Enter due date (format: yyyy-MM-dd):", null);
                 //}
 
-                //TODO: Make this configurable in local config file
-                //request.Fields.Assignee = JiraHelper.SelectAssignee(jiraConnector);
-
-                var result = jiraConnector.CreateIssueAsync(request).Result;
-
-                AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/browse/{result.Key}[/]");
-
+                AnsiConsole.MarkupLine($"[green]{atlassianBaseUrl}/browse/{newJiraIssue.Key}[/]");
             }
             catch (Exception ex)
             {
@@ -69,7 +72,7 @@ namespace DevExLead.Modules.Jira.Handlers
 
         private static void ApplyTemplateToRequest(JiraIssueCreateRequest request)
         {
-            var templates = UserStorageManager.GetUserStorage().JiraTemplates;
+            var templates = UserStorageManager.GetUserStorage().Applications.Jira.Templates;
             //show templates in a list with AnsiConsole, choose by name and return JiraTemplate object
             var selectedTemplate = AnsiConsole.Prompt(
                 new SelectionPrompt<JiraTemplate>()

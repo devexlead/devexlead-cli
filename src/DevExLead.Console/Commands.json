@@ -164,25 +164,13 @@
             {
                 "Name": "create",
                 "Description": "Generate JIRA ticket",
-                "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler",
-                "Parameters": [
-                    {
-                        "Name": "isVerbose",
-                        "Description": "Show HTTP Request/Response",
-                        "DefaultValue": "false"
-                    }
-                ]
+                "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler"
             },
             {
                 "Name": "plan",
                 "Description": "Monitor Backlog Changes during the Sprint",
                 "Handler": "DevExLead.Modules.Jira.Handlers.JiraPlanHandler",
                 "Parameters": [
-                    {
-                        "Name": "isVerbose",
-                        "Description": "Show HTTP Request/Response",
-                        "DefaultValue": "false"
-                    },
                     {
                         "Name": "isSnapshot",
                         "Description": "Take a Backlog Snapshot after Sprint Planning",

@@ -19,10 +19,10 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             try
             {
-                bool isVerbose = ParameterHelper.ReadBoolParameter(options, "isVerbose");
+                bool isLoggingEnabled = UserStorageManager.GetUserStorage().IsLoggingEnabled;
                 bool isSnapshot = ParameterHelper.ReadBoolParameter(options, "isSnapshot");
 
-                _jiraConnector = JiraHelper.GetJiraConnector(isVerbose, out string atlassianBaseUrl);
+                _jiraConnector = JiraHelper.GetJiraConnector(isLoggingEnabled, out string atlassianBaseUrl);
                 var selectedSprint = JiraHelper.SelectSprint(_jiraConnector);
 
                 var jiraWatchJql = $"sprint = {selectedSprint?.Id}";
@@ -55,22 +55,14 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             foreach (var jiraIssue in jiraIssues)
             {
-                //TODO: TEST
-                //if (jiraIssue.Fields.Reporter != null)
-                //{
-                //    await jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.AccountId);
-                //}
-
-                //if (jiraIssue.Fields.Assignee != null)
-                //{
-                //    await jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.AccountId);
-                //}
-
-                var jiraWatchUserEmail = UserStorageManager.GetDecryptedValue("Jira:WatchUserEmail");
-
-                if (!string.IsNullOrEmpty(jiraWatchUserEmail))
+                if (jiraIssue.Fields.Reporter != null)
                 {
-                    await _jiraConnector.WatchIssueWithEmailAddressAsync(jiraIssue.Key, jiraWatchUserEmail);
+                    await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.AccountId);
+                }
+
+                if (jiraIssue.Fields.Assignee != null)
+                {
+                    await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.AccountId);
                 }
             }
         }
@@ -152,17 +144,24 @@ namespace DevExLead.Modules.Jira.Handlers
 
             foreach (var jiraIssue in jiraIssues.Where(i => !i.Fields.IssueType.Name.Equals("Sub-task")).OrderBy(i => i.Fields.Parent?.Key))
             {
-                table.AddRow(
-                    GetEpicMarkup(atlassianBaseUrl, jiraIssue.Fields.Parent),
-                    GetIssueTypeMarkup(jiraIssue.Fields.IssueType.Name),
-                    GetPriorityMarkup(jiraIssue.Fields.Priority.Name),
-                    GetStatusMarkup(jiraIssue.Fields.Status.Name),
-                    $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}][grey]{jiraIssue.Key} | {TruncateWithEllipsis(jiraIssue.Fields.Summary, 40)}[/][/]",
-                    GetPointsMarkup(jiraIssue.Fields.Points),
-                    GetRemainingPointsMarkup(CalculateRemainingPoints(jiraIssue)),
-                    GetAssigneeMarkup(jiraIssue.Fields.Assignee),
-                    GetAssigneeMarkup(jiraIssue.Fields.Reporter)
-                );
+                try
+                {
+                    table.AddRow(
+                                   GetEpicMarkup(atlassianBaseUrl, jiraIssue.Fields.Parent),
+                                   GetIssueTypeMarkup(jiraIssue.Fields.IssueType.Name),
+                                   GetPriorityMarkup(jiraIssue.Fields.Priority.Name),
+                                   GetStatusMarkup(jiraIssue.Fields.Status.Name),
+                                   $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}][grey]{jiraIssue.Key} | {TruncateWithEllipsis(jiraIssue.Fields.Summary, 40)}[/][/]",
+                                   GetPointsMarkup(jiraIssue.Fields.Points),
+                                   GetRemainingPointsMarkup(CalculateRemainingPoints(jiraIssue)),
+                                   GetAssigneeMarkup(jiraIssue.Fields.Assignee),
+                                   GetAssigneeMarkup(jiraIssue.Fields.Reporter)
+                    );
+                }
+                catch (Exception)
+                {
+                    AnsiConsole.MarkupLine($"[red]Error adding [link={atlassianBaseUrl}/browse/{jiraIssue.Key}]{jiraIssue.Key}[/] to the table[/]");
+                }
             }
 
             AnsiConsole.Write(table);

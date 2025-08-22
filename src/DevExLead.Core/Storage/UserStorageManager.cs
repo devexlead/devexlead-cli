@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage.Model;
+using DevExLead.Core.Storage.Model.Jira;
 using Spectre.Console;
 
 namespace DevExLead.Core.Storage
@@ -40,6 +41,23 @@ namespace DevExLead.Core.Storage
             if (userStorage.EnvironmentVariables == null)
             {
                 userStorage.EnvironmentVariables = new Dictionary<string, string>();
+            }
+
+            if (userStorage.Applications == null)
+            {
+                userStorage.Applications = new ApplicationsConfiguration();
+                if (userStorage.Applications.Jira == null)
+                {
+                    userStorage.Applications.Jira = new JiraConfiguration();
+                    if (userStorage.Applications.Jira.Templates == null)
+                    {
+                        userStorage.Applications.Jira.Templates = new List<JiraTemplate>();
+                    }
+                    if (userStorage.Applications.Jira.Users == null)
+                    {
+                        userStorage.Applications.Jira.Users = new List<JiraUser>();
+                    }
+                }
             }
 
             // Generate Encryption Keys if not present

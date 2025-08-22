@@ -69,28 +69,23 @@ namespace DevExLead.Modules.Jira.Helpers
 
         public static JiraUser? SelectAssignee(JiraConnector jiraConnector)
         {
-            var atlassianUserGroupName = UserStorageManager.GetDecryptedValue("Atlassian:Assignees");
-            if (atlassianUserGroupName == null) return null;
+            var users = UserStorageManager.GetUserStorage().Applications.Jira.Users;
 
-            var jiraGroupMembersResponse = jiraConnector.GetJiraUsersByGroupName(atlassianUserGroupName).Result;
-            var userOptions = jiraGroupMembersResponse.Users
-                .Select(u => new { u.DisplayName, u.AccountId })
-                .ToList();
-            userOptions.Insert(0, new { DisplayName = "None", AccountId = (string)null });
-
-            var selectedUser = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Select an assignee:")
-                    .AddChoices(userOptions.Select(u => $"{u.DisplayName} ({u.AccountId})").ToList())
-            );
-
-            if (selectedUser == "None (null)")
+            if (users == null || users.Count == 0)
             {
+                AnsiConsole.MarkupLine("[red]No users found in Jira configuration.[/]");
                 return null;
             }
 
-            var selectedAccountId = userOptions.First(u => $"{u.DisplayName} ({u.AccountId})" == selectedUser).AccountId;
-            return new JiraUser { AccountId = selectedAccountId };
+            // Prompt the user to select a user
+            var selectedUser = AnsiConsole.Prompt(
+                new SelectionPrompt<Core.Storage.Model.Jira.JiraUser>()
+                    .Title("Select an assignee:")
+                    .UseConverter(u => $"{u.Name} ({u.Id})")
+                    .AddChoices(users.ToList()) // Ensure users is converted to a List<JiraUser>
+            );
+
+            return new JiraUser { AccountId = selectedUser.Id };
         }
 
         
