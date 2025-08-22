@@ -77,17 +77,28 @@ namespace DevExLead.Modules.Jira.Helpers
                 return null;
             }
 
-            // Prompt the user to select a user
+            // Add "Unassigned" option
+            var unassigned = new Core.Storage.Model.Jira.JiraUser
+            {
+                Name = "Unassigned",
+                Id = string.Empty // or null, depending on your logic
+            };
+
+            var userList = users.ToList();
+            userList.Insert(0, unassigned);
+
             var selectedUser = AnsiConsole.Prompt(
                 new SelectionPrompt<Core.Storage.Model.Jira.JiraUser>()
                     .Title("Select an assignee:")
-                    .UseConverter(u => $"{u.Name} ({u.Id})")
-                    .AddChoices(users.ToList()) // Ensure users is converted to a List<JiraUser>
+                    .UseConverter(u => u.Name == "Unassigned" ? "Unassigned" : $"{u.Name} ({u.Id})")
+                    .AddChoices(userList)
             );
+
+            // If "Unassigned" is selected, return null
+            if (selectedUser.Name == "Unassigned")
+                return null;
 
             return new JiraUser { AccountId = selectedUser.Id };
         }
-
-        
     }
 }

@@ -37,7 +37,7 @@ namespace DevExLead.Modules.Jira.Handlers
 
                 var assignee = JiraHelper.SelectAssignee(jiraConnector);
 
-                if (assignee != null)
+                if (!string.IsNullOrEmpty(assignee?.AccountId))
                 {
                     await jiraConnector.UpdateIssueAssigneeAsync(newJiraIssue.Key, assignee);
                 }
