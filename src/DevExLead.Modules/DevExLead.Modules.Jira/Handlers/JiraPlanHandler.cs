@@ -86,7 +86,7 @@ namespace DevExLead.Modules.Jira.Handlers
             var epics = jiraIssues
                 .Where(i => !i.Fields.IssueType.Name.Equals("Sub-task"))
                 .GroupBy(i => i.Fields.Parent?.Key)
-                .OrderBy(g => g.Key ?? "No Epic");
+                .OrderBy(g => g.FirstOrDefault()?.Fields.Parent?.Fields.Summary ?? "No Epic");
 
             var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Grey);
             table.AddColumn("Epic");
@@ -202,7 +202,7 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             if (parent == null || string.IsNullOrWhiteSpace(parent.Key))
                 return "[red]No Epic[/]";
-            return $"[link={atlassianBaseUrl}/browse/{parent.Key}][grey]{parent.Key} | {TruncateWithEllipsis(parent.Fields.Summary, 40)}[/][/]";
+            return $"[link={atlassianBaseUrl}/browse/{parent.Key}][grey]{parent.Key} | {TruncateWithEllipsis(parent.Fields.Summary, 300)}[/][/]";
         }
 
 
