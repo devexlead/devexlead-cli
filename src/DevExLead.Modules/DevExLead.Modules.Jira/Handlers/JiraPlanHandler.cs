@@ -55,6 +55,8 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             foreach (var jiraIssue in jiraIssues)
             {
+                AnsiConsole.MarkupLine($"[green]Watching issue {jiraIssue.Key} for {jiraIssue.Fields.Reporter?.DisplayName} and {jiraIssue.Fields.Assignee?.DisplayName}[/]");
+
                 if (jiraIssue.Fields.Reporter != null)
                 {
                     await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.AccountId);
@@ -63,6 +65,15 @@ namespace DevExLead.Modules.Jira.Handlers
                 if (jiraIssue.Fields.Assignee != null)
                 {
                     await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.AccountId);
+                }
+
+                var watchers = UserStorageManager.GetUserStorage().Applications.Jira.Users.Where(u => u.IsWatcher);
+                foreach (var watcher in watchers)
+                {
+                    if (watcher.Id != null)
+                    {
+                        await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, watcher.Id);
+                    }
                 }
             }
         }

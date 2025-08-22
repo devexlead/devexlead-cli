@@ -9,7 +9,7 @@ namespace DevExLead.Modules.Jira.Helpers
     {
         public static JiraConnector? GetJiraConnector(bool isVerbose, out string atlassianBaseUrl)
         {
-            atlassianBaseUrl = UserStorageManager.GetDecryptedValue("Atlassian:BaseUrl");
+            atlassianBaseUrl = UserStorageManager.GetUserStorage().Applications.Jira.BaseUrl;
             if (atlassianBaseUrl == null) return null;
 
             var atlassianUser = UserStorageManager.GetDecryptedValue("Atlassian:User");
@@ -25,10 +25,10 @@ namespace DevExLead.Modules.Jira.Helpers
 
         public static JiraSprint? SelectSprint(JiraConnector jiraConnector)
         {
-            var atlassianTeamBoardId = UserStorageManager.GetDecryptedValue("Atlassian:BoardId");
+            var atlassianTeamBoardId = UserStorageManager.GetUserStorage().Applications.Jira.BoardId;
             if (atlassianTeamBoardId == null) return null;
 
-            var jiraSprints = jiraConnector.FetchSprints(int.Parse(atlassianTeamBoardId))
+            var jiraSprints = jiraConnector.FetchSprints(atlassianTeamBoardId)
                                        .Result.Where(s => s.State.Equals("active") ||
                                                           s.State.Equals("future")).ToList();
 
@@ -47,7 +47,7 @@ namespace DevExLead.Modules.Jira.Helpers
 
         public static string SelectPriority()
         {
-            var priorityOptions = UserStorageManager.GetDecryptedValue("Atlassian:Jira:Priorities").Split("|");
+            var priorityOptions = UserStorageManager.GetUserStorage().Applications.Jira.Priorities;
 
             return AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
@@ -58,7 +58,7 @@ namespace DevExLead.Modules.Jira.Helpers
 
         public static string SelectIssueType()
         {
-           var issueTypeOptions = UserStorageManager.GetDecryptedValue("Atlassian:Jira:IssueTypes").Split("|");
+           var issueTypeOptions = UserStorageManager.GetUserStorage().Applications.Jira.IssueTypes;
 
             return AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
