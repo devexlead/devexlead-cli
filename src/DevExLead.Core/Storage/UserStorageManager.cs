@@ -2,6 +2,7 @@
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage.Model;
 using DevExLead.Core.Storage.Model.Jira;
+using DevExLead.Core.Storage.Model.SqlServer;
 using Spectre.Console;
 
 namespace DevExLead.Core.Storage
@@ -58,6 +59,17 @@ namespace DevExLead.Core.Storage
                         userStorage.Applications.Jira.Users = new List<JiraUser>();
                     }
                 }
+
+                if (userStorage.Applications.SqlServer == null)
+                {
+                    userStorage.Applications.SqlServer = new SqlServerConfiguration();
+                    if (userStorage.Applications.SqlServer.Queries == null)
+                    {
+                        userStorage.Applications.SqlServer.Queries = new List<SqlServerQuery>();
+                    }
+                }
+                
+
             }
 
             // Generate Encryption Keys if not present
