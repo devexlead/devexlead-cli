@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "jira create"
+      "commandLineArgs": "tool npm-dependencies"
     }
   }
 }

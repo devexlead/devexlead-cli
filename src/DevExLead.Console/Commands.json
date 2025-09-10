@@ -141,19 +141,26 @@
       "Description": "Developer Tools",
       "SubCommands": [
         {
-          "Name": "waffle",
-          "Description": "Generate Text Data for Testing",
-          "Handler": "DevExLead.Modules.Tools.Handlers.WaffleGeneratorHandler",
-          "Parameters": [
-            {
-              "Name": "paragraphs",
-              "Description": "Number of Paragraphs"
-            },
-            {
-              "Name": "includeHeading",
-              "Description": "Generate Heading"
-            }
-          ]
+            "Name": "waffle",
+            "Description": "Generate Text Data for Testing",
+            "Handler": "DevExLead.Modules.Tools.Handlers.WaffleGeneratorHandler",
+            "Parameters": [
+                {
+                    "Name": "paragraphs",
+                    "Description": "Number of Paragraphs"
+                },
+                {
+                    "Name": "includeHeading",
+                    "Description": "Generate Heading"
+                }
+            ]
+        },
+        {
+            "Name": "npm-dependencies",
+            "Description": "Check npm Dependencies in a folder",
+            "Handler": "DevExLead.Modules.Tools.Handlers.NpmVersionChecker",
+            "Parameters": [
+            ]
         }
       ]
     },
