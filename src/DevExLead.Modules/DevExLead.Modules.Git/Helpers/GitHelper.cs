@@ -37,24 +37,12 @@ namespace DevExLead.Modules.Git.Helpers
 
         public static void GetLatest(Repository repository, string branch)
         {
-            var askToProceed = AnsiConsole.Ask<string>($"All your local changes in the {repository.Key} will be stashed. Do you want to proceed? (y/n)");
-            if (askToProceed.ToLower().Equals("y"))
-            {
-                if (string.IsNullOrEmpty(branch))
-                {
-                    branch = repository.DefaultBranch;
-                }
-
-                TerminalHelper.Run(PromptModeEnum.Powershell, $"git stash", repository.WorkingFolder);
-                TerminalHelper.Run(PromptModeEnum.Powershell, $"git reset --hard", repository.WorkingFolder);
-                TerminalHelper.Run(PromptModeEnum.Powershell, $"git fetch", repository.WorkingFolder);
-                TerminalHelper.Run(PromptModeEnum.Powershell, $"git checkout {branch}", repository.WorkingFolder);
-                TerminalHelper.Run(PromptModeEnum.Powershell, $"git pull", repository.WorkingFolder);
-            }
-            else
-            {
-                AnsiConsole.MarkupLine($"[red]Operation has been cancelled[/]");
-            }
+            AnsiConsole.MarkupLine($"[green]Getting latest from {repository.RemoteLocation}...[/]");
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git stash", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git reset --hard", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git fetch", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git checkout {branch}", repository.WorkingFolder);
+            TerminalHelper.Run(PromptModeEnum.Powershell, $"git pull", repository.WorkingFolder);
         }
 
         public static List<Repository> GetRepositories()
