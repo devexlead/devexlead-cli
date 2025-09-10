@@ -10,14 +10,24 @@ namespace DevExLead.Modules.Tools.Handlers
 
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
-            var rootDirectory = Directory.GetCurrentDirectory();
-            var packages = ScanAll(rootDirectory);
-            SaveSummaryToCsv(packages, rootDirectory, Path.Combine(rootDirectory, "packages-summary.csv"));
+            options.TryGetValue("path", out var path);
+
+            var rootPath = Directory.GetCurrentDirectory();
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                rootPath = path;
+            }
+
+            var packages = ScanAll(rootPath);
+            SaveSummaryToCsv(packages, rootPath);
             //PrintSpectreTable(packages, rootDirectory, showSummary: true);
         }
 
-        private static void SaveSummaryToCsv(List<PackageInfo> packages, string rootDirectory, string outputPath)
+        private static void SaveSummaryToCsv(List<PackageInfo> packages, string rootDirectory)
         {
+            var outputPath = Path.Combine(rootDirectory, "npm_packages_summary.csv");
+
             var lines = new List<string>
                     {
                         "Package,Version,Kind,File"

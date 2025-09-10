@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "git latest"
+      "commandLineArgs": "tool software-catalog-builder"
     }
   }
 }
