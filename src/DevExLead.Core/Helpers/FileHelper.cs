@@ -1,4 +1,6 @@
 ﻿using Spectre.Console;
+using SpreadCheetah;
+using SpreadCheetah.Worksheets;
 using System.Data;
 using System.IO.Compression;
 using System.Text.Json;
@@ -203,7 +205,36 @@ namespace DevExLead.Core.Helpers
             }
         }
 
+        public static async Task ExportAsExcelFile(DataTable dataTable, string rootPath, string fileName)
+        {
+            var filePath = Path.Combine(rootPath, $"{fileName}.xlsx");
 
+            using var fileStream = new FileStream(filePath, FileMode.Create);
+            using var spreadsheet = await Spreadsheet.CreateNewAsync(fileStream);
+
+            // Create worksheet options with freeze panes
+            var worksheetOptions = new WorksheetOptions
+            {
+                FrozenRows = 1 // Freeze the header row
+            };
+
+            await spreadsheet.StartWorksheetAsync(fileName, worksheetOptions);
+
+            // Write headers using AddHeaderRowAsync
+            var headerNames = dataTable.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToArray();
+            await spreadsheet.AddHeaderRowAsync(headerNames);
+
+            // Write data rows
+            foreach (DataRow row in dataTable.Rows)
+            {
+                var cells = row.ItemArray.Select(field => new Cell(field?.ToString() ?? string.Empty)).ToArray();
+                await spreadsheet.AddRowAsync(cells);
+            }
+
+            await spreadsheet.FinishAsync();
+
+            AnsiConsole.MarkupLine($"[green]Exported to:[/] [bold]{filePath}[/]");
+        }
 
         public static void ExportAsCsvFile(DataTable dataTable, string rootPath, string fileName)
         {

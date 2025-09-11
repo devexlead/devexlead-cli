@@ -34,6 +34,9 @@ namespace DevExLead.Modules.Export.Handlers
                 case "csv":
                     FileHelper.ExportAsCsvFile(softwareCatalog, rootPath, fileName);
                     break;
+                case "xls":
+                    await FileHelper.ExportAsExcelFile(softwareCatalog, rootPath, fileName);
+                    break;
                 default:
                     FileHelper.ExportAsCsvFile(softwareCatalog, rootPath, fileName);
                     break;
