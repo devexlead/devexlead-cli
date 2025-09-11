@@ -224,10 +224,12 @@ namespace DevExLead.Core.Helpers
                 AutoFilter = new AutoFilterOptions(autoFilterRange)
             };
 
-            // Set column widths to auto-size
-            for (int i = 1; i <= dataTable.Columns.Count; i++)
+            // Calculate and set column widths based on content
+            for (int i = 0; i < dataTable.Columns.Count; i++)
             {
-                worksheetOptions.Column(i).Width = null; // Auto-size
+                var columnIndex = i + 1; // SpreadCheetah uses 1-based indexing
+                var maxWidth = CalculateColumnWidth(dataTable, i);
+                worksheetOptions.Column(columnIndex).Width = maxWidth;
             }
 
             await spreadsheet.StartWorksheetAsync(fileName, worksheetOptions);
@@ -246,6 +248,28 @@ namespace DevExLead.Core.Helpers
             await spreadsheet.FinishAsync();
 
             AnsiConsole.MarkupLine($"[green]Exported to:[/] [bold]{filePath}[/]");
+        }
+
+        private static double CalculateColumnWidth(DataTable dataTable, int columnIndex)
+        {
+            var column = dataTable.Columns[columnIndex];
+            double maxWidth = column.ColumnName.Length; // Start with header length
+
+            // Check all data rows for this column
+            foreach (DataRow row in dataTable.Rows)
+            {
+                var cellValue = row[columnIndex]?.ToString() ?? string.Empty;
+                if (cellValue.Length > maxWidth)
+                {
+                    maxWidth = cellValue.Length;
+                }
+            }
+
+            // Apply some padding and convert to Excel width units
+            // Excel width units are approximately 1/256th of the width of the zero character
+            // in the default font. A rough approximation is character count * 1.2 + 2 for padding
+            var excelWidth = Math.Min(maxWidth * 1.2 + 2, 100); // Cap at 100 to prevent extremely wide columns
+            return Math.Max(excelWidth, 8); // Minimum width of 8
         }
 
         private static string GetColumnLetter(int columnNumber)
