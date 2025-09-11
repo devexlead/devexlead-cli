@@ -212,11 +212,23 @@ namespace DevExLead.Core.Helpers
             using var fileStream = new FileStream(filePath, FileMode.Create);
             using var spreadsheet = await Spreadsheet.CreateNewAsync(fileStream);
 
-            // Create worksheet options with freeze panes
+            // Calculate the range for auto filter
+            var endColumn = GetColumnLetter(dataTable.Columns.Count);
+            var endRow = dataTable.Rows.Count + 1; // +1 for header row
+            var autoFilterRange = $"A1:{endColumn}{endRow}";
+
+            // Create worksheet options with freeze panes and auto filter
             var worksheetOptions = new WorksheetOptions
             {
-                FrozenRows = 1 // Freeze the header row
+                FrozenRows = 1, // Freeze the header row
+                AutoFilter = new AutoFilterOptions(autoFilterRange)
             };
+
+            // Set column widths to auto-size
+            for (int i = 1; i <= dataTable.Columns.Count; i++)
+            {
+                worksheetOptions.Column(i).Width = null; // Auto-size
+            }
 
             await spreadsheet.StartWorksheetAsync(fileName, worksheetOptions);
 
@@ -234,6 +246,18 @@ namespace DevExLead.Core.Helpers
             await spreadsheet.FinishAsync();
 
             AnsiConsole.MarkupLine($"[green]Exported to:[/] [bold]{filePath}[/]");
+        }
+
+        private static string GetColumnLetter(int columnNumber)
+        {
+            string columnLetter = "";
+            while (columnNumber > 0)
+            {
+                int remainder = (columnNumber - 1) % 26;
+                columnLetter = (char)('A' + remainder) + columnLetter;
+                columnNumber = (columnNumber - 1) / 26;
+            }
+            return columnLetter;
         }
 
         public static void ExportAsCsvFile(DataTable dataTable, string rootPath, string fileName)
