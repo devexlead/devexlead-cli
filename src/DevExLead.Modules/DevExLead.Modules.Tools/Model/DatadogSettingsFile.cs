@@ -1,4 +1,4 @@
-﻿namespace DevExLead.Modules.Tools.Model
+﻿namespace DevExLead.Modules.Export.Model
 {
     public class DatadogSettingsFile
     {

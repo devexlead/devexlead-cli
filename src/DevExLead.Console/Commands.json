@@ -1,352 +1,347 @@
 {
-    "Commands": [
+  "Commands": [
+    {
+      "Name": "vault",
+      "Description": "Vault operations",
+      "SubCommands": [
         {
-            "Name": "vault",
-            "Description": "Vault operations",
-            "SubCommands": [
-                {
-                    "Name": "list",
-                    "Description": "List Vault entries",
-                    "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultListCommandHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "update",
-                    "Description": "Update an entry",
-                    "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultUpdateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to update"
-                        },
-                        {
-                            "Name": "value",
-                            "Description": "The new value"
-                        }
-                    ]
-                },
-                {
-                    "Name": "delete",
-                    "Description": "Delete an entry",
-                    "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultDeleteCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to delete"
-                        }
-                    ]
-                },
-                {
-                    "Name": "reencrypt",
-                    "Description": "Re-encrypt the Vault",
-                    "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultReEncryptCommandHandler",
-                    "Parameters": []
-                }
-            ]
+          "Name": "list",
+          "Description": "List Vault entries",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultListCommandHandler",
+          "Parameters": []
         },
         {
-            "Name": "transfer",
-            "Description": "Transfer CLI Configuration between computers",
-            "SubCommands": [
-                {
-                    "Name": "export",
-                    "Description": "Export Configuration",
-                    "Handler": "DevExLead.Modules.Transfer.Handlers.TransferExportCommandHandler"
-                },
-                {
-                    "Name": "import",
-                    "Description": "Import Configuration",
-                    "Handler": "DevExLead.Modules.Transfer.Handlers.TransferImportCommandHandler"
-                }
-            ]
+          "Name": "update",
+          "Description": "Update an entry",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultUpdateCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to update"
+            },
+            {
+              "Name": "value",
+              "Description": "The new value"
+            }
+          ]
         },
         {
-            "Name": "setup",
-            "Description": "Software Installation using WinGet",
-            "SubCommands": [
-                {
-                    "Name": "install",
-                    "Description": "Install Software",
-                    "Handler": "DevExLead.Modules.Setup.Handlers.SeptupInstallHandler"
-                }
-            ]
+          "Name": "delete",
+          "Description": "Delete an entry",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultDeleteCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to delete"
+            }
+          ]
         },
         {
-            "Name": "command",
-            "Description": "Saved Commands",
-            "SubCommands": [
-                {
-                    "Name": "update",
-                    "Description": "Update Command",
-                    "Handler": "DevExLead.Modules.Command.Handlers.CommandUpdateCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "Command Name"
-                        },
-                        {
-                            "Name": "path",
-                            "Description": "Command Location"
-                        },
-                        {
-                            "Name": "body",
-                            "Description": "Command Body"
-                        },
-                        {
-                            "Name": "group",
-                            "Description": "Command Group (for parallel execution)"
-                        },
-                        {
-                            "Name": "process",
-                            "Description": "Command Process (required for re-execution)"
-                        }
-                    ]
-                },
-                {
-                    "Name": "delete",
-                    "Description": "Delete Command",
-                    "Handler": "DevExLead.Modules.Command.Handlers.CommandDeleteCommandHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "Command Name"
-                        }
-                    ]
-                },
-                {
-                    "Name": "run",
-                    "Description": "Run Commands",
-                    "Handler": "DevExLead.Modules.Command.Handlers.CommandRunHandler",
-                    "Parameters": [
-                        {
-                            "Name": "single",
-                            "Description": "Command Key"
-                        },
-                        {
-                            "Name": "multiple",
-                            "Description": "Command Group Name"
-                        }
-                    ]
-                },
-                {
-                    "Name": "list",
-                    "Description": "List Commands",
-                    "Handler": "DevExLead.Modules.Command.Handlers.CommandListHandler",
-                    "Parameters": []
-                }
-            ]
-        },
-        {
-            "Name": "tool",
-            "Description": "Developer Tools",
-            "SubCommands": [
-                {
-                    "Name": "waffle",
-                    "Description": "Generate Text Data for Testing",
-                    "Handler": "DevExLead.Modules.Tools.Handlers.WaffleGeneratorHandler",
-                    "Parameters": [
-                        {
-                            "Name": "paragraphs",
-                            "Description": "Number of Paragraphs"
-                        },
-                        {
-                            "Name": "includeHeading",
-                            "Description": "Generate Heading"
-                        }
-                    ]
-                },
-                {
-                    "Name": "npm-dependencies",
-                    "Description": "Check npm Dependencies in a folder",
-                    "Handler": "DevExLead.Modules.Tools.Handlers.NpmVersionChecker",
-                    "Parameters": [
-                        {
-                            "Name": "path",
-                            "Description": "Path to be scanned"
-                        }
-                    ]
-                },
-                {
-                    "Name": "software-catalog-builder",
-                    "Description": "Catalog Builder based on Kubernetes and Datadog Files",
-                    "Handler": "DevExLead.Modules.Tools.Handlers.SoftwareCatalogChecker",
-                    "Parameters": [
-                        {
-                            "Name": "path",
-                            "Description": "Path to be scanned"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Name": "jira",
-            "Description": "JIRA Commands",
-            "SubCommands": [
-                {
-                    "Name": "create",
-                    "Description": "Generate JIRA ticket",
-                    "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler"
-                },
-                {
-                    "Name": "plan",
-                    "Description": "Monitor Backlog Changes during the Sprint",
-                    "Handler": "DevExLead.Modules.Jira.Handlers.JiraPlanHandler",
-                    "Parameters": [
-                        {
-                            "Name": "isSnapshot",
-                            "Description": "Take a Backlog Snapshot after Sprint Planning",
-                            "DefaultValue": "false"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Name": "ssl",
-            "Description": "SSL Certificate Commands",
-            "SubCommands": [
-                {
-                    "Name": "create",
-                    "Description": "Generate Self-signed SSL Certificate",
-                    "Handler": "DevExLead.Modules.SSL.Handlers.SslCreateCertificateHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "install",
-                    "Description": "Install SSL Certificate",
-                    "Handler": "DevExLead.Modules.SSL.Handlers.SslInstallCertificateHandler",
-                    "Parameters": []
-                }
-            ]
-        },
-        {
-            "Name": "git",
-            "Description": "Git Commands",
-            "SubCommands": [
-                {
-                    "Name": "repository",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.Git.Handlers.GitRepositoryHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "remoteLocation",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "workingFolder",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "defaultBranch",
-                            "Description": ""
-                        }
-                    ]
-                },
-                {
-                    "Name": "clone",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.Git.Handlers.GitCloneHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "latest",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.Git.Handlers.GitLatestHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "branch",
-                            "Description": ""
-                        }
-                    ]
-                },
-                {
-                    "Name": "profile",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.Git.Handlers.GitProfileHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "ssh",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.Git.Handlers.GitSshHandler",
-                    "Parameters": []
-                }
-            ]
-        },
-        {
-            "Name": "variable",
-            "Description": "Environment Variables",
-            "SubCommands": [
-                {
-                    "Name": "update",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableUpdateHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to update"
-                        },
-                        {
-                            "Name": "value",
-                            "Description": "The new value"
-                        }
-                    ]
-                },
-                {
-                    "Name": "list",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableListHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "configure",
-                    "Description": "Configure Environment Variables in Machine",
-                    "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableConfigureHandler",
-                    "Parameters": []
-                },
-                {
-                    "Name": "delete",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableDeleteHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": "The key to update"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "Name": "sql",
-            "Description": "SQL Queries",
-            "SubCommands": [
-                {
-                    "Name": "run",
-                    "Description": "",
-                    "Handler": "DevExLead.Modules.Sql.Handlers.SqlServerQueryHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "parameters",
-                            "Description": "",
-                            "DefaultValue": "{'param1':'value1','param2':'value2'}"
-                        }
-                    ]
-                }
-            ]
+          "Name": "reencrypt",
+          "Description": "Re-encrypt the Vault",
+          "Handler": "DevExLead.Modules.Configuration.Handlers.Vault.VaultReEncryptCommandHandler",
+          "Parameters": []
         }
-    ]
+      ]
+    },
+    {
+      "Name": "transfer",
+      "Description": "Transfer CLI Configuration between computers",
+      "SubCommands": [
+        {
+          "Name": "export",
+          "Description": "Export Configuration",
+          "Handler": "DevExLead.Modules.Transfer.Handlers.TransferExportCommandHandler"
+        },
+        {
+          "Name": "import",
+          "Description": "Import Configuration",
+          "Handler": "DevExLead.Modules.Transfer.Handlers.TransferImportCommandHandler"
+        }
+      ]
+    },
+    {
+      "Name": "setup",
+      "Description": "Software Installation using WinGet",
+      "SubCommands": [
+        {
+          "Name": "install",
+          "Description": "Install Software",
+          "Handler": "DevExLead.Modules.Setup.Handlers.SeptupInstallHandler"
+        }
+      ]
+    },
+    {
+      "Name": "command",
+      "Description": "Saved Commands",
+      "SubCommands": [
+        {
+          "Name": "update",
+          "Description": "Update Command",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandUpdateCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "Command Name"
+            },
+            {
+              "Name": "path",
+              "Description": "Command Location"
+            },
+            {
+              "Name": "body",
+              "Description": "Command Body"
+            },
+            {
+              "Name": "group",
+              "Description": "Command Group (for parallel execution)"
+            },
+            {
+              "Name": "process",
+              "Description": "Command Process (required for re-execution)"
+            }
+          ]
+        },
+        {
+          "Name": "delete",
+          "Description": "Delete Command",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandDeleteCommandHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "Command Name"
+            }
+          ]
+        },
+        {
+          "Name": "run",
+          "Description": "Run Commands",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandRunHandler",
+          "Parameters": [
+            {
+              "Name": "single",
+              "Description": "Command Key"
+            },
+            {
+              "Name": "multiple",
+              "Description": "Command Group Name"
+            }
+          ]
+        },
+        {
+          "Name": "list",
+          "Description": "List Commands",
+          "Handler": "DevExLead.Modules.Command.Handlers.CommandListHandler",
+          "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "export",
+      "Description": "Export as 'csv' or 'json'",
+      "SubCommands": [
+        {
+          "Name": "npm",
+          "Description": "npm Package Dependencies",
+          "Handler": "DevExLead.Modules.Export.Handlers.NpmHandler",
+          "Parameters": [
+            {
+              "Name": "path",
+              "Description": "Path to be scanned"
+            },
+            {
+              "Name": "format",
+              "Description": "'csv' or 'json'",
+              "DefaultValue": "json"
+            }
+          ]
+        },
+        {
+          "Name": "catalog",
+          "Description": "Software Catalog based on Kubernetes and Datadog Files",
+          "Handler": "DevExLead.Modules.Export.Handlers.CatalogHandler",
+          "Parameters": [
+            {
+              "Name": "path",
+              "Description": "Path to be scanned"
+            },
+            {
+              "Name": "format",
+              "Description": "'csv' or 'json'",
+              "DefaultValue": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "jira",
+      "Description": "JIRA Commands",
+      "SubCommands": [
+        {
+          "Name": "create",
+          "Description": "Generate JIRA ticket",
+          "Handler": "DevExLead.Modules.Jira.Handlers.JiraCreateHandler"
+        },
+        {
+          "Name": "plan",
+          "Description": "Monitor Backlog Changes during the Sprint",
+          "Handler": "DevExLead.Modules.Jira.Handlers.JiraPlanHandler",
+          "Parameters": [
+            {
+              "Name": "isSnapshot",
+              "Description": "Take a Backlog Snapshot after Sprint Planning",
+              "DefaultValue": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "ssl",
+      "Description": "SSL Certificate Commands",
+      "SubCommands": [
+        {
+          "Name": "create",
+          "Description": "Generate Self-signed SSL Certificate",
+          "Handler": "DevExLead.Modules.SSL.Handlers.SslCreateCertificateHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "install",
+          "Description": "Install SSL Certificate",
+          "Handler": "DevExLead.Modules.SSL.Handlers.SslInstallCertificateHandler",
+          "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "git",
+      "Description": "Git Commands",
+      "SubCommands": [
+        {
+          "Name": "repository",
+          "Description": "",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitRepositoryHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": ""
+            },
+            {
+              "Name": "remoteLocation",
+              "Description": ""
+            },
+            {
+              "Name": "workingFolder",
+              "Description": ""
+            },
+            {
+              "Name": "defaultBranch",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "Name": "clone",
+          "Description": "",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitCloneHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "latest",
+          "Description": "",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitLatestHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": ""
+            },
+            {
+              "Name": "branch",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "Name": "profile",
+          "Description": "",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitProfileHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "ssh",
+          "Description": "",
+          "Handler": "DevExLead.Modules.Git.Handlers.GitSshHandler",
+          "Parameters": []
+        }
+      ]
+    },
+    {
+      "Name": "variable",
+      "Description": "Environment Variables",
+      "SubCommands": [
+        {
+          "Name": "update",
+          "Description": "",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableUpdateHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to update"
+            },
+            {
+              "Name": "value",
+              "Description": "The new value"
+            }
+          ]
+        },
+        {
+          "Name": "list",
+          "Description": "",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableListHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "configure",
+          "Description": "Configure Environment Variables in Machine",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableConfigureHandler",
+          "Parameters": []
+        },
+        {
+          "Name": "delete",
+          "Description": "",
+          "Handler": "DevExLead.Modules.EnvironmentVariables.Handlers.EnvironmentVariableDeleteHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": "The key to update"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "sql",
+      "Description": "SQL Queries",
+      "SubCommands": [
+        {
+          "Name": "run",
+          "Description": "",
+          "Handler": "DevExLead.Modules.Sql.Handlers.SqlServerQueryHandler",
+          "Parameters": [
+            {
+              "Name": "key",
+              "Description": ""
+            },
+            {
+              "Name": "parameters",
+              "Description": "",
+              "DefaultValue": "{'param1':'value1','param2':'value2'}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

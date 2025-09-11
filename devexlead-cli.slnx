@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/.github/" />
-  <Folder Name="/.github/workflows/" Id="e7a3c856-6834-d657-f2f0-05592df2dde9">
+  <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/ci-cd.yml" />
     <File Path=".github/workflows/release.yml" />
   </Folder>
@@ -11,7 +11,7 @@
     <Project Path="src/DevExLead.Console/DevExLead.CLI.csproj" Id="412ec254-46ae-d92e-f2d7-0e821cf9a9a5" />
     <Project Path="src/DevExLead.Core/DevExLead.Core.csproj" />
   </Folder>
-  <Folder Name="/src/Modules/" Id="ec447dcf-abfa-6e24-52a5-d7fd48a5c558">
+  <Folder Name="/src/Modules/">
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Command/DevExLead.Modules.Command.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.EnvironmentVariables/DevExLead.Modules.EnvironmentVariables.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Git/DevExLead.Modules.Git.csproj" />
@@ -19,7 +19,7 @@
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Setup/DevExLead.Modules.Setup.csproj" Id="92d43fae-af37-42db-8871-bb9ff29f61f9" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Sql/DevExLead.Modules.Sql.csproj" Id="a3c2b87c-eb2b-47c6-b96b-a6adb209331a" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.SSL/DevExLead.Modules.SSL.csproj" />
-    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Tools/DevExLead.Modules.Tools.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.Tools/DevExLead.Modules.Export.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Transfer/DevExLead.Modules.Transfer.csproj" Id="e008339c-2e6b-4312-9f3c-3b5e99fa50d0" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Vault/DevExLead.Modules.Vault.csproj" />
   </Folder>

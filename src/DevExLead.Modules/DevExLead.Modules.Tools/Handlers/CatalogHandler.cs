@@ -1,18 +1,20 @@
-﻿using System.Data;
-using System.Text.Json;
-using DevExLead.Core;
-using DevExLead.Modules.Tools.Model;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
+using DevExLead.Modules.Export.Model;
 using Spectre.Console;
+using System.Data;
+using System.Text.Json;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace DevExLead.Modules.Tools.Handlers
+namespace DevExLead.Modules.Export.Handlers
 {
-    public class SoftwareCatalogChecker : ICommandHandler
+    public class CatalogHandler : ICommandHandler
     {
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             options.TryGetValue("path", out var path);
+            options.TryGetValue("format", out var format);
 
             var rootPath = Directory.GetCurrentDirectory();
 
@@ -22,30 +24,22 @@ namespace DevExLead.Modules.Tools.Handlers
             }
            
             var softwareCatalog = await BuildSoftwareCatalog(rootPath);
-            SaveAsCsvFile(softwareCatalog, rootPath);
 
-            var csvFilePath = Path.Combine(rootPath, "software_catalog.csv");
-            AnsiConsole.MarkupLine($"[green]Software catalog saved to:[/] [bold]{csvFilePath}[/]");
-        }
-
-        private static void SaveAsCsvFile(DataTable softwareCatalog, string rootPath)
-        {
-            var csvFilePath = Path.Combine(rootPath, "software_catalog.csv");
-            using (var writer = new StreamWriter(csvFilePath))
+            var fileName = "catalog";
+            switch (format)
             {
-                // Write header
-                var columnNames = softwareCatalog.Columns.Cast<DataColumn>().Select(col => col.ColumnName);
-                writer.WriteLine(string.Join(",", columnNames));
-
-                // Write rows
-                foreach (DataRow row in softwareCatalog.Rows)
-                {
-                    var fields = row.ItemArray.Select(field =>
-                        field?.ToString()?.Replace("\"", "\"\"") ?? string.Empty);
-                    writer.WriteLine(string.Join(",", fields.Select(f => $"\"{f}\"")));
-                }
+                case "json":
+                    FileHelper.ExportAsJsonFile(softwareCatalog, rootPath, fileName);
+                    break;
+                case "csv":
+                    FileHelper.ExportAsCsvFile(softwareCatalog, rootPath, fileName);
+                    break;
+                default:
+                    FileHelper.ExportAsCsvFile(softwareCatalog, rootPath, fileName);
+                    break;
             }
         }
+
 
         private static async Task<DataTable> BuildSoftwareCatalog(string rootPath)
         {

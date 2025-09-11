@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "tool software-catalog-builder"
+      "commandLineArgs": "export npm --format \"json\""
     }
   }
 }

@@ -1,5 +1,7 @@
 ﻿using Spectre.Console;
+using System.Data;
 using System.IO.Compression;
+using System.Text.Json;
 using System.Xml;
 
 namespace DevExLead.Core.Helpers
@@ -199,6 +201,125 @@ namespace DevExLead.Core.Helpers
                     }
                 });
             }
+        }
+
+
+
+        public static void ExportAsCsvFile(DataTable dataTable, string rootPath, string fileName)
+        {
+            var filePath = Path.Combine(rootPath, $"{fileName}.csv");
+            using (var writer = new StreamWriter(filePath))
+            {
+                // Write header
+                var columnNames = dataTable.Columns.Cast<DataColumn>().Select(col => col.ColumnName);
+                writer.WriteLine(string.Join(",", columnNames));
+
+                // Write rows
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    var fields = row.ItemArray.Select(field =>
+                        field?.ToString()?.Replace("\"", "\"\"") ?? string.Empty);
+                    writer.WriteLine(string.Join(",", fields.Select(f => $"\"{f}\"")));
+                }
+            }
+
+            AnsiConsole.MarkupLine($"[green]Exported to:[/] [bold]{filePath}[/]");
+        }
+
+        public static void ExportAsJsonFile(DataTable dataTable, string rootPath, string fileName)
+        {
+            var filePath = Path.Combine(rootPath, $"{fileName}.json");
+
+            var jsonOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            // Convert DataTable to a JSON-friendly format with schema information
+            var exportData = new
+            {
+                Schema = dataTable.Columns.Cast<DataColumn>().Select(col => new
+                {
+                    ColumnName = col.ColumnName,
+                    DataType = col.DataType.FullName
+                }).ToArray(),
+                Data = dataTable.Rows.Cast<DataRow>().Select(row =>
+                {
+                    var rowData = new Dictionary<string, object>();
+                    foreach (DataColumn column in dataTable.Columns)
+                    {
+                        rowData[column.ColumnName] = row[column] ?? string.Empty;
+                    }
+                    return rowData;
+                }).ToArray()
+            };
+
+            var json = JsonSerializer.Serialize(exportData, jsonOptions);
+            File.WriteAllText(filePath, json);
+
+            AnsiConsole.MarkupLine($"[green]Exported to:[/] [bold]{filePath}[/]");
+        }
+
+        public static DataTable ImportFromJsonFile(string rootPath, string fileName)
+        {
+            var filePath = Path.Combine(rootPath, $"{fileName}.json");
+            
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"File not found: {filePath}");
+            }
+
+            var json = File.ReadAllText(filePath);
+            
+            var jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var exportData = JsonSerializer.Deserialize<JsonElement>(json, jsonOptions);
+            
+            var dataTable = new DataTable();
+
+            // Recreate columns with original types if schema is available
+            if (exportData.TryGetProperty("schema", out var schemaElement))
+            {
+                foreach (var columnElement in schemaElement.EnumerateArray())
+                {
+                    var columnName = columnElement.GetProperty("columnName").GetString();
+                    var dataTypeName = columnElement.GetProperty("dataType").GetString();
+                    var dataType = Type.GetType(dataTypeName) ?? typeof(string);
+                    
+                    dataTable.Columns.Add(columnName, dataType);
+                }
+            }
+
+            // Add data rows
+            if (exportData.TryGetProperty("data", out var dataElement))
+            {
+                foreach (var rowElement in dataElement.EnumerateArray())
+                {
+                    var dataRow = dataTable.NewRow();
+                    
+                    foreach (var property in rowElement.EnumerateObject())
+                    {
+                        // If no schema was found, add columns dynamically
+                        if (!dataTable.Columns.Contains(property.Name))
+                        {
+                            dataTable.Columns.Add(property.Name, typeof(string));
+                        }
+                        
+                        dataRow[property.Name] = property.Value.ValueKind == JsonValueKind.Null 
+                            ? DBNull.Value 
+                            : property.Value.ToString();
+                    }
+                    
+                    dataTable.Rows.Add(dataRow);
+                }
+            }
+
+            AnsiConsole.MarkupLine($"[green]Imported from:[/] [bold]{filePath}[/]");
+            return dataTable;
         }
 
     }

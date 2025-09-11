@@ -1,16 +1,19 @@
-﻿using System.Text.Json;
-using DevExLead.Core;
+﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 using Spectre.Console;
+using System.Data;
+using System.Text.Json;
 
-namespace DevExLead.Modules.Tools.Handlers
+namespace DevExLead.Modules.Export.Handlers
 {
-    public class NpmVersionChecker : ICommandHandler
+    public class NpmHandler : ICommandHandler
     {
         public record PackageInfo(string Name, string Version, string Kind, string FilePath);
 
         public async Task ExecuteAsync(Dictionary<string, string> options)
         {
             options.TryGetValue("path", out var path);
+            options.TryGetValue("format", out var format);
 
             var rootPath = Directory.GetCurrentDirectory();
 
@@ -19,43 +22,43 @@ namespace DevExLead.Modules.Tools.Handlers
                 rootPath = path;
             }
 
-            var packages = ScanAll(rootPath);
-            SaveSummaryToCsv(packages, rootPath);
+            var npmPackages = ScanAllNpmPackages(rootPath);
+
+            var fileName = "npm";
+            switch (format)
+            {
+                case "json":
+                    FileHelper.ExportAsJsonFile(npmPackages, rootPath, fileName);
+                    break;
+                case "csv":
+                    FileHelper.ExportAsCsvFile(npmPackages, rootPath, fileName);
+                    break;
+                default:
+                    FileHelper.ExportAsCsvFile(npmPackages, rootPath, fileName);
+                    break;
+            }
             //PrintSpectreTable(packages, rootDirectory, showSummary: true);
         }
 
-        private static void SaveSummaryToCsv(List<PackageInfo> packages, string rootDirectory)
+        private static DataTable ScanAllNpmPackages(string rootDirectory)
         {
-            var outputPath = Path.Combine(rootDirectory, "npm_packages_summary.csv");
+            var dataTable = new DataTable("NpmPackages");
 
-            var lines = new List<string>
-                    {
-                        "Package,Version,Kind,File"
-                    };
-
-            foreach (var p in packages)
-            {
-                string relative = Path.GetRelativePath(rootDirectory, p.FilePath).Replace("\"", "\"\"");
-                string name = p.Name.Replace("\"", "\"\"");
-                string version = p.Version.Replace("\"", "\"\"");
-                string kind = p.Kind.Replace("\"", "\"\"");
-
-                lines.Add($"\"{name}\",\"{version}\",\"{kind}\",\"{relative}\"");
-            }
-
-            File.WriteAllLines(outputPath, lines);
-        }
-
-
-        private static List<PackageInfo> ScanAll(string rootDirectory)
-        {
-            var list = new List<PackageInfo>();
+            // Add columns to match PackageInfo properties
+            dataTable.Columns.Add("Name", typeof(string));
+            dataTable.Columns.Add("Version", typeof(string));
+            dataTable.Columns.Add("Kind", typeof(string));
+            dataTable.Columns.Add("FilePath", typeof(string));
 
             foreach (var file in Directory.EnumerateFiles(rootDirectory, "package.json", SearchOption.AllDirectories))
             {
                 try
                 {
-                    list.AddRange(ReadPackagesFromFile(file));
+                    var packages = ReadPackagesFromFile(file);
+                    foreach (var package in packages)
+                    {
+                        dataTable.Rows.Add(package.Name, package.Version, package.Kind, package.FilePath);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -63,11 +66,12 @@ namespace DevExLead.Modules.Tools.Handlers
                 }
             }
 
-            return list
-                .OrderBy(p => p.Kind)
-                .ThenBy(p => p.Name, StringComparer.OrdinalIgnoreCase)
-                .ThenBy(p => p.FilePath, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+            // Sort the DataTable
+            DataView view = dataTable.DefaultView;
+            view.Sort = "Kind ASC, Name ASC, FilePath ASC";
+            DataTable sortedTable = view.ToTable();
+
+            return sortedTable;
         }
 
         private static IEnumerable<PackageInfo> ReadPackagesFromFile(string packageJsonPath)

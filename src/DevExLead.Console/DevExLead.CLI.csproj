@@ -30,7 +30,7 @@
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Setup\DevExLead.Modules.Setup.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Sql\DevExLead.Modules.Sql.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.SSL\DevExLead.Modules.SSL.csproj" />
-		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Tools\DevExLead.Modules.Tools.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Tools\DevExLead.Modules.Export.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Transfer\DevExLead.Modules.Transfer.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Vault\DevExLead.Modules.Vault.csproj" />
 	</ItemGroup>
