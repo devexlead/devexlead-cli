@@ -7,7 +7,7 @@ namespace DevExLead.Modules.Setup.Handlers
 {
     public class SeptupInstallHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             string installationConfigurationPath = Path.Combine(AppContext.BaseDirectory, "Installation");
             TerminalHelper.Run(PromptModeEnum.Powershell, "winget configure -f winget-config.yaml", installationConfigurationPath);

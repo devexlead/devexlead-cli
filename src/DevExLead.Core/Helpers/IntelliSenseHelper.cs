@@ -45,7 +45,7 @@ namespace DevExLead.Core.Helpers
                             {
                                 foreach (var param in sub.Parameters)
                                 {
-                                    if (string.IsNullOrEmpty(param.DefaultValue))
+                                    if (param.DefaultValue == null)
                                     {
                                         // Use --paramName followed by a placeholder for its value.
                                         line += $" --{param.Name} {{{param.Name}}}";

@@ -1,16 +1,17 @@
 ﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 
 namespace DevExLead.Modules.Git.Handlers
 {
     internal class GitRepositoryHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            var key = options["key"];
-            var remoteLocation = options["remoteLocation"];
-            var workingFolder = options["workingFolder"];
-            var defaultBranch = options["defaultBranch"];
+            var key = ParameterHelper.ReadStringParameter(options, "key");
+            var remoteLocation = ParameterHelper.ReadStringParameter(options, "remoteLocation");
+            var workingFolder = ParameterHelper.ReadStringParameter(options, "workingFolder");
+            var defaultBranch = ParameterHelper.ReadStringParameter(options, "defaultBranch");
 
             if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(remoteLocation) || string.IsNullOrWhiteSpace(workingFolder) ||
                 string.IsNullOrWhiteSpace(defaultBranch))

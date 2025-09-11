@@ -6,7 +6,7 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
     public class VaultListCommandHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var userStorage = UserStorageManager.GetUserStorage();
             var vaultItems = userStorage.Vault;

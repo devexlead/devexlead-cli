@@ -1,13 +1,14 @@
 ﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 
 namespace DevExLead.Modules.Command.Handlers
 {
     internal class CommandDeleteCommandHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            var name = options["key"];
+            var name = ParameterHelper.ReadStringParameter(options, "name");
 
             if (string.IsNullOrWhiteSpace(name))
             {

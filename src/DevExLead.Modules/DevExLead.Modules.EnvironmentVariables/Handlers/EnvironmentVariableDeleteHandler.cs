@@ -7,9 +7,9 @@ namespace DevExLead.Modules.EnvironmentVariables.Handlers
 {
     public class EnvironmentVariableDeleteHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            var key = options["key"];
+            var key = ParameterHelper.ReadStringParameter(options, "key");
 
             if (string.IsNullOrWhiteSpace(key))
             {

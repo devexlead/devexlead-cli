@@ -15,12 +15,13 @@ namespace DevExLead.Modules.Jira.Handlers
     {
         JiraConnector? _jiraConnector;
 
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
+            var isSnapshot = ParameterHelper.ReadBoolParameter(options, "isSnapshot");
+
             try
             {
                 bool isLoggingEnabled = UserStorageManager.GetUserStorage().IsLoggingEnabled;
-                bool isSnapshot = ParameterHelper.ReadBoolParameter(options, "isSnapshot");
 
                 _jiraConnector = JiraHelper.GetJiraConnector(isLoggingEnabled, out string atlassianBaseUrl);
                 var selectedSprint = JiraHelper.SelectSprint(_jiraConnector);

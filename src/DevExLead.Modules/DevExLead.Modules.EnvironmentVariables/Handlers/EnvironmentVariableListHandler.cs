@@ -8,7 +8,7 @@ namespace DevExLead.Modules.EnvironmentVariables.Handlers
 {
     public class EnvironmentVariableListHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var environmentVariables = EnvironmentVariableHelper.List();
 

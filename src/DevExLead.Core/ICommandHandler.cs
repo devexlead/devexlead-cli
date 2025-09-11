@@ -2,6 +2,6 @@
 {
     public interface ICommandHandler
     {
-        Task ExecuteAsync(Dictionary<string, string> options);
+        Task ExecuteAsync(Dictionary<string, object> options);
     }
 }

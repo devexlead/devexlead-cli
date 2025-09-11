@@ -9,7 +9,7 @@ namespace DevExLead.Modules.Git.Handlers
 {
     internal class GitProfileHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var gitUsername = AnsiConsole.Ask<string>("Git Username: ");
             var gitEmail = AnsiConsole.Ask<string>("Git Email Address: ");

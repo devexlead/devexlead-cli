@@ -9,7 +9,7 @@ namespace DevExLead.Modules.Transfer.Handlers
 {
     public class TransferExportCommandHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var userStorage = UserStorageManager.GetUserStorage();
             TransferHelper.SelectPath(out string folderPath);

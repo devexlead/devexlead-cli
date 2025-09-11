@@ -7,10 +7,11 @@ namespace DevExLead.Modules.EnvironmentVariables.Handlers
 {
     public class EnvironmentVariableUpdateHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            var key = options["key"];
-            var value = options["value"];
+            var key = ParameterHelper.ReadStringParameter(options, "key");
+            var value = ParameterHelper.ReadStringParameter(options, "value");
+
 
             if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(value))
             {

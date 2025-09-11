@@ -7,7 +7,7 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
 {
     public class VaultReEncryptCommandHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var userStorage = UserStorageManager.GetUserStorage();
 

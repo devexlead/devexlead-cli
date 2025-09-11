@@ -9,7 +9,7 @@ namespace DevExLead.Modules.Transfer.Handlers
 {
     public class TransferImportCommandHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             TransferHelper.SelectPath(out string folderPath);
 

@@ -11,10 +11,10 @@ namespace DevExLead.Modules.Export.Handlers
 {
     public class CatalogHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            options.TryGetValue("path", out var path);
-            options.TryGetValue("format", out var format);
+            var path = ParameterHelper.ReadStringParameter(options, "path");
+            var format = ParameterHelper.ReadStringParameter(options, "format");
 
             var rootPath = Directory.GetCurrentDirectory();
 

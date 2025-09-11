@@ -8,7 +8,7 @@ namespace DevExLead.Modules.SSL.Handlers
 {
     public class SslCreateCertificateHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var sslConfigurationPath = CertificateHelper.GetSslConfigPath();
             var sslCertificatePassword = UserStorageManager.GetDecryptedValue("SslCertificatePassword");

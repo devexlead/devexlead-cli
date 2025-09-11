@@ -2,25 +2,28 @@
 {
     public class ParameterHelper
     {
-        public static bool ReadBoolParameter(Dictionary<string, string> options, string paramName)
+        public static bool ReadBoolParameter(Dictionary<string, object> options, string paramName)
         {
             bool param = false;
 
-            if (options.ContainsKey(paramName) && !string.IsNullOrEmpty(options[paramName]))
+            if (options.ContainsKey(paramName) && options[paramName]!=null)
             {
-                param = bool.Parse(options[paramName]);
+                param = (bool) options[paramName];
             }
 
             return param;
         }
 
-        public static string ReadStringParameter(Dictionary<string, string> options, string paramName)
+        public static string ReadStringParameter(Dictionary<string, object> options, string paramName)
         {
-            if (options.ContainsKey(paramName) && !string.IsNullOrEmpty(options[paramName]))
+            string param = string.Empty;
+
+            if (options.ContainsKey(paramName) && options[paramName] != null)
             {
-                return options[paramName];
+                param = (string) options[paramName];
             }
-            return null;
+
+            return param;
         }
 
     }

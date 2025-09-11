@@ -8,7 +8,7 @@ namespace DevExLead.Modules.EnvironmentVariables.Handlers
 {
     public class EnvironmentVariableConfigureHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var variables = UserStorageManager.GetUserStorage().EnvironmentVariables;
 

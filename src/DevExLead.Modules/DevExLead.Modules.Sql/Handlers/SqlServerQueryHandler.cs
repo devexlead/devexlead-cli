@@ -10,7 +10,7 @@ namespace DevExLead.Modules.Sql.Handlers
 {
     public class SqlServerQueryHandler: ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             var sqlScriptName = ParameterHelper.ReadStringParameter(options, "key");
             var sqlParams = ParameterHelper.ReadStringParameter(options, "parameters");

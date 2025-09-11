@@ -12,7 +12,7 @@ namespace DevExLead.Modules.Jira.Handlers
 {
     public class JiraCreateHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
             try
             {

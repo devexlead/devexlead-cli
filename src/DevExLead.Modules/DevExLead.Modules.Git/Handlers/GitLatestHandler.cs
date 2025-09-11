@@ -1,13 +1,15 @@
 ﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 using DevExLead.Modules.Git.Helpers;
 
 namespace DevExLead.Modules.Git.Handlers
 {
     public class GitLatestHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            options.TryGetValue("key", out var key);
+            var key = ParameterHelper.ReadStringParameter(options, "key");
+            var branch = ParameterHelper.ReadStringParameter(options, "branch");
 
             if (string.IsNullOrEmpty(key))
             {
@@ -20,11 +22,10 @@ namespace DevExLead.Modules.Git.Handlers
             else
             {
                 var repository = GitHelper.GetRepositories().FirstOrDefault(r => r.Key.Equals(key));
-                var branch = repository.DefaultBranch;
 
-                if (options.ContainsKey("branch") && !string.IsNullOrEmpty(options["branch"]))
+                if (string.IsNullOrEmpty(branch))
                 {
-                    branch = options["branch"];
+                    branch = repository.DefaultBranch;
                 }
 
                 if (repository != null)

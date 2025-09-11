@@ -7,10 +7,10 @@ namespace DevExLead.Modules.Command.Handlers
 {
     public class CommandRunHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            options.TryGetValue("single", out var commandName);
-            options.TryGetValue("multiple", out var commandGroup);
+            var commandName = ParameterHelper.ReadStringParameter(options, "single");
+            var commandGroup = ParameterHelper.ReadStringParameter(options, "multiple");
 
             if (string.IsNullOrWhiteSpace(commandName) && string.IsNullOrWhiteSpace(commandGroup))
             {

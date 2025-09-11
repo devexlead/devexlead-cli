@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "export npm "
+      "commandLineArgs": "jira plan --isSnapshot false"
     }
   }
 }

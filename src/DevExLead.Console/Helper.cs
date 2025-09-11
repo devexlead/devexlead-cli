@@ -50,7 +50,7 @@ namespace DevExLead.Cli
                         subCommand.SetHandler(async (context) =>
                         {
                             var handlerInstance = GetHandlerInstance(subCmd.Handler);
-                            var optionsDict = new Dictionary<string, string>();
+                            var optionsDict = new Dictionary<string, object>();
 
                             // Retrieve option values dynamically
                             foreach (var optionEntry in optionsMap)

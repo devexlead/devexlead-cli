@@ -1,4 +1,5 @@
 ﻿using DevExLead.Core;
+using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 
 namespace DevExLead.Modules.Configuration.Handlers.Vault
@@ -6,9 +7,9 @@ namespace DevExLead.Modules.Configuration.Handlers.Vault
 
     public class VaultDeleteCommandHandler : ICommandHandler
     {
-        public async Task ExecuteAsync(Dictionary<string, string> options)
+        public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            var key = options["key"];
+            var key = ParameterHelper.ReadStringParameter(options, "key");
 
             if (string.IsNullOrWhiteSpace(key))
             {
