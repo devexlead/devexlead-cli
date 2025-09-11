@@ -8,12 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExLead.Integrations" Version="0.5.0-gd98a5a114c" />
     <PackageReference Include="WaffleGenerator" Version="4.2.2" />
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\DevExLead.Core\DevExLead.Core.csproj" />
+    <ProjectReference Include="..\DevExLead.Modules.Jira\DevExLead.Modules.Jira.csproj" />
   </ItemGroup>
 
 </Project>

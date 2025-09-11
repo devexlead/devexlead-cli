@@ -153,7 +153,7 @@
                             "Name": "format",
                             "Description": "'csv', 'xls' or 'json'",
                             "IsRequired": true,
-                            "DefaultValue": "json"
+                            "DefaultValue": "xls"
                         }
                     ]
                 },
@@ -170,7 +170,30 @@
                             "Name": "format",
                             "Description": "'csv', 'xls' or 'json'",
                             "IsRequired": true,
-                            "DefaultValue": "json"
+                            "DefaultValue": "xls"
+                        }
+                    ]
+                },
+                {
+                    "Name": "jira",
+                    "Description": "JIRA Issues",
+                    "Handler": "DevExLead.Modules.Export.Handlers.JiraHandler",
+                    "Parameters": [
+                        {
+                            "Name": "path",
+                            "Description": "Path where export file will be saved"
+                        },
+                        {
+                            "Name": "format",
+                            "Description": "'csv', 'xls' or 'json'",
+                            "IsRequired": true,
+                            "DefaultValue": "xls"
+                        },
+                        {
+                            "Name": "jql",
+                            "Description": "JQL",
+                            "IsRequired": true,
+                            "DefaultValue": ""
                         }
                     ]
                 }
