@@ -6,9 +6,20 @@
         {
             bool param = false;
 
-            if (options.ContainsKey(paramName) && options[paramName]!=null)
+            if (options.ContainsKey(paramName) && options[paramName] != null)
             {
-                param = (bool) options[paramName];
+                var value = options[paramName];
+                
+                // Handle boolean values directly
+                if (value is bool boolValue)
+                {
+                    param = boolValue;
+                }
+                // Handle string values that represent booleans
+                else if (value is string stringValue)
+                {
+                    bool.TryParse(stringValue, out param);
+                }
             }
 
             return param;
@@ -20,11 +31,10 @@
 
             if (options.ContainsKey(paramName) && options[paramName] != null)
             {
-                param = (string) options[paramName];
+                param = options[paramName].ToString() ?? string.Empty;
             }
 
             return param;
         }
-
     }
 }
