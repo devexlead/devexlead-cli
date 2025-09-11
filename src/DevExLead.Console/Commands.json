@@ -152,6 +152,7 @@
             {
               "Name": "format",
               "Description": "'csv' or 'json'",
+              "IsRequired": true,
               "DefaultValue": "json"
             }
           ]

@@ -38,7 +38,7 @@ namespace DevExLead.Cli
                             {
                                 var option = new Option<string>($"--{param.Name}", param.Description)
                                 {
-                                    IsRequired = false // Adjust based on needs
+                                    IsRequired = param.IsRequired
                                 };
                                 optionsList.Add(option);
                                 optionsMap[param.Name] = option;
