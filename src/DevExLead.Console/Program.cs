@@ -1,13 +1,15 @@
-﻿using System;
+﻿using DevExLead.Cli;
+using DevExLead.Core.Helpers;
+using DevExLead.Core.Model.Command;
+using DevExLead.Core.Storage;
+using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using DevExLead.Cli;
-using DevExLead.Core.Helpers;
-using DevExLead.Core.Storage;
+using System.Text.Json;
 
 //--config parameter
 if (OpenConfiguration())
@@ -15,9 +17,14 @@ if (OpenConfiguration())
     return;
 }
 
-var rootCommand = new RootCommand();
+// Read and parse the JSON file
+string jsonFilePath = $"{AppContext.BaseDirectory}\\Commands.json"; // Ensure this file is placed in the project directory
+string jsonContent = File.ReadAllText(jsonFilePath);
+var dxcCommands = JsonSerializer.Deserialize<DxcCommands>(jsonContent);
 
-Helper.LoadCommands(rootCommand);
+var rootCommand = new RootCommand();
+CommandsHelper.LoadCommands(rootCommand, dxcCommands);
+CommandsHelper.UpdateCommandsBookmark(dxcCommands);
 
 UserStorageManager.Initialize();
 
@@ -29,8 +36,6 @@ var parser = builder.Build();
 
 await parser.InvokeAsync(args);
 
-//Refresh Intellisense Commands
-IntelliSenseHelper.ResetPsReadLineFile();
 
 
 

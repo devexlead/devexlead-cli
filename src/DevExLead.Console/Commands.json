@@ -109,7 +109,8 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": "Command Name"
+                            "Description": "Command Name",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -153,7 +154,7 @@
                             "Name": "format",
                             "Description": "'csv', 'xls' or 'json'",
                             "IsRequired": true,
-                            "DefaultValue": "xls"
+                            "DefaultValue": "xls|csv|json"
                         }
                     ]
                 },
