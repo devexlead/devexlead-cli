@@ -175,7 +175,7 @@ namespace DevExLead.Cli
 
                     // Check if any parameters have pipe-separated DefaultValue
                     var paramsWithPipeOptions = parameters
-                        .Where(p => !string.IsNullOrEmpty(p.DefaultValue.ToString()) && p.DefaultValue.ToString().Contains("|"))
+                        .Where(p => p.DefaultValue != null && !string.IsNullOrEmpty(p.DefaultValue.ToString()) && p.DefaultValue.ToString().Contains("|"))
                         .ToList();
 
                     // If there are no parameters at all, just add the basic command

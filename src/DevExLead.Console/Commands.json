@@ -197,6 +197,23 @@
                             "DefaultValue": ""
                         }
                     ]
+                },
+                {
+                    "Name": "http-endpoints",
+                    "Description": "HTTP Endpoints",
+                    "Handler": "DevExLead.Modules.Export.Handlers.HttpEndpointsHandler",
+                    "Parameters": [
+                        {
+                            "Name": "path",
+                            "Description": "Path to be scanned"
+                        },
+                        {
+                            "Name": "format",
+                            "Description": "'csv', 'xls' or 'json'",
+                            "IsRequired": true,
+                            "DefaultValue": "xls|csv|json"
+                        }
+                    ]
                 }
             ]
         },
