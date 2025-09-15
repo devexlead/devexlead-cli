@@ -385,6 +385,24 @@
                     ]
                 }
             ]
+        },
+        {
+            "Name": "activemq",
+            "Description": "ActiveMq",
+            "SubCommands": [
+                {
+                    "Name": "peak",
+                    "Description": "Peak messages in a Queue",
+                    "Handler": "DevExLead.Modules.ActiveMq.Handlers.ActiveMqReaderHandler",
+                    "Parameters": [
+                        {
+                            "Name": "queue",
+                            "Description": "Queue Name",
+                            "IsRequired": true
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

@@ -12,6 +12,7 @@
     <Project Path="src/DevExLead.Core/DevExLead.Core.csproj" />
   </Folder>
   <Folder Name="/src/Modules/">
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.ActiveMq/DevExLead.Modules.ActiveMq.csproj" Id="14ea4e35-67a7-4199-82d7-83f077185257" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Command/DevExLead.Modules.Command.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.EnvironmentVariables/DevExLead.Modules.EnvironmentVariables.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Git/DevExLead.Modules.Git.csproj" />
