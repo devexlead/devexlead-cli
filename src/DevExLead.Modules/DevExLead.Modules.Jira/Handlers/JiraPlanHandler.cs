@@ -22,6 +22,7 @@ namespace DevExLead.Modules.Jira.Handlers
             try
             {
                 bool isLoggingEnabled = UserStorageManager.GetUserStorage().IsLoggingEnabled;
+                var appFolder = UserStorageManager.GetUserStorage().AppDataFolder;
 
                 _jiraConnector = JiraHelper.GetJiraConnector(isLoggingEnabled, out string atlassianBaseUrl);
                 var selectedSprint = JiraHelper.SelectSprint(_jiraConnector);
@@ -30,7 +31,7 @@ namespace DevExLead.Modules.Jira.Handlers
                 AnsiConsole.MarkupLine($"[blue]Query: {jiraWatchJql} [/]");
                 var jiraIssues = _jiraConnector.RunJqlAsync(jiraWatchJql).Result;
 
-                var appFolder = AppContext.BaseDirectory;
+        
                 var filePath = Path.Combine(appFolder, $"jira-issues-{selectedSprint?.Id}.json");
 
                 if (isSnapshot)

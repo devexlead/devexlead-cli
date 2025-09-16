@@ -5,6 +5,7 @@ namespace DevExLead.Core.Storage
     public class UserStorage
     {
         public bool IsLoggingEnabled { get; set; }
+        public string AppDataFolder { get; set; }
         public string EncryptionKeys { get; set; }
         public Dictionary<string, string> Vault { get; set; }
 
