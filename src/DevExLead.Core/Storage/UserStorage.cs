@@ -1,4 +1,5 @@
 ﻿using DevExLead.Core.Storage.Model;
+using DevExLead.Core.Storage.Model.Investment;
 
 namespace DevExLead.Core.Storage
 {
@@ -13,5 +14,6 @@ namespace DevExLead.Core.Storage
         public List<Repository> Repositories { get; set; }
         public Dictionary<string, string> EnvironmentVariables { get; set; }
         public ApplicationsConfiguration Applications { get; set; }
+        public InvestmentProfile InvestmentProfile { get; set; }
     }
 }

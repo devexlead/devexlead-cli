@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage.Model;
+using DevExLead.Core.Storage.Model.Investment;
 using DevExLead.Core.Storage.Model.Jira;
 using DevExLead.Core.Storage.Model.SqlServer;
 using Spectre.Console;
@@ -68,7 +69,20 @@ namespace DevExLead.Core.Storage
                         userStorage.Applications.SqlServer.Queries = new List<SqlServerQuery>();
                     }
                 }
-                
+
+                if (userStorage.InvestmentProfile == null)
+                {
+                    userStorage.InvestmentProfile = new InvestmentProfile();
+                    if (userStorage.InvestmentProfile.InvestmentCategories == null)
+                    {
+                        userStorage.InvestmentProfile.InvestmentCategories = new List<InvestmentCategory>();
+                    }
+                    if (userStorage.InvestmentProfile.DeveloperAllocations == null)
+                    {
+                        userStorage.InvestmentProfile.DeveloperAllocations = new List<DeveloperAllocation>();
+                    }
+                }
+
 
             }
 

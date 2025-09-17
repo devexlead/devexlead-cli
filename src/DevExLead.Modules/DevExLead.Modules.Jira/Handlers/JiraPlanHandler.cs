@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.RegularExpressions;
-using DevExLead.Core;
+﻿using DevExLead.Core;
 using DevExLead.Core.Helpers;
 using DevExLead.Core.Storage;
 using DevExLead.Integrations.JIRA;
@@ -8,6 +6,8 @@ using DevExLead.Integrations.JIRA.Model;
 using DevExLead.Modules.Jira.Helpers;
 using DevExLead.Modules.Jira.Model;
 using Spectre.Console;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace DevExLead.Modules.Jira.Handlers
 {
@@ -42,6 +42,7 @@ namespace DevExLead.Modules.Jira.Handlers
                 {
                     ShowSprintMetrics(jiraIssues);
                     ShowRemainingPointsPerEpic(atlassianBaseUrl, jiraIssues);
+                    ShowPerInvestmentCategory(atlassianBaseUrl, jiraIssues);
                     ShowSprintBacklog(atlassianBaseUrl, jiraIssues);
                     ShowBacklogChanges(atlassianBaseUrl, jiraIssues, filePath);
                     await WatchJiraIssues(jiraIssues);
@@ -129,6 +130,75 @@ namespace DevExLead.Modules.Jira.Handlers
             AnsiConsole.Write(table);
         }
 
+
+
+        private static void ShowPerInvestmentCategory(string atlassianBaseUrl, List<JiraIssue> jiraIssues)
+        {
+            var investmentProfile = UserStorageManager.GetUserStorage().InvestmentProfile;
+
+            // Category -> Total Story Points
+            var investmentCalculator = new Dictionary<string, double>() { { "Unassigned", 0d } };
+
+            // Consider only non Sub-task issues (stories, tasks, bugs, etc.) so sub-task points do not distort allocation
+            var topLevelIssues = jiraIssues
+                .Where(i => !i.Fields.IssueType.Name.Equals("Sub-task"))
+                .Where(i => i.Fields.Points is not null);
+
+            foreach (var jiraIssue in topLevelIssues)
+            {
+                // Find the investment category by Epic key (issue.Fields.Parent is the Epic for a Story/Task/Bug)
+                var epicKey = jiraIssue.Fields.Parent?.Key;
+                var ic = epicKey == null
+                    ? null
+                    : investmentProfile.InvestmentCategories
+                        .FirstOrDefault(c => c.Epics.Contains(epicKey));
+
+                var points = jiraIssue.Fields.Points ?? 0;
+
+                if (ic != null)
+                {
+                    if (!investmentCalculator.ContainsKey(ic.Name))
+                        investmentCalculator[ic.Name] = 0;
+                    investmentCalculator[ic.Name] += points;
+                }
+                else
+                {
+                    investmentCalculator["Unassigned"] += points;
+                }
+            }
+
+            var overallTotal = investmentCalculator.Values.Sum();
+
+            var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Grey);
+            table.AddColumn("Investment Category");
+            table.AddColumn("Points");
+            table.AddColumn("% of Total");
+
+            foreach (var kvp in investmentCalculator
+                     .OrderByDescending(k => k.Key.Equals("Unassigned") ? -1 : k.Value))
+            {
+                var category = kvp.Key;
+                var pts = kvp.Value;
+                var pct = overallTotal > 0 ? (pts / overallTotal) * 100d : 0d;
+
+                string pointsMarkup = pts > 0 ? $"[grey]{pts}[/]" : "[red]0[/]";
+                string pctMarkup = pct switch
+                {
+                    > 25 => $"[green]{pct:0.##}%[/]",
+                    > 0 => $"[yellow]{pct:0.##}%[/]",
+                    _ => "[red]0%[/]"
+                };
+
+                table.AddRow(
+                    category == "Unassigned" ? "[red]Unassigned[/]" : $"[blue]{category}[/]",
+                    pointsMarkup,
+                    pctMarkup
+                );
+            }
+
+            AnsiConsole.MarkupLine("[blue]Investment Allocation (Points & Percentage)[/]");
+            AnsiConsole.Write(table);
+        }
 
         private static void ShowSprintBacklog(string atlassianBaseUrl, List<JiraIssue> jiraIssues)
         {

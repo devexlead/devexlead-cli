@@ -2,7 +2,7 @@
   "profiles": {
     "DevExLead.CLI": {
       "commandName": "Project",
-      "commandLineArgs": "jira plan --isSnapshot false"
+      "commandLineArgs": "jira plan"
     }
   }
 }
