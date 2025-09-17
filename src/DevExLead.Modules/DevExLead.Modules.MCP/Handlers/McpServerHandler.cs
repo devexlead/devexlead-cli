@@ -1,7 +1,7 @@
 ﻿using DevExLead.Core;
+using DevExLead.Modules.MCP.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ModelContextProtocol.Server;
 
 namespace DevExLead.Modules.MCP.Handlers
 {
@@ -14,7 +14,7 @@ namespace DevExLead.Modules.MCP.Handlers
             builder.Services
                 .AddMcpServer()
                 .WithStdioServerTransport()
-                .WithToolsFromAssembly(typeof(McpServerTool).Assembly);
+                .WithToolsFromAssembly(typeof(McpServerHelper).Assembly);
 
             var host = builder.Build();
             await host.RunAsync();

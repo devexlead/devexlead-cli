@@ -12,8 +12,8 @@ namespace DevExLead.Modules.MCP.Handlers
             var transport = new StdioClientTransport(new StdioClientTransportOptions
             {
                 Name = "LocalServer",
-                Command = "dxc mcp",
-                Arguments = new[] { "server", "" }
+                Command = "dxc",
+                Arguments = new[] { "mcp", "server" }
             });
 
             try
@@ -22,12 +22,32 @@ namespace DevExLead.Modules.MCP.Handlers
                 var client = await McpClientFactory.CreateAsync(transport);
                 AnsiConsole.MarkupLine("[green]✓ Connected successfully![/]");
 
+                // Display server information
+                AnsiConsole.MarkupLine($"[cyan]Server: {client.ServerInfo?.Name ?? "Unknown"} v{client.ServerInfo?.Version ?? "Unknown"}[/]");
+                
+                // Check if the server supports tools
+                if (client.ServerCapabilities?.Tools == null)
+                {
+                    AnsiConsole.MarkupLine("[yellow]Server does not support tools.[/]", transport);
+                    return;
+                }
+
                 // Get available tools
-                var tools = await client.ListToolsAsync();
+                IList<McpClientTool> tools;
+                try
+                {
+                    tools = await client.ListToolsAsync();
+                }
+                catch (Exception ex)
+                {
+                    AnsiConsole.MarkupLine($"[red]Failed to list tools: {ex.Message}[/]");
+                    AnsiConsole.MarkupLine("[yellow]The server may not support the tools/list method.[/]", transport);
+                    return;
+                }
 
                 if (!tools.Any())
                 {
-                    AnsiConsole.MarkupLine("[yellow]No tools available on the server.[/]");
+                    AnsiConsole.MarkupLine("[yellow]No tools available on the server.[/]", transport);
                     return;
                 }
 
@@ -92,14 +112,14 @@ namespace DevExLead.Modules.MCP.Handlers
 
                     try
                     {
-                        AnsiConsole.Status()
-                            .Start($"[yellow]Executing {selectedTool}...[/]", ctx =>
+                        await AnsiConsole.Status()
+                            .StartAsync($"[yellow]Executing {selectedTool}...[/]", async ctx =>
                             {
                                 ctx.Spinner(Spinner.Known.Star);
                                 ctx.SpinnerStyle(Style.Parse("green"));
 
                                 // Execute the tool
-                                var result = client.CallToolAsync(selectedTool, parameters).GetAwaiter().GetResult();
+                                var result = await tool.CallAsync(parameters);
 
                                 // Display results
                                 AnsiConsole.WriteLine();
@@ -136,7 +156,7 @@ namespace DevExLead.Modules.MCP.Handlers
         {
             if (result.IsError == true)
             {
-                return $"[red]Error: {string.Join("\n", result.Content.Select(c => c.ToString()))}[/]";
+                return $"[red]Error: {string.Join("\n", result.Content?.Select(c => c.ToString()) ?? [])}[/]";
             }
 
             if (result.Content?.Any() == true)
