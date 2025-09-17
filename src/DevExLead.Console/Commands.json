@@ -237,6 +237,12 @@
                             "DefaultValue": false
                         }
                     ]
+                },
+                {
+                    "Name": "progress",
+                    "Description": "Monitor Backlog Changes during the Sprint",
+                    "Handler": "DevExLead.Modules.Jira.Handlers.JiraProgressHandler",
+                    "Parameters": []
                 }
             ]
         },

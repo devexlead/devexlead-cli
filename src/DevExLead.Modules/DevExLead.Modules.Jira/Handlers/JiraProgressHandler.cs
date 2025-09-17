@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace DevExLead.Modules.Jira.Handlers
 {
-    public class JiraPlanHandler : ICommandHandler
+    public class JiraProgressHandler : ICommandHandler
     {
         JiraConnector? _jiraConnector;
 
@@ -40,9 +40,9 @@ namespace DevExLead.Modules.Jira.Handlers
                 }
                 else
                 {
-                    ShowSprintMetrics(jiraIssues);
-                    ShowRemainingPointsPerEpic(atlassianBaseUrl, jiraIssues);
-                    ShowPerInvestmentCategory(atlassianBaseUrl, jiraIssues);
+                    ShowSprintBacklog(atlassianBaseUrl, jiraIssues);
+                    ShowBacklogChanges(atlassianBaseUrl, jiraIssues, filePath);
+                    await WatchJiraIssues(jiraIssues);
                 }
             }
             catch (Exception ex)
@@ -51,7 +51,32 @@ namespace DevExLead.Modules.Jira.Handlers
             }
         }
 
+        private async Task WatchJiraIssues(List<JiraIssue> jiraIssues)
+        {
+            foreach (var jiraIssue in jiraIssues)
+            {
+                //AnsiConsole.MarkupLine($"[green]Watching issue {jiraIssue.Key} for {jiraIssue.Fields.Reporter?.DisplayName} and {jiraIssue.Fields.Assignee?.DisplayName}[/]");
 
+                if (jiraIssue.Fields.Reporter != null)
+                {
+                    await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Reporter.AccountId);
+                }
+
+                if (jiraIssue.Fields.Assignee != null)
+                {
+                    await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, jiraIssue.Fields.Assignee.AccountId);
+                }
+
+                var watchers = UserStorageManager.GetUserStorage().Applications.Jira.Users.Where(u => u.IsWatcher);
+                foreach (var watcher in watchers)
+                {
+                    if (watcher.Id != null)
+                    {
+                        await _jiraConnector.WatchIssueWithAccountIdAsync(jiraIssue.Key, watcher.Id);
+                    }
+                }
+            }
+        }
 
         private void ShowSprintMetrics(List<JiraIssue> jiraIssues)
         {
@@ -127,7 +152,7 @@ namespace DevExLead.Modules.Jira.Handlers
                     : investmentProfile.InvestmentCategories
                         .FirstOrDefault(c => c.Epics.Contains(epicKey));
 
-                var points = CalculateRemainingPoints(jiraIssue) ?? 0;
+                var points = jiraIssue.Fields.Points ?? 0;
 
                 if (ic != null)
                 {
@@ -206,6 +231,55 @@ namespace DevExLead.Modules.Jira.Handlers
             AnsiConsole.Write(table);
         }
 
+        private static void ShowSprintBacklog(string atlassianBaseUrl, List<JiraIssue> jiraIssues)
+        {
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine($"[blue]Sprint Backlog[/]");
+            ShowTable(atlassianBaseUrl, jiraIssues);
+        }
+
+        // Replace the problematic code block where 'AddRow' is used with the correct method for adding rows to a Table.
+        private static void ShowTable(string atlassianBaseUrl, List<JiraIssue> jiraIssues)
+        {
+            var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Grey);
+
+
+            table.AddColumn(new TableColumn("Epic"));
+            table.AddColumn(new TableColumn("Type"));
+            table.AddColumn(new TableColumn("Priority"));
+            table.AddColumn(new TableColumn("Status"));
+            table.AddColumn(new TableColumn("Summary"));
+
+            table.AddColumn(new TableColumn("Points"));
+            table.AddColumn(new TableColumn("Remaining"));
+
+            table.AddColumn(new TableColumn("Assignee"));
+            table.AddColumn(new TableColumn("Reporter"));
+
+            foreach (var jiraIssue in jiraIssues.Where(i => !i.Fields.IssueType.Name.Equals("Sub-task")).OrderBy(i => i.Fields.Parent?.Key))
+            {
+                try
+                {
+                    table.AddRow(
+                                   GetEpicMarkup(atlassianBaseUrl, jiraIssue.Fields.Parent),
+                                   GetIssueTypeMarkup(jiraIssue.Fields.IssueType.Name),
+                                   GetPriorityMarkup(jiraIssue.Fields.Priority.Name),
+                                   GetStatusMarkup(jiraIssue.Fields.Status.Name),
+                                   $"[link={atlassianBaseUrl}/browse/{jiraIssue.Key}][grey]{jiraIssue.Key} | {TruncateWithEllipsis(jiraIssue.Fields.Summary, 40)}[/][/]",
+                                   GetPointsMarkup(jiraIssue.Fields.Points),
+                                   GetRemainingPointsMarkup(CalculateRemainingPoints(jiraIssue)),
+                                   GetAssigneeMarkup(jiraIssue.Fields.Assignee),
+                                   GetAssigneeMarkup(jiraIssue.Fields.Reporter)
+                    );
+                }
+                catch (Exception)
+                {
+                    AnsiConsole.MarkupLine($"[red]Error adding [link={atlassianBaseUrl}/browse/{jiraIssue.Key}]{jiraIssue.Key}[/] to the table[/]");
+                }
+            }
+
+            AnsiConsole.Write(table);
+        }
 
         private static string TruncateWithEllipsis(string? text, int maxLength)
         {
@@ -258,6 +332,37 @@ namespace DevExLead.Modules.Jira.Handlers
             };
         }
 
+
+        private static void ShowBacklogChanges(string atlassianBaseUrl, List<JiraIssue> jiraIssues, string filePath)
+        {
+            AnsiConsole.WriteLine();
+
+            if (!File.Exists(filePath))
+            {
+                AnsiConsole.MarkupLine($"[red]No Snapshot found at {filePath}[/]");
+                return;
+            }
+
+            AnsiConsole.MarkupLine($"[yellow]Read {jiraIssues.Count} issues from {filePath}[/]");
+            var json = File.ReadAllText(filePath);
+
+            var plannedIssues = JsonSerializer.Deserialize<List<JiraIssue>>(json);
+
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine($"[blue]Added to Sprint...[/]");
+            var addedIssues = FindAddedIssues(jiraIssues, plannedIssues);
+            ShowTable(atlassianBaseUrl, addedIssues);
+
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine($"[blue]Removed from Sprint...[/]");
+            var deletedIssues = FindDeletedIssues(jiraIssues, plannedIssues);
+            ShowTable(atlassianBaseUrl, deletedIssues);
+
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine($"[blue]Re-Estimated during Sprint...[/]");
+            var reestimatedIssues = FindReestimatedIssues(jiraIssues, plannedIssues);
+            ShowTable(atlassianBaseUrl, reestimatedIssues.Select(i => i.Issue).ToList());
+        }
 
         private static string GetPointsMarkup(double? points)
         {
@@ -321,7 +426,44 @@ namespace DevExLead.Modules.Jira.Handlers
             }
         }
 
-     
+        private static List<JiraIssue> FindDeletedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
+        {
+            var deletedIssues = plannedIssues == null
+                                    ? new List<JiraIssue>()
+                                    : plannedIssues.Where(p => !jiraIssues.Any(j => j.Key == p.Key)).ToList();
+
+            return deletedIssues;
+        }
+
+        private static List<JiraIssue> FindAddedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
+        {
+            var addedIssues = jiraIssues
+                                    .Where(j => plannedIssues == null || !plannedIssues.Any(p => p.Key == j.Key))
+                                    .Where(j => !j.Fields.IssueType.Name.Equals("Sub-task"))
+                                    .OrderBy(j => j.Fields.Reporter.DisplayName)
+                                    .ToList();
+
+           return addedIssues;
+        }
+
+        private static List<JiraIssueReestimate> FindReestimatedIssues(List<JiraIssue> jiraIssues, List<JiraIssue>? plannedIssues)
+        {
+            var reestimatedIssues = jiraIssues
+                .Join(plannedIssues,
+                      current => current.Key,
+                      planned => planned.Key,
+                      (current, planned) => new JiraIssueReestimate()
+                      {
+                          Issue = current,
+                          OldEstimate = planned.Fields.Points,
+                          NewEstimate = current.Fields.Points
+                      })
+                .Where(x => x.OldEstimate != x.NewEstimate)
+                .ToList();
+
+            return reestimatedIssues;
+        }
+
         private static void SaveJsonFile(List<JiraIssue> jiraIssues, string filePath)
         {
             var json = JsonSerializer.Serialize(jiraIssues, new JsonSerializerOptions { WriteIndented = true });
