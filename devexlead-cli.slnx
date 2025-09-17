@@ -17,6 +17,7 @@
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.EnvironmentVariables/DevExLead.Modules.EnvironmentVariables.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Git/DevExLead.Modules.Git.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Jira/DevExLead.Modules.Jira.csproj" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.MCP/DevExLead.Modules.MCP.csproj" Id="190b4fce-b07e-4e61-905e-2d39961604db" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Setup/DevExLead.Modules.Setup.csproj" Id="92d43fae-af37-42db-8871-bb9ff29f61f9" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Sql/DevExLead.Modules.Sql.csproj" Id="a3c2b87c-eb2b-47c6-b96b-a6adb209331a" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.SSL/DevExLead.Modules.SSL.csproj" />

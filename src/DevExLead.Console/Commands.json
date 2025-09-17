@@ -409,6 +409,24 @@
                     ]
                 }
             ]
+        },
+        {
+            "Name": "mcp",
+            "Description": "Model Control Protocol",
+            "SubCommands": [
+                {
+                    "Name": "server",
+                    "Description": "MCP Server",
+                    "Handler": "DevExLead.Modules.MCP.Handlers.McpServerHandler",
+                    "Parameters": []
+                },
+                {
+                    "Name": "client",
+                    "Description": "MCP Client",
+                    "Handler": "DevExLead.Modules.MCP.Handlers.McpClientHandler",
+                    "Parameters": []
+                }
+            ]
         }
     ]
 }
