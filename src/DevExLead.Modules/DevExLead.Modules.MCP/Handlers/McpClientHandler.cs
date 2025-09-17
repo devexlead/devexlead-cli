@@ -156,25 +156,62 @@ namespace DevExLead.Modules.MCP.Handlers
         {
             if (result.IsError == true)
             {
-                return $"[red]Error: {string.Join("\n", result.Content?.Select(c => c.ToString()) ?? [])}[/]";
+                return $"[red]Error: {string.Join("\n", result.Content?.Select(GetContentText) ?? [])}[/]";
             }
 
             if (result.Content?.Any() == true)
             {
-                var content = result.Content
+                var textContents = result.Content
                     .Where(c => c.Type == "text")
-                    .Select(c => c.ToString())
-                    .FirstOrDefault();
+                    .Select(GetContentText)
+                    .Where(text => !string.IsNullOrEmpty(text))
+                    .ToList();
 
-                return content ?? "No text content returned";
+                if (textContents.Any())
+                {
+                    return string.Join("\n", textContents);
+                }
+                
+                return "No text content returned";
             }
 
             if (result.StructuredContent != null)
             {
-                return result.StructuredContent.ToString();
+                return result.StructuredContent.ToString() ?? "No structured content";
             }
 
             return "No content returned";
+        }
+
+        private static string GetContentText(ModelContextProtocol.Protocol.ContentBlock contentBlock)
+        {
+            // Handle different content block types
+            if (contentBlock.Type == "text")
+            {
+                // Try to access Text property if it exists
+                var textProperty = contentBlock.GetType().GetProperty("Text");
+                if (textProperty != null)
+                {
+                    return textProperty.GetValue(contentBlock)?.ToString() ?? "";
+                }
+                
+                // Fallback: try to serialize and extract text from JSON
+                try
+                {
+                    var json = JsonSerializer.Serialize(contentBlock);
+                    var jsonDoc = JsonDocument.Parse(json);
+                    if (jsonDoc.RootElement.TryGetProperty("text", out var textElement))
+                    {
+                        return textElement.GetString() ?? "";
+                    }
+                }
+                catch
+                {
+                    // Ignore JSON parsing errors
+                }
+            }
+            
+            return contentBlock.ToString() ?? "";
         }
     }
 }
