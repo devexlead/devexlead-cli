@@ -4,6 +4,6 @@
     {
         public string DeveloperName { get; set; }
         public string InvestmentCategory { get; set; }
-        public int Percentage { get; set; }
+        public double Hours { get; set; }
     }
 }

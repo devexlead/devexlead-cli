@@ -58,7 +58,7 @@ namespace DevExLead.Modules.Jira.Handlers
         {
             foreach (var jiraIssue in jiraIssues)
             {
-                AnsiConsole.MarkupLine($"[green]Watching issue {jiraIssue.Key} for {jiraIssue.Fields.Reporter?.DisplayName} and {jiraIssue.Fields.Assignee?.DisplayName}[/]");
+                //AnsiConsole.MarkupLine($"[green]Watching issue {jiraIssue.Key} for {jiraIssue.Fields.Reporter?.DisplayName} and {jiraIssue.Fields.Assignee?.DisplayName}[/]");
 
                 if (jiraIssue.Fields.Reporter != null)
                 {
@@ -137,9 +137,11 @@ namespace DevExLead.Modules.Jira.Handlers
             var investmentProfile = UserStorageManager.GetUserStorage().InvestmentProfile;
 
             // Category -> Total Story Points
-            var investmentCalculator = new Dictionary<string, double>() { { "Unassigned", 0d } };
+            var pointsCalculator = new Dictionary<string, double>() { { "Unassigned", 0d } };
+            // Category -> Total Allocation Hours
+            var hoursCalculator = new Dictionary<string, double>() { { "Unassigned", 0d } };
 
-            // Consider only non Sub-task issues (stories, tasks, bugs, etc.) so sub-task points do not distort allocation
+            // Calculate story points from Jira issues
             var topLevelIssues = jiraIssues
                 .Where(i => !i.Fields.IssueType.Name.Equals("Sub-task"))
                 .Where(i => i.Fields.Points is not null);
@@ -157,46 +159,78 @@ namespace DevExLead.Modules.Jira.Handlers
 
                 if (ic != null)
                 {
-                    if (!investmentCalculator.ContainsKey(ic.Name))
-                        investmentCalculator[ic.Name] = 0;
-                    investmentCalculator[ic.Name] += points;
+                    if (!pointsCalculator.ContainsKey(ic.Name))
+                        pointsCalculator[ic.Name] = 0;
+                    pointsCalculator[ic.Name] += points;
                 }
                 else
                 {
-                    investmentCalculator["Unassigned"] += points;
+                    pointsCalculator["Unassigned"] += points;
                 }
             }
 
-            var overallTotal = investmentCalculator.Values.Sum();
+            // Calculate hours from developer allocations
+            if (investmentProfile.DeveloperAllocations != null && investmentProfile.DeveloperAllocations.Any())
+            {
+                foreach (var allocation in investmentProfile.DeveloperAllocations)
+                {
+                    var categoryName = allocation.InvestmentCategory ?? "Unassigned";
+                    
+                    if (!hoursCalculator.ContainsKey(categoryName))
+                        hoursCalculator[categoryName] = 0;
+                    
+                    hoursCalculator[categoryName] += allocation.Hours;
+                }
+            }
+
+            // Get all unique categories from both calculations
+            var allCategories = pointsCalculator.Keys.Union(hoursCalculator.Keys).ToList();
+
+            var totalPoints = pointsCalculator.Values.Sum();
+            var totalHours = hoursCalculator.Values.Sum();
 
             var table = new Table().Border(TableBorder.Rounded).BorderColor(Color.Grey);
             table.AddColumn("Investment Category");
             table.AddColumn("Points");
-            table.AddColumn("% of Total");
+            table.AddColumn("% Points");
+            table.AddColumn("Hours");
+            table.AddColumn("% Hours");
 
-            foreach (var kvp in investmentCalculator
-                     .OrderByDescending(k => k.Key.Equals("Unassigned") ? -1 : k.Value))
+            foreach (var category in allCategories
+                     .OrderByDescending(k => k.Equals("Unassigned") ? -1 : Math.Max(pointsCalculator.GetValueOrDefault(k), hoursCalculator.GetValueOrDefault(k))))
             {
-                var category = kvp.Key;
-                var pts = kvp.Value;
-                var pct = overallTotal > 0 ? (pts / overallTotal) * 100d : 0d;
+                var points = pointsCalculator.GetValueOrDefault(category);
+                var hours = hoursCalculator.GetValueOrDefault(category);
+                var pointsPct = totalPoints > 0 ? (points / totalPoints) * 100d : 0d;
+                var hoursPct = totalHours > 0 ? (hours / totalHours) * 100d : 0d;
 
-                string pointsMarkup = pts > 0 ? $"[grey]{pts}[/]" : "[red]0[/]";
-                string pctMarkup = pct switch
+                string pointsMarkup = points > 0 ? $"[grey]{points}[/]" : "[red]0[/]";
+                string hoursMarkup = hours > 0 ? $"[grey]{hours:0.##}h[/]" : "[red]0h[/]";
+                
+                string pointsPctMarkup = pointsPct switch
                 {
-                    > 25 => $"[green]{pct:0.##}%[/]",
-                    > 0 => $"[yellow]{pct:0.##}%[/]",
+                    > 25 => $"[green]{pointsPct:0.##}%[/]",
+                    > 0 => $"[yellow]{pointsPct:0.##}%[/]",
+                    _ => "[red]0%[/]"
+                };
+
+                string hoursPctMarkup = hoursPct switch
+                {
+                    > 25 => $"[green]{hoursPct:0.##}%[/]",
+                    > 0 => $"[yellow]{hoursPct:0.##}%[/]",
                     _ => "[red]0%[/]"
                 };
 
                 table.AddRow(
                     category == "Unassigned" ? "[red]Unassigned[/]" : $"[blue]{category}[/]",
                     pointsMarkup,
-                    pctMarkup
+                    pointsPctMarkup,
+                    hoursMarkup,
+                    hoursPctMarkup
                 );
             }
 
-            AnsiConsole.MarkupLine("[blue]Investment Allocation (Points & Percentage)[/]");
+            AnsiConsole.MarkupLine("[blue]Investment Allocation (Points & Hours)[/]");
             AnsiConsole.Write(table);
         }
 
