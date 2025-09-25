@@ -411,20 +411,32 @@
             ]
         },
         {
-            "Name": "mcp",
+            "Name": "ai",
             "Description": "Model Control Protocol",
             "SubCommands": [
                 {
-                    "Name": "server",
+                    "Name": "mcp-server",
                     "Description": "MCP Server",
-                    "Handler": "DevExLead.Modules.MCP.Handlers.McpServerHandler",
+                    "Handler": "DevExLead.Modules.AI.Handlers.McpServerHandler",
                     "Parameters": []
                 },
                 {
-                    "Name": "client",
+                    "Name": "mcp-client",
                     "Description": "MCP Client",
-                    "Handler": "DevExLead.Modules.MCP.Handlers.McpClientHandler",
+                    "Handler": "DevExLead.Modules.AI.Handlers.McpClientHandler",
                     "Parameters": []
+                },
+                {
+                    "Name": "chat",
+                    "Description": "AI Chat",
+                    "Handler": "DevExLead.Modules.AI.Handlers.ChatHandler",
+                    "Parameters": [
+                        {
+                            "Name": "prompt",
+                            "Description": "AI Chat Prompt",
+                            "IsRequired": true
+                        }
+                    ]
                 }
             ]
         }

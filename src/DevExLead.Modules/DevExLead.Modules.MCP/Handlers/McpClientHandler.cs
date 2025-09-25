@@ -3,7 +3,7 @@ using ModelContextProtocol.Client;
 using Spectre.Console;
 using System.Text.Json;
 
-namespace DevExLead.Modules.MCP.Handlers
+namespace DevExLead.Modules.AI.Handlers
 {
     public class McpClientHandler : ICommandHandler
     {

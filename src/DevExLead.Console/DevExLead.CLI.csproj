@@ -25,10 +25,11 @@
 		<ProjectReference Include="..\DevExLead.Core\DevExLead.Core.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.ActiveMq\DevExLead.Modules.ActiveMq.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Command\DevExLead.Modules.Command.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Confluence\DevExLead.Modules.Confluence.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.EnvironmentVariables\DevExLead.Modules.EnvironmentVariables.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Git\DevExLead.Modules.Git.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Jira\DevExLead.Modules.Jira.csproj" />
-		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.MCP\DevExLead.Modules.MCP.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.MCP\DevExLead.Modules.AI.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Setup\DevExLead.Modules.Setup.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Sql\DevExLead.Modules.Sql.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.SSL\DevExLead.Modules.SSL.csproj" />
