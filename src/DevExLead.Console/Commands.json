@@ -378,17 +378,7 @@
                     "Name": "run",
                     "Description": "",
                     "Handler": "DevExLead.Modules.Sql.Handlers.SqlServerQueryHandler",
-                    "Parameters": [
-                        {
-                            "Name": "key",
-                            "Description": ""
-                        },
-                        {
-                            "Name": "parameters",
-                            "Description": "",
-                            "DefaultValue": "{'param1':'value1','param2':'value2'}"
-                        }
-                    ]
+                    "Parameters": []
                 }
             ]
         },
