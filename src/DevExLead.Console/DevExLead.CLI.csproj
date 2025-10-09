@@ -24,6 +24,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DevExLead.Core\DevExLead.Core.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.ActiveMq\DevExLead.Modules.ActiveMq.csproj" />
+		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.AzDevOps\DevExLead.Modules.AzDevOps.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Command\DevExLead.Modules.Command.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.Confluence\DevExLead.Modules.Confluence.csproj" />
 		<ProjectReference Include="..\DevExLead.Modules\DevExLead.Modules.EnvironmentVariables\DevExLead.Modules.EnvironmentVariables.csproj" />

@@ -139,6 +139,7 @@ namespace DevExLead.Cli
             {
                 commands.Add($"dxc git latest --key \"{repository.Key}\"");
                 commands.Add($"dxc git latest --key \"{repository.Key}\" --branch \"{{Branch}}\"");
+                commands.Add($"dxc azdo release --repository \"{repository.Key}\"");
             }
 
             commands.Add($"dxc --config");
