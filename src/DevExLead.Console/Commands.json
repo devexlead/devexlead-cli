@@ -429,6 +429,24 @@
                     ]
                 }
             ]
+        },
+        {
+            "Name": "azdo",
+            "Description": "Azure DevOps",
+            "SubCommands": [
+                {
+                    "Name": "release",
+                    "Description": "Release",
+                    "Handler": "DevExLead.Modules.AzDevOps.Handlers.AzDevOpsReleaseHandler",
+                    "Parameters": [
+                        {
+                            "Name": "repository",
+                            "Description": "Repository Name",
+                            "IsRequired": true
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

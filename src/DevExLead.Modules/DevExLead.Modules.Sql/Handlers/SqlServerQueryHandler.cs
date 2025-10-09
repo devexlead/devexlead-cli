@@ -12,7 +12,7 @@ namespace DevExLead.Modules.Sql.Handlers
     {
         public async Task ExecuteAsync(Dictionary<string, object> options)
         {
-            var queryPath = UserStorageManager.GetDecryptedValue("SqlServer:QueryPath");
+            var queryPath = UserStorageManager.GetUserStorage().Applications.SqlServer?.QueryPath;
             var connectionString = UserStorageManager.GetDecryptedValue("SqlServer:ConnectionString");
 
             var scriptLocation = await SelectSqlScriptWithAutocomplete(queryPath);

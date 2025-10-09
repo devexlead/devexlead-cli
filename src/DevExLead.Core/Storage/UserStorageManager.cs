@@ -66,10 +66,6 @@ namespace DevExLead.Core.Storage
             if (userStorage.Applications.SqlServer == null)
             {
                 userStorage.Applications.SqlServer = new SqlServerConfiguration();
-                if (userStorage.Applications.SqlServer.Queries == null)
-                {
-                    userStorage.Applications.SqlServer.Queries = new List<SqlServerQuery>();
-                }
             }
 
             if (userStorage.Applications.AzureDevOps == null)

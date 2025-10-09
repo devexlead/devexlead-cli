@@ -2,6 +2,6 @@
 {
     public class SqlServerConfiguration
     {
-        public List<SqlServerQuery> Queries { get; set; }
+        public string QueryPath { get; set; }
     }
 }
