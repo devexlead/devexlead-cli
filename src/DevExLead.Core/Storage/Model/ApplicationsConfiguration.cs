@@ -7,5 +7,6 @@ namespace DevExLead.Core.Storage.Model
     {
         public JiraConfiguration Jira { get; set; }
         public SqlServerConfiguration SqlServer { get; set; }
+        public AzureDevOps AzureDevOps { get; set; }
     }
 }

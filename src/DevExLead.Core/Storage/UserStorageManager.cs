@@ -48,42 +48,46 @@ namespace DevExLead.Core.Storage
             if (userStorage.Applications == null)
             {
                 userStorage.Applications = new ApplicationsConfiguration();
-                if (userStorage.Applications.Jira == null)
+            }
+
+            if (userStorage.Applications.Jira == null)
+            {
+                userStorage.Applications.Jira = new JiraConfiguration();
+                if (userStorage.Applications.Jira.Templates == null)
                 {
-                    userStorage.Applications.Jira = new JiraConfiguration();
-                    if (userStorage.Applications.Jira.Templates == null)
-                    {
-                        userStorage.Applications.Jira.Templates = new List<JiraTemplate>();
-                    }
-                    if (userStorage.Applications.Jira.Users == null)
-                    {
-                        userStorage.Applications.Jira.Users = new List<JiraUser>();
-                    }
+                    userStorage.Applications.Jira.Templates = new List<JiraTemplate>();
                 }
-
-                if (userStorage.Applications.SqlServer == null)
+                if (userStorage.Applications.Jira.Users == null)
                 {
-                    userStorage.Applications.SqlServer = new SqlServerConfiguration();
-                    if (userStorage.Applications.SqlServer.Queries == null)
-                    {
-                        userStorage.Applications.SqlServer.Queries = new List<SqlServerQuery>();
-                    }
+                    userStorage.Applications.Jira.Users = new List<JiraUser>();
                 }
+            }
 
-                if (userStorage.InvestmentProfile == null)
+            if (userStorage.Applications.SqlServer == null)
+            {
+                userStorage.Applications.SqlServer = new SqlServerConfiguration();
+                if (userStorage.Applications.SqlServer.Queries == null)
                 {
-                    userStorage.InvestmentProfile = new InvestmentProfile();
-                    if (userStorage.InvestmentProfile.InvestmentCategories == null)
-                    {
-                        userStorage.InvestmentProfile.InvestmentCategories = new List<InvestmentCategory>();
-                    }
-                    if (userStorage.InvestmentProfile.DeveloperAllocations == null)
-                    {
-                        userStorage.InvestmentProfile.DeveloperAllocations = new List<DeveloperAllocation>();
-                    }
+                    userStorage.Applications.SqlServer.Queries = new List<SqlServerQuery>();
                 }
+            }
 
+            if (userStorage.Applications.AzureDevOps == null)
+            {
+                userStorage.Applications.AzureDevOps = new AzureDevOps() { StagesToSkip = new List<string>() };
+            }
 
+            if (userStorage.InvestmentProfile == null)
+            {
+                userStorage.InvestmentProfile = new InvestmentProfile();
+                if (userStorage.InvestmentProfile.InvestmentCategories == null)
+                {
+                    userStorage.InvestmentProfile.InvestmentCategories = new List<InvestmentCategory>();
+                }
+                if (userStorage.InvestmentProfile.DeveloperAllocations == null)
+                {
+                    userStorage.InvestmentProfile.DeveloperAllocations = new List<DeveloperAllocation>();
+                }
             }
 
             // Generate Encryption Keys if not present

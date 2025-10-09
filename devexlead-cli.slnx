@@ -13,6 +13,7 @@
   </Folder>
   <Folder Name="/src/Modules/">
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.ActiveMq/DevExLead.Modules.ActiveMq.csproj" Id="14ea4e35-67a7-4199-82d7-83f077185257" />
+    <Project Path="src/DevExLead.Modules/DevExLead.Modules.AzDevOps/DevExLead.Modules.AzDevOps.csproj" Id="b35bba05-95c3-4f81-8892-f065ee5a787e" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Command/DevExLead.Modules.Command.csproj" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.Confluence/DevExLead.Modules.Confluence.csproj" Id="12734f9c-70fa-41ca-82ec-c1ab0048bb08" />
     <Project Path="src/DevExLead.Modules/DevExLead.Modules.EnvironmentVariables/DevExLead.Modules.EnvironmentVariables.csproj" />
