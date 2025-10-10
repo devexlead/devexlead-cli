@@ -22,7 +22,7 @@ namespace DevExLead.Modules.Export.Handlers
             {
                 rootPath = path;
             }
-           
+
             var softwareCatalog = await BuildSoftwareCatalog(rootPath);
 
             var fileName = "catalog";
@@ -54,7 +54,8 @@ namespace DevExLead.Modules.Export.Handlers
             table.Columns.Add("app_name", typeof(string));
             table.Columns.Add("service_prefix", typeof(string));
             table.Columns.Add("Datadog", typeof(string));
-            table.Columns.Add("Pipeline URL", typeof(string));
+            table.Columns.Add("DataDog Link Name", typeof(string));
+            table.Columns.Add("DataDog Link Value", typeof(string));
 
             foreach (var kvp in fileMatchesByDirectory)
             {
@@ -77,24 +78,25 @@ namespace DevExLead.Modules.Export.Handlers
                                 .IgnoreUnmatchedProperties()
                                 .Build();
                             var datadogRoot = deserializer.Deserialize<DatadogSettingsFile>(yaml);
-                            pipelineUrl = datadogRoot?.Metadata?.Links?
-                                                                .FirstOrDefault(l => string.Equals(l.Name, "Pipeline", StringComparison.OrdinalIgnoreCase))
-                                                                ?.Url ?? string.Empty;
+
+                            foreach (var link in datadogRoot?.Metadata?.Links)
+                            {
+                                table.Rows.Add(
+                                                directory,
+                                                Path.GetFileName(match.KubernetesFile) ?? string.Empty,
+                                                k8sObject?.Default.app_name ?? string.Empty,
+                                                k8sObject?.Default.service_prefix ?? string.Empty,
+                                                Path.GetFileName(match.DatadogFile),
+                                                link.Name,
+                                                link.Url
+                                            );
+                            }
                         }
                         catch (Exception)
                         {
 
                         }
                     }
-
-                    table.Rows.Add(
-                        directory,
-                        Path.GetFileName(match.KubernetesFile) ?? string.Empty,
-                        k8sObject?.Default.app_name ?? string.Empty,
-                        k8sObject?.Default.service_prefix ?? string.Empty,
-                        Path.GetFileName(match.DatadogFile),
-                        pipelineUrl
-                    );
                 }
             }
 
@@ -107,13 +109,13 @@ namespace DevExLead.Modules.Export.Handlers
 
         public static async Task<Dictionary<string, List<(string KubernetesFile, string? DatadogFile)>>> FindKubernetesAndDatadogFiles(string folderPath)
         {
-            var kubernetesFiles = Directory.GetFiles(folderPath, "*k8_settings*.json", SearchOption.AllDirectories);
-            var datadogFiles = Directory.GetFiles(folderPath, "*datadog*.yaml", SearchOption.AllDirectories);
+            var jsonKubernetesFiles = Directory.GetFiles(folderPath, "*k8_settings*.json", SearchOption.AllDirectories);
+            var yamlDatadogFiles = Directory.GetFiles(folderPath, "*datadog*.yaml", SearchOption.AllDirectories);
 
             // Group files by their directory
             var filesByDirectory = new Dictionary<string, List<(string filePath, string fileType)>>();
 
-            foreach (string file in kubernetesFiles)
+            foreach (string file in jsonKubernetesFiles)
             {
                 string directory = Path.GetDirectoryName(file);
                 if (!filesByDirectory.ContainsKey(directory))
@@ -121,7 +123,7 @@ namespace DevExLead.Modules.Export.Handlers
                 filesByDirectory[directory].Add((file, "kubernetes"));
             }
 
-            foreach (string file in datadogFiles)
+            foreach (string file in yamlDatadogFiles)
             {
                 string directory = Path.GetDirectoryName(file);
                 if (!filesByDirectory.ContainsKey(directory))

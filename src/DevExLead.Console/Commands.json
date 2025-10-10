@@ -17,11 +17,13 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": "The key to update"
+                            "Description": "The key to update",
+                            "IsRequired": true
                         },
                         {
                             "Name": "value",
-                            "Description": "The new value"
+                            "Description": "The new value",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -32,7 +34,8 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": "The key to delete"
+                            "Description": "The key to delete",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -82,23 +85,28 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": "Command Name"
+                            "Description": "Command Name",
+                            "IsRequired": true
                         },
                         {
                             "Name": "path",
-                            "Description": "Command Location"
+                            "Description": "Command Location",
+                            "IsRequired": true
                         },
                         {
                             "Name": "body",
-                            "Description": "Command Body"
+                            "Description": "Command Body",
+                            "IsRequired": true
                         },
                         {
                             "Name": "group",
-                            "Description": "Command Group (for parallel execution)"
+                            "Description": "Command Group (for parallel execution)",
+                            "IsRequired": true
                         },
                         {
                             "Name": "process",
-                            "Description": "Command Process (required for re-execution)"
+                            "Description": "Command Process (required for re-execution)",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -121,11 +129,13 @@
                     "Parameters": [
                         {
                             "Name": "single",
-                            "Description": "Command Key"
+                            "Description": "Command Key",
+                            "IsRequired": true
                         },
                         {
                             "Name": "multiple",
-                            "Description": "Command Group Name"
+                            "Description": "Command Group Name",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -148,7 +158,8 @@
                     "Parameters": [
                         {
                             "Name": "path",
-                            "Description": "Path to be scanned"
+                            "Description": "Path to be scanned",
+                            "IsRequired": true
                         },
                         {
                             "Name": "format",
@@ -165,13 +176,14 @@
                     "Parameters": [
                         {
                             "Name": "path",
-                            "Description": "Path to be scanned"
+                            "Description": "Path to be scanned",
+                            "IsRequired": true
                         },
                         {
                             "Name": "format",
                             "Description": "'csv', 'xls' or 'json'",
                             "IsRequired": true,
-                            "DefaultValue": "xls"
+                            "DefaultValue": "xls|csv|json"
                         }
                     ]
                 },
@@ -182,13 +194,14 @@
                     "Parameters": [
                         {
                             "Name": "path",
-                            "Description": "Path where export file will be saved"
+                            "Description": "Path where export file will be saved",
+                            "IsRequired": true
                         },
                         {
                             "Name": "format",
                             "Description": "'csv', 'xls' or 'json'",
                             "IsRequired": true,
-                            "DefaultValue": "xls"
+                            "DefaultValue": "xls|csv|json"
                         },
                         {
                             "Name": "jql",
@@ -205,7 +218,8 @@
                     "Parameters": [
                         {
                             "Name": "path",
-                            "Description": "Path to be scanned"
+                            "Description": "Path to be scanned",
+                            "IsRequired": true
                         },
                         {
                             "Name": "format",
@@ -234,7 +248,8 @@
                         {
                             "Name": "isSnapshot",
                             "Description": "Take a Backlog Snapshot after Sprint Planning",
-                            "DefaultValue": false
+                            "DefaultValue": false,
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -275,19 +290,23 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": ""
+                            "Description": "",
+                            "IsRequired": true
                         },
                         {
                             "Name": "remoteLocation",
-                            "Description": ""
+                            "Description": "",
+                            "IsRequired": true
                         },
                         {
                             "Name": "workingFolder",
-                            "Description": ""
+                            "Description": "",
+                            "IsRequired": true
                         },
                         {
                             "Name": "defaultBranch",
-                            "Description": ""
+                            "Description": "",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -304,11 +323,13 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": ""
+                            "Description": "",
+                            "IsRequired": true
                         },
                         {
                             "Name": "branch",
-                            "Description": ""
+                            "Description": "",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -337,11 +358,13 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": "The key to update"
+                            "Description": "The key to update",
+                            "IsRequired": true
                         },
                         {
                             "Name": "value",
-                            "Description": "The new value"
+                            "Description": "The new value",
+                            "IsRequired": true
                         }
                     ]
                 },
@@ -364,7 +387,8 @@
                     "Parameters": [
                         {
                             "Name": "key",
-                            "Description": "The key to update"
+                            "Description": "The key to update",
+                            "IsRequired": true
                         }
                     ]
                 }
